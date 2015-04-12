@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #include "glut.h"
-//#include "Elemento.h"
+#include "Elemento.h"
 #include "Camera.h"
 #include "Interfaz.h"
 
@@ -12,13 +12,9 @@ void OnDraw(void);
 void OnTimer(int value); 
 void OnKeyboardDown(unsigned char key, int x, int y);
 
-const int dim = 6;
 //Objetos Primarios
-//Elemento myElem;
-//Elemento e[dim];
 Camera camera;
-
-float scale = 1;
+Elemento a;
 
 //Secuencia de inicializacion
 void inicializaVentana(int argc, char* argv[])
@@ -46,9 +42,6 @@ int main(int argc,char* argv[])
 {
 	//Abre la ventana y GL
 	inicializaVentana(argc, argv);
-	//Crear los objetos
-
-
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -71,7 +64,10 @@ void OnDraw(void) {
 		vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 	);
 
-	glutWireSphere(10, 50, 50);
+	glColor3ub(255, 255, 255);
+	a.doDraw();
+
+	glutWireSphere(10, 10, 10);
 
 	glutSwapBuffers(); //Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
@@ -86,5 +82,5 @@ void OnTimer(int value) //poner aqui el codigo de animacion
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	InterfazTeclado(key, &camera);
+	InterfazTeclado(key, &camera, &a);
 }

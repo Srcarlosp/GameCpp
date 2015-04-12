@@ -31,6 +31,7 @@ public:
 	void setDim(float);
 	void getBackCamera(float *);
 
+	//constructor
 	Camera();
 
 private:

@@ -26,8 +26,8 @@ void Camera::moveCamera(float x, float y, float z)
 {
 	o_x += x * dir[0] * vmove + y * dir[1] * vmove;
 	v_x += x * dir[0] * vmove + y * dir[1] * vmove;
-	o_y += x * dir[1] * vmove + y * dir[0] * -1 * vmove;
-	v_y += x * dir[1] * vmove + y * dir[0] * -1 * vmove;
+	o_y += x * dir[1] * vmove - y * dir[0] * vmove;
+	v_y += x * dir[1] * vmove - y * dir[0] * vmove;
 	o_z += z * vmove;
 	v_z += z * vmove;
 }
