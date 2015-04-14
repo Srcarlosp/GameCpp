@@ -66,9 +66,33 @@ void OnDraw(void) {
 
 	glColor3ub(255, 255, 255);
 	a.doDraw();
+	
+	//glutWireSphere(10, 10, 10);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 153, 153);
+	glVertex3f(-5.0f, -5.0f, 0.0f); 
+	glColor3ub(0, 153, 153);
+	glVertex3f(-5.0f, 5.0f, 0.0f); 
+	glColor3ub(0, 153, 153);
+	glVertex3f(5.0f, 5.0f, 0.0f); 
+	glColor3ub(0, 153, 153);
+	glVertex3f(5.0f, -5.0f, 0.0f);
+	glEnd();
 
-	glutWireSphere(10, 10, 10);
 
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 51, 51);
+	glVertex3f(-5.0f, -5.0f, -2.0f);
+	glColor3ub(0, 51, 51);
+	glVertex3f(-5.0f, 5.0f, -2.0f);
+	glColor3ub(0, 51, 51);
+	glVertex3f(5.0f, 5.0f, -2.0f);
+	glColor3ub(0, 51, 51);
+	glVertex3f(5.0f, -5.0f, -2.0f);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	
 	glutSwapBuffers(); //Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
 
