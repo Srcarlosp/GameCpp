@@ -9,6 +9,7 @@
 #include "Interfaz.h"
 #include "windows.h"
 #include "glut.h"
+#include "funciones_inline.h"
 
 void OnDraw(void);
 void OnTimer(int value); 
@@ -18,6 +19,7 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 
 Camera camera;
 Elemento a;
+
 
 /*void animacion(){
 	float x = 0.25, y = -4.567;
@@ -44,6 +46,11 @@ Elemento a;
 	}
 
 }*/
+
+
+
+
+
 void ControlRaton(int button, int state, int x, int y) {
 	if ( state == GLUT_UP && x>800) {
 		pintarHexagono(0.25, -0.2165, camera);
@@ -73,7 +80,7 @@ void inicializaVentana(int argc, char* argv[])
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
 	srand(time(NULL));
-	glClearColor(0.1,0.90,0.90,1);
+	glClearColor(0.7,1.0,1.0,0);
 	glutMouseFunc(ControlRaton);
 
 }
@@ -82,6 +89,9 @@ int main(int argc,char* argv[])
 {
 	//Abre la ventana y GL
 	inicializaVentana(argc, argv);
+
+	//Creacion de periferias
+	printPeriferia(3);
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -105,9 +115,10 @@ void OnDraw(void) {
 	);
 
 	
-	//a.doDraw();
+	a.doDraw();
 	
-	//glutWireSphere(10, 10, 10);
+	//glutWireSphere(100, 100, 100);
+
 	pintarPlanos();
 	
 	glutSwapBuffers(); //Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
