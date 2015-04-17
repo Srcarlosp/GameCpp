@@ -1,9 +1,12 @@
 ﻿#include <math.h>
-#include <stdlib.h>
+
 
 #include "Elemento.h"
-#include "glut.h"
+#include <stdlib.h>
+
 #include "funciones_inline.h"
+#include "glut.h"
+
 
 Elemento::Elemento()
 {

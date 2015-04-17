@@ -2,7 +2,7 @@
 
 class Camera
 {
-
+public:
 	//Posicon de los ojos
 	float o_x = 20, o_y = 20, o_z = 20;
 	//Punto de vista
@@ -15,7 +15,7 @@ class Camera
 	//Orientacion de camra
 	float dir[2];
 
-public:
+
 
 	//Metodos principales
 	void orbit(float d); //Inicia una orbita entorno al punto actual
