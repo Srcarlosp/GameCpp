@@ -3,10 +3,12 @@
 #include <math.h>
 #include <stdio.h>
 
+
 #include "glut.h"
 #include "Elemento.h"
 #include "Camera.h"
 #include "Interfaz.h"
+#include "windows.h"
 
 void OnDraw(void);
 void OnTimer(int value); 
@@ -15,6 +17,151 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 //Objetos Primarios
 Camera camera;
 Elemento a;
+
+/*void animacion(){
+	int x = 0, y = -4.567;
+	for (x = 4.75; x >= -5;){
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x + 0.25, y + 0.433, 0.02);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x + 0.5, y, 0.02);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x + 0.25, y - 0.433, 0.02);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x - 0.25, y - 0.433, 0.02);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x - 0.5, y, 0.02);
+	glColor3ub(253, 253, 253);
+	glVertex3f(x - 0.25, y + 0.433, 0.02);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glutSwapBuffers();
+	x -= 1.5;
+	Sleep(300);
+}
+}*/
+/*void ControlRaton(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+		
+		animacion();
+	}
+}*/
+void pintarPlanos()
+{
+	int cont = 0;
+	const float ALTURA_PLANO_SUP = 0.0;
+	const float ALTURA_PLANO_INF = -5.0;
+	
+	glColor3ub(255, 255, 255);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 153, 153);
+	glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_SUP);
+	glColor3ub(0, 153, 153);
+	glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_SUP);
+	glColor3ub(0, 153, 153);
+	glVertex3f(5.0f, 5.0f, ALTURA_PLANO_SUP);
+	glColor3ub(0, 153, 153);
+	glVertex3f(5.0f, -5.0f, ALTURA_PLANO_SUP);
+	glEnd();
+
+
+	glBegin(GL_POLYGON);
+	glColor3ub(0, 51, 51);
+	glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_INF);
+	glColor3ub(0, 51, 51);
+	glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_INF);
+	glColor3ub(0, 51, 51);
+	glVertex3f(5.0f, 5.0f, ALTURA_PLANO_INF);
+	glColor3ub(0, 51, 51);
+	glVertex3f(5.0f, -5.0f, ALTURA_PLANO_INF);
+	glEnd();
+	//malla superior
+	for (float x = 5; x >= -5;)
+	{
+		if (cont % 2 == 0){
+			for (float y = -5; y <= 5;){
+				glBegin(GL_LINES);
+				glColor3ub(255, 255, 255);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glEnd();
+				y += 0.866;
+				
+			}
+			x -= 0.75;
+			cont++;
+		}
+		else
+		{
+			for (float y = -5.433; y <= 5;){
+				glBegin(GL_LINES);
+				glColor3ub(255, 255, 255);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glEnd();
+				y += 0.866;
+				
+			}
+			cont++;
+			x -= 0.75;
+		}
+
+	}
+	//malla inferior
+	for (float x = 5; x >= -5;)
+	{
+		if (cont % 2 == 0){
+			for (float y = -5; y <= 5;){
+				glBegin(GL_LINES);
+				glColor3ub(255, 255, 255);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glEnd();
+				y += 0.866;
+
+			}
+			x -= 0.75;
+			cont++;
+		}
+		else
+		{
+			for (float y = -5.433; y <= 5;){
+				glBegin(GL_LINES);
+				glColor3ub(255, 255, 255);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glEnd();
+				y += 0.866;
+
+			}cont++;
+			x -= 0.75;
+		}
+
+	}
+
+	glEnable(GL_LIGHTING);
+}
+
+
 
 //Secuencia de inicializacion
 void inicializaVentana(int argc, char* argv[])
@@ -36,6 +183,9 @@ void inicializaVentana(int argc, char* argv[])
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
 	srand(time(NULL));
+	glClearColor(0.1,0.90,0.90,1);
+	//glutMouseFunc(ControlRaton);
+
 }
 
 int main(int argc,char* argv[])
@@ -64,34 +214,11 @@ void OnDraw(void) {
 		vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 	);
 
-	glColor3ub(255, 255, 255);
+	
 	a.doDraw();
 	
-	//glutWireSphere(10, 10, 10);
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3ub(0, 153, 153);
-	glVertex3f(-5.0f, -5.0f, 0.0f); 
-	glColor3ub(0, 153, 153);
-	glVertex3f(-5.0f, 5.0f, 0.0f); 
-	glColor3ub(0, 153, 153);
-	glVertex3f(5.0f, 5.0f, 0.0f); 
-	glColor3ub(0, 153, 153);
-	glVertex3f(5.0f, -5.0f, 0.0f);
-	glEnd();
-
-
-	glBegin(GL_POLYGON);
-	glColor3ub(0, 51, 51);
-	glVertex3f(-5.0f, -5.0f, -2.0f);
-	glColor3ub(0, 51, 51);
-	glVertex3f(-5.0f, 5.0f, -2.0f);
-	glColor3ub(0, 51, 51);
-	glVertex3f(5.0f, 5.0f, -2.0f);
-	glColor3ub(0, 51, 51);
-	glVertex3f(5.0f, -5.0f, -2.0f);
-	glEnd();
-	glEnable(GL_LIGHTING);
+	glutWireSphere(10, 10, 10);
+	pintarPlanos();
 	
 	glutSwapBuffers(); //Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }

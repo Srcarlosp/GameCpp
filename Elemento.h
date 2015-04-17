@@ -11,8 +11,8 @@ class Elemento
 	//Parametros del elemento
 	enum ejes { x, y, z };
 	float posVec[3];
-	float vmove = 2;
-	float dir[2];
+	float vmove = 1.5;
+	float dirx[2], diry[2];
 
 public:
 
@@ -23,7 +23,6 @@ public:
 	void setColor(unsigned char r = 255, unsigned char v = 255, unsigned char a = 255);
 	void setPos(float, float, float);
 	void setSpd(float);
-	void setDir(float, float); //Actualiza el vector direccion
 
 	//Metodos graficos
 	void doDraw();

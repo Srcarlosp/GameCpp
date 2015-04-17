@@ -15,14 +15,16 @@ Elemento::Elemento()
 	colorVec[verde] = 255;
 	colorVec[azul] = 255;
 
-	dir[x] = 1;
-	dir[y] = 0;
+	diry[x] = 1;
+	diry[y] = 0;
+	dirx[x] = sin(2.0F*3.1416F / 3.0F);
+	dirx[y] = cos(2.0F*3.1416F / 3.0F);
 }
 
 void Elemento::moveOnKey(float xx, float yy)
 {
-	posVec[x] += xx * dir[0] * vmove + yy * dir[1] * vmove;
-	posVec[y] += xx * dir[1] * vmove - yy * dir[0] * vmove;
+	posVec[x] += xx * dirx[0] * vmove + yy * diry[1] * vmove;
+	posVec[y] += xx * dirx[1] * vmove - yy * diry[0] * vmove;
 }
 
 void Elemento::setColor(unsigned char r, unsigned char v, unsigned char a)
@@ -50,19 +52,4 @@ void Elemento::doDraw()
 	glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
 	glutSolidCube(1);
 	glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
-}
-
-void Elemento::setDir(float xx, float yy)
-{
-
-	float v[2];
-
-	v[x] = xx;
-	v[y] = yy;
-
-	norma(v, true, 2);
-
-	dir[x] = v[x];
-	dir[y] = v[y];
-
 }
