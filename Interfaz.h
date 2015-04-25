@@ -8,5 +8,5 @@
 typedef unsigned char Byte;
 
 void InterfazTeclado(Byte key, Camera *, Elemento *);
-void pintarHexagono(float x, float y, Camera camera);
+void pintarHexagono(float x2, float y2);
 void pintarPlanos();

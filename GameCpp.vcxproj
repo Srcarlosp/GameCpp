@@ -67,6 +67,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Pablo Lozano\Programación\GameCpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,6 +82,7 @@
     <ClCompile Include="Interfaz.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="ShipClass.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -91,6 +93,7 @@
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Elemento.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="OpenGL.h" />
     <ClInclude Include="Posicion.h" />
     <ClInclude Include="ShipClass.h" />
     <ClInclude Include="World.h" />
