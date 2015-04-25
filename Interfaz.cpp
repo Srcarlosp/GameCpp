@@ -1,8 +1,6 @@
 #include <math.h>
 #include <stdio.h>
 
-
-
 #include "Elemento.h"
 #include "Camera.h"
 #include "Interfaz.h"

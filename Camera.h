@@ -8,14 +8,12 @@ public:
 	//Punto de vista
 	float v_x = 0, v_y = 0, v_z = 0;
 	//Velocidad de desplazamiento de vista
-	float vmove = 5;
-	//Datos orvita
+	float vmove = 0.1;
+	//Datos orbita
 	float dim = 0;
 	float step_dif = 0.01F;
 	//Orientacion de camra
 	float dir[2];
-
-
 
 	//Metodos principales
 	void orbit(float d); //Inicia una orbita entorno al punto actual

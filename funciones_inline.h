@@ -3,8 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include "Posicion.h"
-
-enum e { x, y, z };
+#include "Constantes.h"
 
 inline float norma(float *v, bool prenorma = false, int dim = 3)
 {
@@ -21,7 +20,7 @@ inline float norma(float *v, bool prenorma = false, int dim = 3)
 inline Posicion * periferiaFinder(int n)
 {
 	int c = 0;
-	static Posicion *v = new Posicion[6 * n];
+	Posicion *v = new Posicion[PERIFERIASIZE(n)];
 	for (int i = 0; i <= n; i++)
 	{
 		for (int j = n - i; -n <= j; i == n? j-- : j -= (2 * n) - i)

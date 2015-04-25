@@ -2,9 +2,11 @@
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
-
 #include <stdlib.h>
+#include <iostream>
+
 #include "Elemento.h"
+#include "World.h"
 #include "Camera.h"
 #include "Interfaz.h"
 #include "windows.h"
@@ -17,9 +19,13 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 
 //Objetos Primarios
 
-Camera camera;
-Elemento a;
+int p[15];
 
+World superficie;
+Camera camera;
+Elemento a(p,0,0);
+//Vector para periferias
+Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
 /*void animacion(){
 	float x = 0.25, y = -4.567;
@@ -46,10 +52,6 @@ Elemento a;
 	}
 
 }*/
-
-
-
-
 
 void ControlRaton(int button, int state, int x, int y) {
 	if ( state == GLUT_UP && x>800) {
@@ -91,7 +93,12 @@ int main(int argc,char* argv[])
 	inicializaVentana(argc, argv);
 
 	//Creacion de periferias
-	printPeriferia(3);
+	for (int i = 0; i < ((WORLDSIZE - 1) / 2); i++)
+		periferias[i] = periferiaFinder(i + 1);
+	printPeriferia(1);
+
+	//Poner contenido a mundo
+	superficie.addElem(&a);
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -114,8 +121,8 @@ void OnDraw(void) {
 		vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 	);
 
-	
-	a.doDraw();
+	superficie.doDrawWorldContent();
+	//superficie.getPoint(0, 0).getElem()->doDraw();
 	
 	//glutWireSphere(100, 100, 100);
 
@@ -135,4 +142,5 @@ void OnTimer(int value) //poner aqui el codigo de animacion
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	InterfazTeclado(key, &camera, &a);
+	std::cout << "Key";
 }
