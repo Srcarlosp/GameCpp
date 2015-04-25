@@ -5,7 +5,7 @@
 #include "Posicion.h"
 #include "Constantes.h"
 
-inline float norma(float *v, bool prenorma = false, int dim = 3)
+inline float norma(float *v, bool prenorma = false, int dim = 3)	//Devulve modulo y vector normal
 {
 	float modulo = 0;
 	for (int i = 0; i<dim; i++)
@@ -17,7 +17,7 @@ inline float norma(float *v, bool prenorma = false, int dim = 3)
 	return modulo;
 }
 
-inline Posicion * periferiaFinder(int n)
+inline Posicion * periferiaFinder(int n)				//Genera las periferias que se usan para medir distancias en al espacio exagonal
 {
 	int c = 0;
 	Posicion *v = new Posicion[PERIFERIASIZE(n)];
@@ -32,7 +32,7 @@ inline Posicion * periferiaFinder(int n)
 	return v;
 }
 
-inline void printPeriferia(int n)
+inline void printPeriferia(int n)    //De fase debug, eliminar
 {
 	Posicion *posicion = periferiaFinder(n);
 	for (int i = 0; i < 6 * n; i++) 

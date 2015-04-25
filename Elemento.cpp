@@ -1,9 +1,5 @@
 ﻿#include <math.h>
-
 #include "Elemento.h"
-#include "Constantes.h"
-#include "Posicion.h"
-#include "funciones_inline.h"
 #include "glut.h"
 
 Elemento::Elemento(int *p, int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b) :posAbs(_x, _y), ship(p)

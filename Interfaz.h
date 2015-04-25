@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Camera.h"
 #include "Elemento.h"
+#include "Camera.h"
+#include "windows.h"
+#include "glut.h"
 
 typedef unsigned char Byte;
 

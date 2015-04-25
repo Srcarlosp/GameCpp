@@ -1,11 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "Elemento.h"
-#include "Camera.h"
 #include "Interfaz.h"
-#include "windows.h"
-#include "glut.h"
 
 
 void InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
