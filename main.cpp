@@ -21,9 +21,10 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 
 int p[15];
 
+Elemento a(p, 0, 0);
 World superficie;
 Camera camera;
-Elemento a(p,0,0);
+
 //Vector para periferias
 Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
@@ -95,10 +96,27 @@ int main(int argc,char* argv[])
 	//Creacion de periferias
 	for (int i = 0; i < ((WORLDSIZE - 1) / 2); i++)
 		periferias[i] = periferiaFinder(i + 1);
-	printPeriferia(1);
+
+	Elemento b(p, periferias[0][0].getPos(x), periferias[0][0].getPos(y));
+	Elemento c(p, periferias[0][1].getPos(x), periferias[0][1].getPos(y));
+	Elemento d(p, periferias[0][2].getPos(x), periferias[0][2].getPos(y));
+	Elemento e(p, periferias[0][3].getPos(x), periferias[0][3].getPos(y));
+	Elemento f(p, periferias[0][4].getPos(x), periferias[0][4].getPos(y));
+	Elemento g(p, periferias[0][5].getPos(x), periferias[0][5].getPos(y));
+	Elemento h(p, periferias[1][0].getPos(x), periferias[1][0].getPos(y));
+	Elemento i(p, periferias[1][1].getPos(x), periferias[1][1].getPos(y));
+	Elemento j(p, periferias[1][2].getPos(x), periferias[1][2].getPos(y));
 
 	//Poner contenido a mundo
 	superficie.addElem(&a);
+	superficie.addElem(&b);
+	superficie.addElem(&c);
+	superficie.addElem(&d);
+	superficie.addElem(&e);
+	superficie.addElem(&f);
+	superficie.addElem(&g);
+	superficie.addElem(&h);
+	superficie.addElem(&i);
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -122,20 +140,17 @@ void OnDraw(void) {
 	);
 
 	superficie.doDrawWorldContent();
-	//superficie.getPoint(0, 0).getElem()->doDraw();
-	
-	//glutWireSphere(100, 100, 100);
 
 	pintarPlanos();
 	
-	glutSwapBuffers(); //Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
+	glutSwapBuffers();					//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
 
-void OnTimer(int value) //poner aqui el codigo de animacion
+void OnTimer(int value)					//poner aqui el codigo de animacion
 {
 
-	glutTimerFunc(10,OnTimer,0); //Temporizador de actulizacion
-	glutPostRedisplay(); //Actualizacion de pantalla
+	glutTimerFunc(10,OnTimer,0);		//Temporizador de actulizacion
+	glutPostRedisplay();				//Actualizacion de pantalla
 
 }
 

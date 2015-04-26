@@ -8,8 +8,8 @@ Elemento::Elemento(int *p, int _x, int _y, unsigned char _r, unsigned char _g, u
 	colorVec[verde] = _g;
 	colorVec[azul] = _b;
 
-	posVec[x] = dirx[0] * posAbs.getPos(x) + diry[1] * posAbs.getPos(y);
-	posVec[y] = dirx[1] * posAbs.getPos(y) + diry[0] * posAbs.getPos(x);
+	posVec[x] = dirx[0] * (float)posAbs.getPos(x) - diry[1] * (float)posAbs.getPos(y);
+	posVec[y] = dirx[1] * (float)posAbs.getPos(x) + diry[0] * (float)posAbs.getPos(y);
 	posVec[z] = 0;
 }
 
@@ -23,8 +23,8 @@ void Elemento::setColor(unsigned char _r, unsigned char _g, unsigned char _b)
 void Elemento::setPos(int _x, int _y)
 {
 	posAbs.setPos(_x, _y);
-	posVec[x] = dirx[0] * posAbs.getPos(x) - diry[1] * posAbs.getPos(y);
-	posVec[y] = dirx[1] * posAbs.getPos(x) + diry[0] * posAbs.getPos(y);
+	posVec[x] = dirx[0] * (float)posAbs.getPos(x) - diry[1] * (float)posAbs.getPos(y);
+	posVec[y] = dirx[1] * (float)posAbs.getPos(x) + diry[0] * (float)posAbs.getPos(y);
 }
 
 int Elemento::getPos(int d)
@@ -41,6 +41,6 @@ void Elemento::doDraw()
 {
 	glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 	glTranslatef(this->posVec[y], this->posVec[x], this->posVec[z]);
-	glutSolidCube(1);
+	glutSolidCube(0.3);
 	glTranslatef(-this->posVec[y], -this->posVec[x], -this->posVec[z]);
 }

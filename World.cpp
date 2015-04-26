@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include "World.h"
 #include "Casilla.h"
@@ -31,7 +32,7 @@ void World::doDrawWorldContent()
 
 Casilla * World::operatePoint(int _x, int _y)
 {
-	int x = _x + ((WORLDSIZE - 1) / 2), y = _x + ((WORLDSIZE - 1) / 2);
+	int x = _x + ((WORLDSIZE - 1) / 2), y = _y + ((WORLDSIZE - 1) / 2);
 	return &world[x][y];
 }
 
@@ -40,8 +41,8 @@ void World::loopMap(int _x, int _y, void (*funcion)(Casilla *), int n, bool itSe
 	int x = _x + ((WORLDSIZE - 1) / 2), y = _x + ((WORLDSIZE - 1) / 2);
 	if (itSelf == true) funcion(&world[x][y]);
 	for (int i = 0; i < n; i++)
-		for (int ii = 0; ii < PERIFERIASIZE(i); ii++)
+		for (int ii = 0; ii < PERIFERIASIZE((i+1)); ii++)
 		{
-			funcion(&world[periferias[i]->getPos(0) + x][periferias[i]->getPos(1) + y]);		//Problema Enum
+			funcion(&world[periferias[i][ii].getPos(0) + x][periferias[i][ii].getPos(1) + y]);		//Problema Enum
 		}
 }
