@@ -18,10 +18,10 @@ void InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 	if (key == 'r') camara->zoomCamera(1);
 	if (key == 'f') camara->zoomCamera(-1);
 	//Control de movimento de Elemetos
-	if (key == 'u') elem->moveOnKey(0, 1);
-	if (key == 'j') elem->moveOnKey(0, -1);
-	if (key == 'k') elem->moveOnKey(1, 0);
-	if (key == 'h') elem->moveOnKey(-1,0);
+	if (key == 'u') elem->moveOnKey(1, 0);
+	if (key == 'j') elem->moveOnKey(-1, 0);
+	if (key == 'k') elem->moveOnKey(0, 1);
+	if (key == 'h') elem->moveOnKey(0, -1);
 }
 void pintarPlanos()
 {
