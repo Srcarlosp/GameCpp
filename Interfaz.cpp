@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdio.h>
-
+#include "OpenGL.h"
 #include "Interfaz.h"
 
 
@@ -18,41 +18,64 @@ void InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 	if (key == 'r') camara->zoomCamera(1);
 	if (key == 'f') camara->zoomCamera(-1);
 	//Control de movimento de Elemetos
-	if (key == 'u') elem->moveOnKey(1, 0);
-	if (key == 'j') elem->moveOnKey(-1, 0);
-	if (key == 'k') elem->moveOnKey(0, 1);
-	if (key == 'h') elem->moveOnKey(0, -1);
+	if (key == 'u') elem->moveOnKey(0, 1);
+	if (key == 'j') elem->moveOnKey(0, -1);
+	if (key == 'k') elem->moveOnKey(1, 0);
+	if (key == 'h') elem->moveOnKey(-1,0);
 }
 void pintarPlanos()
 {
 	int cont = 0;
 	const float ALTURA_PLANO_SUP = 0.0;
 	const float ALTURA_PLANO_INF = -5.0;
+	unsigned int width = 0, height = 0;
 
-	glColor3ub(255, 255, 255);
+	//Cargar textura de arriba
+	unsigned int image = OpenGL::CargaTextura("oceano.bmp");
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, image);
 	glDisable(GL_LIGHTING);
+	glColor3ub(255, 255, 255);
+	glColor3f(1, 1, 1);
+	//pintar plano de arriba
 	glBegin(GL_POLYGON);
-	glColor3ub(0, 153, 153);
+	//glColor3ub((0, 153, 153);
+	glTexCoord2d(0.0f, 0.0f);
 	glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_SUP);
-	glColor3ub(0, 153, 153);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(0.0f, 1.0);
 	glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_SUP);
-	glColor3ub(0, 153, 153);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(1.0f, 1.0f);
 	glVertex3f(5.0f, 5.0f, ALTURA_PLANO_SUP);
-	glColor3ub(0, 153, 153);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(1.0f, 0.0f);
 	glVertex3f(5.0f, -5.0f, ALTURA_PLANO_SUP);
 	glEnd();
-
-
+	glDisable(GL_TEXTURE_2D);
+	//Cargar textura de abajo
+	image = OpenGL::CargaTextura("fondo.bmp");
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, image);
+	glDisable(GL_LIGHTING);
+	glColor3ub(255, 255, 255);
+	glColor3f(1, 1, 1);
+	//pintar plano de abajo
 	glBegin(GL_POLYGON);
-	glColor3ub(0, 51, 51);
+	//glColor3ub(0, 51, 51);
+	glTexCoord2d(0.0f, 0.0f);
 	glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_INF);
-	glColor3ub(0, 51, 51);
+	//(0, 51, 51);
+	glTexCoord2d(0.0f, 1.0);
 	glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_INF);
-	glColor3ub(0, 51, 51);
+	//glColor3ub(0, 51, 51);
+	glTexCoord2d(1.0f, 1.0);
 	glVertex3f(5.0f, 5.0f, ALTURA_PLANO_INF);
-	glColor3ub(0, 51, 51);
+	//glColor3ub(0, 51, 51
+	glTexCoord2d(1.0f, 0.0);
 	glVertex3f(5.0f, -5.0f, ALTURA_PLANO_INF);
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 	//malla superior
 	for (float x = 5; x >= -5;)
 	{
@@ -60,12 +83,12 @@ void pintarPlanos()
 			for (float y = -5; y <= 5;){
 				glBegin(GL_LINES);
 				glColor3ub(255, 255, 255);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
 				glEnd();
 				y += 0.866;
 			}
@@ -77,19 +100,19 @@ void pintarPlanos()
 			for (float y = -5.433; y <= 5;){
 				glBegin(GL_LINES);
 				glColor3ub(255, 255, 255);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
 				glEnd();
 				y += 0.866;
 			}
 			cont++;
 			x -= 0.75;
 		}
-}
+	}
 	//malla inferior
 	for (float x = 5; x >= -5;)
 	{
@@ -97,12 +120,12 @@ void pintarPlanos()
 			for (float y = -5; y <= 5;){
 				glBegin(GL_LINES);
 				glColor3ub(255, 255, 255);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
 				glEnd();
 				y += 0.866;
 
@@ -115,12 +138,12 @@ void pintarPlanos()
 			for (float y = -5.433; y <= 5;){
 				glBegin(GL_LINES);
 				glColor3ub(255, 255, 255);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x, y, ALTURA_PLANO_INF + 0.01f);
-				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.01f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
+				glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
 				glEnd();
 				y += 0.866;
 
@@ -131,29 +154,62 @@ void pintarPlanos()
 	}
 
 	glEnable(GL_LIGHTING);
-}
-void pintarHexagono(float x, float y,Camera camera){
-	//angulo paralelo a z
-	float a = atan2(camera.o_z - camera.v_z, sqrt((camera.o_x - camera.v_x)*(camera.o_x - camera.v_x) + (camera.o_y - camera.v_y)*(camera.o_y - camera.v_y)));
-	float b = atan2((camera.o_y - camera.v_y), (camera.o_z - camera.v_z));
 
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x + 0.25, y + 0.433, 0.02);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x + 0.5, y, 0.02);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x + 0.25, y - 0.433, 0.02);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x - 0.25, y - 0.433, 0.02);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x - 0.5, y, 0.02);
-	glColor3ub(100, 250, 250);
-	glVertex3f(x - 0.25, y + 0.433, 0.02);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glutSwapBuffers();
-	Sleep(300);
+}
+void pintarHexagono(float x2, float y2){
+	//angulo paralelo a z
+	int cont = 0;
+
+
+	while (cont <= 6){
+		float x = x2, y = y2;
+		if (cont == 1){
+			y = y2 + 0.866;
+		}
+		if (cont == 2){
+			x = x2 + 0.75;
+			y = y2 + 0.433;
+		}
+		if (cont == 3){
+			x = x2 + 0.75;
+			y = y2 - 0.433;
+		}
+		if (cont == 4){
+			y = y2 - 0.866;
+		}
+		if (cont == 5){
+			x = x2 - 0.75;
+			y = y2 - 0.433;
+		}
+		if (cont == 6){
+			x = x2 - 0.75;
+			y = y2 + 0.433;
+		}
+
+
+
+
+
+		glDisable(GL_LIGHTING);
+		glBegin(GL_POLYGON);
+
+
+		glColor3ub(100, 250, 250);
+		glVertex3f(x + 0.25, y + 0.433, 0.01);
+		glColor3ub(100, 250, 250);
+		glVertex3f(x + 0.5, y, 0.01);
+		glColor3ub(100, 250, 250);
+		glVertex3f(x + 0.25, y - 0.433, 0.01);
+		glColor3ub(100, 250, 250);
+		glVertex3f(x - 0.25, y - 0.433, 0.01);
+		glColor3ub(100, 250, 250);
+		glVertex3f(x - 0.5, y, 0.01);
+		glColor3ub(100, 250, 250);
+		glVertex3f(x - 0.25, y + 0.433, 0.01);
+		glEnd();
+		glEnable(GL_LIGHTING);
+		cont++;
+	}
+
 }
 

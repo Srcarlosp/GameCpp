@@ -1,12 +1,14 @@
 ﻿#include <math.h>
 #include "Elemento.h"
 #include "glut.h"
+#include "Interfaz.h"
 
 Elemento::Elemento(int *p, int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b) :posAbs(_x, _y), ship(p)
 {
 	colorVec[rojo] = _r;
 	colorVec[verde] = _g;
 	colorVec[azul] = _b;
+	
 
 	posVec[x] = dirx[0] * (float)posAbs.getPos(x) - diry[1] * (float)posAbs.getPos(y);
 	posVec[y] = dirx[1] * (float)posAbs.getPos(x) + diry[0] * (float)posAbs.getPos(y);

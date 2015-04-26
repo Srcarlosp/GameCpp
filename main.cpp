@@ -56,7 +56,7 @@ Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
 void ControlRaton(int button, int state, int x, int y) {
 	if ( state == GLUT_UP && x>800) {
-		pintarHexagono(0.25, -0.2165, camera);
+		pintarHexagono(0.25, -0.2165);
 //		animacion();
 	}
 }
