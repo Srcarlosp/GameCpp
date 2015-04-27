@@ -2,7 +2,7 @@
 #include "Elemento.h"
 #include "glut.h"
 #include "Interfaz.h"
-
+Interfaz interfaz1;
 Elemento::Elemento(int *p, int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b) :posAbs(_x, _y), ship(p)
 {
 	colorVec[rojo] = _r;
@@ -42,7 +42,8 @@ void Elemento::moveOnKey(int _x, int _y)
 void Elemento::doDraw()
 {
 	glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
-	glTranslatef(this->posVec[y], this->posVec[x], this->posVec[z]);
+	glTranslatef(this->posVec[y] * scale + offx, this->posVec[x] * scale + offy, this->posVec[z]);
 	glutSolidCube(0.3);
-	glTranslatef(-this->posVec[y], -this->posVec[x], -this->posVec[z]);
+	glTranslatef(-(this->posVec[y] * scale + offx), -(this->posVec[x] * scale + offy), -this->posVec[z]);
+	interfaz1.pintarHexagono(this->posVec[y] * scale + offx, this->posVec[x] * scale + offy);
 }

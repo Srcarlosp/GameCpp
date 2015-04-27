@@ -20,7 +20,7 @@ void OnKeyboardDown(unsigned char key, int x, int y);
 //Objetos Primarios
 
 int p[15];
-
+Interfaz interfaz;
 Elemento a(p, 0, 0);
 World superficie;
 Camera camera;
@@ -56,7 +56,8 @@ Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
 void ControlRaton(int button, int state, int x, int y) {
 	if ( state == GLUT_UP && x>800) {
-		pintarHexagono(0.25, -0.2165);
+		interfaz.pintarHexagono(0.25, -0.2165);
+
 //		animacion();
 	}
 }
@@ -141,7 +142,7 @@ void OnDraw(void) {
 
 	superficie.doDrawWorldContent();
 
-	pintarPlanos();
+	interfaz.pintarPlanos();
 	
 	glutSwapBuffers();					//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
@@ -156,6 +157,6 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	InterfazTeclado(key, &camera, &a);
+	interfaz.InterfazTeclado(key, &camera, &a);
 	std::cout << "Key";
 }

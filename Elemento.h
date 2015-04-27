@@ -14,6 +14,7 @@ class Elemento
 	unsigned char colorVec[3];
 	float rad = 1.0F;
 	float posVec[3];
+	float offx=-0.5, offy=+0.1875,scale=0.866;
 
 public:
 	//Metodos interfaz

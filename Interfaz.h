@@ -5,8 +5,13 @@
 #include "windows.h"
 #include "glut.h"
 
-typedef unsigned char Byte;
+class Interfaz{
+public:
+	typedef unsigned char Byte;
+	int select = 0;
 
-void InterfazTeclado(Byte key, Camera *, Elemento *);
-void pintarHexagono(float x2, float y2);
-void pintarPlanos();
+	void InterfazTeclado(Byte key, Camera *, Elemento *);
+	void pintarHexagono(float x2, float y2);
+	void pintarPlanos();
+};
+
