@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 #include "Posicion.h"
 #include "Constantes.h"
 
@@ -30,11 +29,4 @@ inline Posicion * periferiaFinder(int n)				//Genera las periferias que se usan 
 				v[c].setPos(-i, j), c++;
 	}
 	return v;
-}
-
-inline void printPeriferia(int n)    //De fase debug, eliminar
-{
-	Posicion *posicion = periferiaFinder(n);
-	for (int i = 0; i < 6 * n; i++) 
-		std::cout << posicion[i].getPos(x) << ' ' << posicion[i].getPos(y) << std::endl;
 }

@@ -4,6 +4,7 @@
 #include "Posicion.h"
 #include "ShipClass.h"
 
+
 class Elemento
 {
 	//Parametros de memoria 
@@ -13,8 +14,8 @@ class Elemento
 	//Parametros de dibujo
 	unsigned char colorVec[3];
 	float rad = 1.0F;
-	float posVec[3];
-	float offx=-0.5, offy=+0.1875,scale=0.866;
+	float posVec[3];  //Vector de posicion espacial
+	float offx=-0.5, offy=+0.1875,scale=0.866;  //Ofsets en pintura
 
 public:
 	//Metodos interfaz

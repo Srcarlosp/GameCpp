@@ -1,4 +1,4 @@
-#include <iostream>
+//#pragma once
 
 #include "Casilla.h"
 #include "Constantes.h"
@@ -31,5 +31,4 @@ private:
 inline void drawElments(Casilla *C)		//Funcion se encarga de llamar a el dibujo de cada elemento
 {
 	if (C->getFull()) C->getElem()->doDraw();
-	if (C->getFull()) std::cout << C->getFull() << ' ' << C->getElem()->getPos(x) << ',' << C->getElem()->getPos(y) << "\n";
 }

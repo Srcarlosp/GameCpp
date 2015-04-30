@@ -71,5 +71,8 @@
     <ClInclude Include="OpenGL.h">
       <Filter>Archivos de recursos</Filter>
     </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include <math.h>
-#include <stdio.h>
 #include "OpenGL.h"
+
 #include "Interfaz.h"
 
 

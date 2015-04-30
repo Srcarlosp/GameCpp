@@ -90,6 +90,7 @@
     <ClInclude Include="Casilla.h" />
     <ClInclude Include="Constantes.h" />
     <ClInclude Include="funciones_inline.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Elemento.h" />
     <ClInclude Include="Camera.h" />
