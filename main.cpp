@@ -77,7 +77,7 @@ void inicializaVentana(int argc, char* argv[])
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective(40.0, 1600 / 1000.0f, 0.1, 1000); //Registrar los callbacks
+	gluPerspective(40.0, WWW / HHH, 0.1, HHH); //Registrar los callbacks
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);

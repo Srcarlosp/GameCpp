@@ -61,8 +61,8 @@ void Interfaz::pintarPlanos()
 		glVertex3f(5.0f, -5.0f, ALTURA_PLANO_SUP);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-		//Cargar textura de abajo
-
+		
+		//malla superior
 		for (float x = 5; x >= -5;)
 		{
 			if (cont % 2 == 0){
@@ -123,7 +123,7 @@ void Interfaz::pintarPlanos()
 		glVertex3f(5.0f, -5.0f, ALTURA_PLANO_INF);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-		//malla superior
+		
 
 		//malla inferior
 		for (float x = 5; x >= -5;)
@@ -164,6 +164,26 @@ void Interfaz::pintarPlanos()
 			}
 
 		}break;
+		
+
+	}
+
+	
+	//////////////////////////////////////////////////////////////////
+	//Regla
+	glBegin(GL_LINES);
+	glColor3ub(0, 0, 0);
+	glVertex3f(+0.25f, 5.0f, 0.011f);
+	glVertex3f(+0.25f, -5.0f, 0.011f);
+	glEnd();
+	for (float y = 5; y >= -5;)
+	{
+
+		glBegin(GL_LINES);
+		glVertex3f(0.15f, y, 0.011f);
+		glVertex3f(0.35f, y, 0.011f);
+		glEnd();
+		y -= (float)(0.866 / 10);
 	}
 	glEnable(GL_LIGHTING);
 
@@ -222,6 +242,8 @@ void Interfaz::pintarHexagono(float x2, float y2){
 		glEnable(GL_LIGHTING);
 		cont++;
 	}
+	
+	
 
 }
 

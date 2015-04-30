@@ -46,13 +46,13 @@ void Camera::teleportCamera(float _x, float _y, float _z)
 
 void Camera::zoomCamera(float d)
 {
-	Vector vTemp = _o;
-	vTemp[x] = vTemp[x] * cosf(turnAngle) - vTemp[y] * sinf(turnAngle);
-	vTemp[y] = vTemp[x] * sinf(turnAngle) + vTemp[y] * cosf(turnAngle);
-	vTemp = vTemp - step_dif*d*100;
+	Vector vTemp = _o - _v;
 	vTemp[x] = vTemp[x] * cosf(-turnAngle) - vTemp[y] * sinf(-turnAngle);
 	vTemp[y] = vTemp[x] * sinf(-turnAngle) + vTemp[y] * cosf(-turnAngle);
-	_o = vTemp;
+	vTemp = vTemp - step_dif*d*100;
+	vTemp[x] = vTemp[x] * cosf(+turnAngle) - vTemp[y] * sinf(+turnAngle);
+	vTemp[y] = vTemp[x] * sinf(+turnAngle) + vTemp[y] * cosf(+turnAngle);
+	_o = vTemp + _v;
 }
 
 void Camera::setPV(float _x, float _y, float _z)
@@ -138,7 +138,7 @@ Vector Camera::posiconCursor(int _x, int _y)
 	Vector vTemp;
 	//Primera aproximacion trabajando sobre el plano virtual
 	float cx = cos(anguloAbsolutoPosElevacion())*_y;
-	//vTemp[z] = sin(anguloAbsolutoPosElevacion())*_x/1000;
+	vTemp[z] = -sin(anguloAbsolutoPosElevacion())*_y;
 	float cy = -_x;
 	//Ahora tratamos de alinear la proyeccion girada en trs ejes con el sistema de referencia base, tenemos en cuenta que la possicion relativa de los puntos debe mantenerse, solo hay que hace el cambio de seistema de referencia en el plano XY
 	vTemp[x] = cx * cos(anguloAbsolutoPosLineXY()) - cy * sin(anguloAbsolutoPosLineXY());
