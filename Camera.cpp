@@ -1,99 +1,147 @@
-#include <math.h>
-
 #include "Camera.h"
-#include "funciones_inline.h"
 
-Camera::Camera()
+Camera::Camera() :_o(20,20,20)
 {
 	newDir();
 }
 
 void Camera::orbit(float d)
 {
-	o_x -= v_x;
-	o_y -= v_y;
+	_o[x] -= _v[x];
+	_o[y] -= _v[y];
 
-	o_x = o_x*cosf(step_dif*d) - o_y*sinf(step_dif*d);
-	o_y = o_x*sinf(step_dif*d) + o_y*cosf(step_dif*d);
+	_o[x] = _o[x] * cosf(step_dif*d) - _o[y] * sinf(step_dif*d);
+	_o[y] = _o[x] * sinf(step_dif*d) + _o[y] * cosf(step_dif*d);
 	
-	o_x += v_x;
-	o_y += v_y;
+	_o[x] += _v[x];
+	_o[y] += _v[y];
+
+	turnAngle = step_dif*d;
 
 	this->newDir();
 }
 
-void Camera::moveCamera(float x, float y, float z)
+void Camera::moveCamera(float _x, float _y, float _z)
 {
-	o_x += x * dir[0] * vmove + y * dir[1] * vmove;
-	v_x += x * dir[0] * vmove + y * dir[1] * vmove;
-	o_y += x * dir[1] * vmove - y * dir[0] * vmove;
-	v_y += x * dir[1] * vmove - y * dir[0] * vmove;
-	o_z += z * vmove;
-	v_z += z * vmove;
+	_o[x] += _x * dir[0] * vmove + _y * dir[1] * vmove;
+	_v[x] += _x * dir[0] * vmove + _y * dir[1] * vmove;
+	_o[y] += _x * dir[1] * vmove - _y * dir[0] * vmove;
+	_v[y] += _x * dir[1] * vmove - _y * dir[0] * vmove;
+	_o[z] += _z * vmove;
+	_v[z] += _z * vmove;
 }
 
-void Camera::teleportCamera(float x, float y, float z)
+void Camera::teleportCamera(float _x, float _y, float _z)
 {
-	o_x -= v_x;
-	v_x = x;
-	o_x += v_x;
-	o_y -= v_y;
-	v_y = y;
-	o_y += v_y;
-	o_z -= v_z;
-	v_z = z;
-	o_z += v_z;
+	_o[x] -= _v[x];
+	_v[x] = _x;
+	_o[x] += _v[x];
+	_o[y] -= _v[y];
+	_v[y] = _y;
+	_o[y] += _v[y];
+	_o[z] -= _v[z];
+	_v[z] = _z;
+	_o[z] += _v[z];
 }
 
 void Camera::zoomCamera(float d)
 {
-	dim += d;
+	Vector vTemp = _o;
+	vTemp[x] = vTemp[x] * cosf(turnAngle) - vTemp[y] * sinf(turnAngle);
+	vTemp[y] = vTemp[x] * sinf(turnAngle) + vTemp[y] * cosf(turnAngle);
+	vTemp = vTemp - step_dif*d*100;
+	vTemp[x] = vTemp[x] * cosf(-turnAngle) - vTemp[y] * sinf(-turnAngle);
+	vTemp[y] = vTemp[x] * sinf(-turnAngle) + vTemp[y] * cosf(-turnAngle);
+	_o = vTemp;
 }
 
-void Camera::setPV(float x, float y, float z)
+void Camera::setPV(float _x, float _y, float _z)
 {
-	v_x = x, v_y = y, v_z = z;
+	_v[x] = _x, _v[y] = _y, _v[z] = _z;
 }
-void Camera::setCamera(float x, float y, float z)
+
+void Camera::setCamera(float _x, float _y, float _z)
 {
-	o_x = x, o_y = y, o_z = z;
+	_o[x] = _x, _o[y] = _y, _o[z] = _z;
 }
+
 void Camera::setSpeed(float s)
 {
 	vmove = s;
 }
+
 void Camera::setStepOrb(float s)
 {
 	step_dif = s;
 }
+
 void Camera::setDim(float d)
 {
 	dim = d;
 }
+
 void Camera::getBackCamera(float *v)
 {
-	v[0] = o_x;
-	v[1] = o_y;
-	v[2] = o_z;
-	v[3] = v_x;
-	v[4] = v_y;
-	v[5] = v_z;
+	v[0] = _o[x];
+	v[1] = _o[y];
+	v[2] = _o[z];
+	v[3] = _v[x];
+	v[4] = _v[y];
+	v[5] = _v[z];
 	v[6] = 0;
 	v[7] = 0;
 	v[8] = 1;
 }
+
 void Camera::newDir()
 {
 
 	float v[2];
 
-	v[0] = v_x - o_x;
-	v[1] = v_y - o_y;
+	v[0] = _v[x] - _o[x];
+	v[1] = _v[y] - _o[y];
 
 	norma(v, true, 2);
 
 	dir[0] = v[0];
 	dir[1] = v[1];
-
 }
 
+Vector Camera::vectorPosOjos()
+{
+	return _o;
+}
+Vector Camera::vectorPosMira()
+{;
+	return _v;
+}
+Vector Camera::vectorPosLine()
+{
+	return _o-_v;
+}
+float Camera::anguloAbsolutoPosLineXY()
+{
+	Vector vTemp = vectorPosLine();
+	return atan2(vTemp[x], vTemp[y]);
+}
+float Camera::anguloAbsolutoPosElevacion()
+{
+	Vector vTemp = vectorPosLine();
+	return acos(vTemp.norma2D() / vTemp.norma3D());
+}
+
+Vector Camera::posiconCursor(int _x, int _y)
+{
+	//Corregimos el offset
+	_x = (_x - WWW / 2)/25;
+	_y = (_y - HHH / 2)/25;
+	Vector vTemp;
+	//Primera aproximacion trabajando sobre el plano virtual
+	float cx = cos(anguloAbsolutoPosElevacion())*_y;
+	//vTemp[z] = sin(anguloAbsolutoPosElevacion())*_x/1000;
+	float cy = -_x;
+	//Ahora tratamos de alinear la proyeccion girada en trs ejes con el sistema de referencia base, tenemos en cuenta que la possicion relativa de los puntos debe mantenerse, solo hay que hace el cambio de seistema de referencia en el plano XY
+	vTemp[x] = cx * cos(anguloAbsolutoPosLineXY()) - cy * sin(anguloAbsolutoPosLineXY());
+	vTemp[y] = cy * cos(anguloAbsolutoPosLineXY()) + cx * sin(anguloAbsolutoPosLineXY());
+	return vTemp + vectorPosMira();
+}
