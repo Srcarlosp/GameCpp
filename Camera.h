@@ -43,7 +43,7 @@ public:
 	float anguloAbsolutoPosLineXY();	//Devurlve el angulo que forma el vector linae con el eje x
 	float anguloAbsolutoPosElevacion();	//Devulve el angulo entre el vector linea y el plano XY
 
-	Vector posiconCursor(int, int);		//Devulve la posicion que ocupa el raton sobre el plano del mundo segun su poscion en la ventana
+	Vector posicionCursor(int, int);		//Devulve la posicion que ocupa el raton sobre el plano del mundo segun su poscion en la ventana
 
 	//constructor
 	Camera();

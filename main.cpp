@@ -13,6 +13,7 @@ void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnMouseMotion(int x, int y);
+void OnMouseMotionTwo(int, int, int x, int y);
 
 //Objetos Primarios
 
@@ -81,6 +82,7 @@ void inicializaVentana(int argc, char* argv[])
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
+	glutMouseFunc(OnMouseMotionTwo);
 	glutPassiveMotionFunc(OnMouseMotion);
 	srand(time(NULL));
 	glClearColor(0.7,1.0,1.0,0);
@@ -138,12 +140,11 @@ void OnDraw(void) {
 	);
 
 	glColor3ub(2, 2, 2);
-	glTranslatef(pos[y], pos[x], pos[z]);
-	glutWireSphere(5, 20, 20);
-	glTranslatef(-pos[y], -pos[x], -pos[z]);
+	glTranslatef(pos[x], pos[y], pos[z]);
+	glutSolidSphere(0.05, 20, 20);
+	glTranslatef(-pos[x], -pos[y], -pos[z]);
 
 	superficie.doDrawWorldContent();
-
 
 	interfaz.pintarPlanos();
 	
@@ -160,7 +161,13 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 
 void OnMouseMotion(int x, int y)
 {
-	pos = camera.posiconCursor(x, y);
+	pos = camera.posicionCursor(x, y);
+	std::cout << pos[z];
+}
+
+void OnMouseMotionTwo(int p, int pp, int x, int y)
+{
+	pos = camera.posicionCursor(x, y);
 	std::cout << "Key";
 }
 

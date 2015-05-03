@@ -36,6 +36,19 @@ public:
 	{
 		return Vector(v[x] + m, v[y] + m, v[z] + m);
 	}
+	inline Vector operator* (Vector vr)
+	{
+		return Vector(v[x] * vr[x], v[y] * vr[y], v[z] * vr[z]);
+	}
+	inline Vector operator* (float m)
+	{
+		return Vector(v[x] * m, v[y] * m, v[z] * m);
+	}
+
+	inline float sumaElmentos()
+	{
+		return v[x] + v[y] + v[z];
+	}
 
 	inline float norma2D()	//Devulve modulo y vector normal
 	{

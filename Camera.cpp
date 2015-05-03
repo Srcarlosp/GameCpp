@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera() :_o(20,20,20)
+Camera::Camera() :_o(20,0,20)
 {
 	newDir();
 }
@@ -46,13 +46,7 @@ void Camera::teleportCamera(float _x, float _y, float _z)
 
 void Camera::zoomCamera(float d)
 {
-	Vector vTemp = _o - _v;
-	vTemp[x] = vTemp[x] * cosf(-turnAngle) - vTemp[y] * sinf(-turnAngle);
-	vTemp[y] = vTemp[x] * sinf(-turnAngle) + vTemp[y] * cosf(-turnAngle);
-	vTemp = vTemp - step_dif*d*100;
-	vTemp[x] = vTemp[x] * cosf(+turnAngle) - vTemp[y] * sinf(+turnAngle);
-	vTemp[y] = vTemp[x] * sinf(+turnAngle) + vTemp[y] * cosf(+turnAngle);
-	_o = vTemp + _v;
+	_o = (vectorPosLine() - vectorPosLine().normaUnitario()*d) + vectorPosMira();
 }
 
 void Camera::setPV(float _x, float _y, float _z)
@@ -130,18 +124,22 @@ float Camera::anguloAbsolutoPosElevacion()
 	return acos(vTemp.norma2D() / vTemp.norma3D());
 }
 
-Vector Camera::posiconCursor(int _x, int _y)
+Vector Camera::posicionCursor(int _x, int _y)
 {
 	//Corregimos el offset
-	_x = (_x - WWW / 2)/25;
-	_y = (_y - HHH / 2)/25;
+	float x_ = ((float)_x - WWW / 2) / (820.2438662F/vectorPosOjos().norma3D());
+	float y_ = ((float)_y - HHH / 2) / (820.2438662F/vectorPosOjos().norma3D());
 	Vector vTemp;
 	//Primera aproximacion trabajando sobre el plano virtual
-	float cx = cos(anguloAbsolutoPosElevacion())*_y;
-	vTemp[z] = -sin(anguloAbsolutoPosElevacion())*_y;
-	float cy = -_x;
+	float cx = cos(-anguloAbsolutoPosElevacion())*y_;
+	float cy = x_;
+	vTemp[z] = sin(-anguloAbsolutoPosElevacion())*y_;
 	//Ahora tratamos de alinear la proyeccion girada en trs ejes con el sistema de referencia base, tenemos en cuenta que la possicion relativa de los puntos debe mantenerse, solo hay que hace el cambio de seistema de referencia en el plano XY
-	vTemp[x] = cx * cos(anguloAbsolutoPosLineXY()) - cy * sin(anguloAbsolutoPosLineXY());
-	vTemp[y] = cy * cos(anguloAbsolutoPosLineXY()) + cx * sin(anguloAbsolutoPosLineXY());
-	return vTemp + vectorPosMira();
+	vTemp[x] = cx * cos(-anguloAbsolutoPosLineXY() + PI / 2) - cy * sin(-anguloAbsolutoPosLineXY() + PI / 2);
+	vTemp[y] = cy * cos(-anguloAbsolutoPosLineXY() + PI / 2) + cx * sin(-anguloAbsolutoPosLineXY() + PI / 2);
+	//Ahora convertimos los puntos en una recta y hallamos la interseccion con el plano
+	Vector proyeccionOjo = vectorPosOjos() - (vTemp + vectorPosMira());
+	Vector planoMundo(0, 0, 1);
+	float lamda = -(planoMundo*vectorPosOjos()).sumaElmentos() / (planoMundo*proyeccionOjo).sumaElmentos();
+	return vectorPosOjos() + proyeccionOjo*lamda;
 }
