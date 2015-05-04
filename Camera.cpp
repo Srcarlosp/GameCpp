@@ -127,8 +127,8 @@ float Camera::anguloAbsolutoPosElevacion()
 Vector Camera::posicionCursor(int _x, int _y)
 {
 	//Corregimos el offset
-	float x_ = ((float)_x - WWW / 2) / (820.2438662F/vectorPosOjos().norma3D());
-	float y_ = ((float)_y - HHH / 2) / (820.2438662F/vectorPosOjos().norma3D());
+	float x_ = ((float)_x - WWW / 2) / (820.2438662F/vectorPosLine().norma3D());
+	float y_ = ((float)_y - HHH / 2) / (820.2438662F/vectorPosLine().norma3D());
 	Vector vTemp;
 	//Primera aproximacion trabajando sobre el plano virtual
 	float cx = cos(-anguloAbsolutoPosElevacion())*y_;
@@ -141,5 +141,6 @@ Vector Camera::posicionCursor(int _x, int _y)
 	Vector proyeccionOjo = vectorPosOjos() - (vTemp + vectorPosMira());
 	Vector planoMundo(0, 0, 1);
 	float lamda = -(planoMundo*vectorPosOjos()).sumaElmentos() / (planoMundo*proyeccionOjo).sumaElmentos();
-	return vectorPosOjos() + proyeccionOjo*lamda;
+	//return vectorPosOjos() + proyeccionOjo*lamda;
+	return vTemp + vectorPosMira();
 }
