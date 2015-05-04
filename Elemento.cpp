@@ -1,7 +1,7 @@
 ﻿#include <cmath>
 #include "Elemento.h"
-#include "glut.h"
 #include "Interfaz.h"
+#include "glut.h"
 
 
 Interfaz interfaz1;   //Comentar que hace aqui????   Quedaria maejor pasarle un argumento a dodraw con la direccion de la interfaz o algo 

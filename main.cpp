@@ -21,7 +21,7 @@ int p[15];
 Interfaz interfaz;
 Elemento a(p, 0, 0);
 World superficie;
-Camera camera;
+Camera camera(15,0,10);
 Vector pos;
 
 //Vector para periferias
@@ -162,7 +162,7 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 void OnMouseMotion(int x, int y)
 {
 	pos = camera.posicionCursor(x, y);
-	std::cout << pos[z];
+	std::cout << pos[z] << "\n";
 }
 
 void OnMouseMotionTwo(int p, int pp, int x, int y)

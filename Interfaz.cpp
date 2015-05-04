@@ -7,10 +7,10 @@
 void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 {
 	//Control del movimeto de camara
-	if (key == 'w') camara->moveCamera(1, 0, 0);
-	if (key == 's') camara->moveCamera(-1, 0, 0);
-	if (key == 'd') camara->moveCamera(0, 1, 0);
-	if (key == 'a') camara->moveCamera(0, -1, 0);
+	if (key == 'w') camara->moveCamera(-1, 0, 0);
+	if (key == 's') camara->moveCamera(1, 0, 0);
+	if (key == 'd') camara->moveCamera(0, -1, 0);
+	if (key == 'a') camara->moveCamera(0, 1, 0);
 	//Control de la orbita de camara
 	if (key == 'e') camara->orbit(1);
 	if (key == 'q') camara->orbit(-1);
@@ -246,4 +246,3 @@ void Interfaz::pintarHexagono(float x2, float y2){
 	
 
 }
-

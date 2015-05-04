@@ -16,6 +16,6 @@ enum ShipClasses {AircraftCarrier, Battleship, BattleCrusier, Crusier, Destrolle
 enum Subsistems {Hull, Engines, Power, Armament, Crew};
 enum Medios { Air, Water, Underwater };
 
-//Ejes coordenados del sistema
+//Ejes equivalente para el dibujo de la matriz de casillas
 const float dirx[] = { 1, 0 };
 const float diry[] = { sin(2.0F*3.1416F / 3.0F), cos(2.0F*3.1416F / 3.0F) };
