@@ -7,12 +7,16 @@
 
 class Interfaz{
 public:
+	
 	typedef unsigned char Byte;
 	int select = 0;
 	int sMenu = 0;
+	bool var;
 
 	void InterfazTeclado(Byte key, Camera *, Elemento *);
 	void pintarPlanos();
 	void Menu();
+	void Jugador1();
+	void Jugador2();
 };
 

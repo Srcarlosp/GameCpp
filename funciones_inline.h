@@ -47,6 +47,7 @@ inline Vector goWorld(Posicion pt)
 
 inline Posicion goMemory(Vector vt)
 {
-	float u = vt[x] - vt[y] / ejeDirector(x)[y];
-	return Posicion();
+	float ux = (vt[x] - vt[y] * ejeDirector(x)[x] / ejeDirector(x)[y]) / (ejeDirector(y)[x] - ejeDirector(x)[x] * ejeDirector(y)[y] / ejeDirector(x)[y]);
+	float uy = (vt[x] - vt[y] * ejeDirector(x)[x] / ejeDirector(x)[y]) / (ejeDirector(y)[x] - ejeDirector(x)[x] * ejeDirector(y)[y] / ejeDirector(x)[y]);
+//	return Posicion(ejeDirector(x)*ux ,ejeDirector(y)*u);
 }

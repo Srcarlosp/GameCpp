@@ -1,20 +1,15 @@
 #include <math.h>
 #include "OpenGL.h"
-
+#include  "Casilla.h"
 #include "Interfaz.h"
+#include "stdio.h"
+
+extern Camera camera;
 
 void Interfaz::Menu(){
-	char a[] = "Hola";
+	camera.setCamera(-10, 0, 0);
 	float vista[9];
-	vista[0] = 0;
-	vista[1] = 0;
-	vista[2] = -10;
-	vista[3] = 0;
-	vista[4] = 0;
-	vista[5] = 0;
-	vista[6] = 0;
-	vista[7] = 1;
-	vista[8] = 0;
+	camera.getBackCamera(vista);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -34,32 +29,26 @@ void Interfaz::Menu(){
 	glBegin(GL_POLYGON);
 	//glColor3ub((0, 153, 153);
 	glTexCoord2d(1.0f, 0.0f);
-	glVertex3f(-5.0f, -5, 0);
+	glVertex3f(0, -5, -5);
 	//glColor3ub(0, 153, 153);
 	glTexCoord2d(1.0f, 1.0);
-	glVertex3f(-5.0f, 5.0f, 0);
+	glVertex3f(0.0f,-5.0f, 5);
 	//glColor3ub(0, 153, 153);
 	glTexCoord2d(0.0f, 1.0f);
-	glVertex3f(5.0f, 5.0f, 0);
+	glVertex3f(0.0f,5.0f, 5);
 	//glColor3ub(0, 153, 153);
 	glTexCoord2d(0.0f, 0.0f);
-	glVertex3f(5.0f, -5.0f, 0);
+	glVertex3f(0.0f, 5.0f,-5);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 
-	glTranslatef(2, 2, -1);
-	glScalef(0.2, 0.2, 0.2);
-
-	glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
-
-	glPopMatrix();
 
 }
 void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 {
 	switch (sMenu){
-	//si estas en el menu
+		//si estas en el menu
 	case 0:
 		if (key == '1') this->sMenu = 1;
 		break;
@@ -77,9 +66,32 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 		if (key == 'r') camara->zoomCamera(1);
 		if (key == 'f') camara->zoomCamera(-1);
 		//Control de movimento de Elemetos
+
 		if (key == '0') this->select = 0;
 		if (key == '1') this->select = 1;
 		if (key == '2') this->select = 2;
+		if (key == 27) this->sMenu = 0;
+		if (key == '9') this->sMenu = 2; printf("%d", sMenu);
+		break;
+	case 2:
+		//Control del movimeto de camara
+		if (key == 'w') camara->moveCamera(-1, 0, 0);
+		if (key == 's') camara->moveCamera(1, 0, 0);
+		if (key == 'd') camara->moveCamera(0, -1, 0);
+		if (key == 'a') camara->moveCamera(0, 1, 0);
+		//Control de la orbita de camara
+		if (key == 'e') camara->orbit(1);
+		if (key == 'q') camara->orbit(-1);
+		//Control del zoom de la camara
+		if (key == 'r') camara->zoomCamera(1);
+		if (key == 'f') camara->zoomCamera(-1);
+		//Control de movimento de Elemetos
+	
+		if (key == '0') this->select = 0;
+		if (key == '1') this->select = 1;
+		if (key == '2') this->select = 2;
+		if (key == 27) this->sMenu = 0;
+		if (key == '9') this->sMenu = 1; 
 		break;
 	}
 }
@@ -244,4 +256,10 @@ void Interfaz::pintarPlanos()
 	}
 	glEnable(GL_LIGHTING);
 
+}
+void Interfaz::Jugador1(){
+	camera.setCamera(10, 0, 15);
+	}
+void Interfaz::Jugador2(){
+	camera.setCamera(-10, 0, 15);
 }

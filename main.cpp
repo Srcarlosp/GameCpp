@@ -21,7 +21,7 @@ int p[15];
 Interfaz interfaz;
 Elemento a(p, 0, 0);
 World superficie;
-Camera camera(15,7,10);
+Camera camera(15, 7, 10);
 Vector posRaton;
 
 //Vector para periferias
@@ -81,6 +81,7 @@ void inicializaVentana(int argc, char* argv[])
 
 int main(int argc,char* argv[])
 {
+	
 	//Abre la ventana y GL
 	inicializaVentana(argc, argv);
 
@@ -97,37 +98,45 @@ int main(int argc,char* argv[])
 } 
 
 void OnDraw(void) {
+
+	float vista[9];
+	camera.getBackCamera(vista);
 	switch (interfaz.sMenu){
-	case 0:
-		interfaz.Menu();
-	break;
-	case 1:
+		//Menu
+		case 0:
+			interfaz.Menu();
+			break;
+		//Tanto para el caso del jugador 1 como el 2, se pinta el mismo mundo, solo se pone la camara al otro lado del tablero
+		case 1:
+		case 2:
+			
+			if(interfaz.sMenu==1)interfaz.Jugador1();
+			if (interfaz.sMenu == 2)interfaz.Jugador2();
+	
 
-		float vista[9];
-		camera.getBackCamera(vista);
+		
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
 
-		gluLookAt(
-			vista[0], vista[1], vista[2], // posicion del ojo
-			vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
-			vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
-			);
+			gluLookAt(
+				vista[0], vista[1], vista[2], // posicion del ojo
+				vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
+				vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
+				);
 
-		glColor3ub(2, 2, 2);
-		//glTranslatef(pos[x], pos[y], pos[z]);
-		Casilla::lightUp(posRaton[x], posRaton[y]);
-		//glTranslatef(-pos[x], -pos[y], -pos[z]);
+			glColor3ub(2, 2, 2);
+			//glTranslatef(pos[x], pos[y], pos[z]);
+			Casilla::lightUp(posRaton[x], posRaton[y]);
+			//glTranslatef(-pos[x], -pos[y], -pos[z]);
 
-		superficie.doDrawWorldContent();
+			superficie.doDrawWorldContent();
 
-		interfaz.pintarPlanos();
-		break;
+			interfaz.pintarPlanos();
+			break;
 	}
-
-	glutSwapBuffers();							//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
+	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
 
 void OnTimer(int value)					//poner aqui el codigo de animacion
