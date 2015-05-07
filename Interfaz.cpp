@@ -284,8 +284,9 @@ void Interfaz::pintarPlanos()
 void Interfaz::Jugador1(){
 	
 	if (var1==0)camera.setCamera(10, 0, 15);var1=1;
-	
+	var2 = 0;
 	}
 void Interfaz::Jugador2(){
 	if (var2 == 0)camera.setCamera(-10, 0, 15); var2 = 1; 
+	var1 = 0;
 }
