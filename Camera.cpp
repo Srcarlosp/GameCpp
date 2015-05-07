@@ -2,6 +2,30 @@
 
 Camera::Camera(float _x, float _y, float _z) :_o(_x, _y, _z) {}
 
+//Interaccion
+
+Vector Camera::posicionCursor(int _x, int _y)
+{
+	//Corregimos el offset
+	double x_ = ((double)_x - WWW / 2) / (820.2438662 / vectorPosLine().norma3D());
+	double y_ = ((double)_y - HHH / 2) / (820.2438662 / vectorPosLine().norma3D());
+	Vector vTemp;
+	//Primera aproximacion trabajando sobre el plano virtual
+	double cx = cos(-anguloAbsolutoPosElevacion())*y_;
+	double cy = x_;
+	vTemp[z] = sin(-anguloAbsolutoPosElevacion())*y_;
+	//Ahora tratamos de alinear la proyeccion girada en trs ejes con el sistema de referencia base, tenemos en cuenta que la possicion
+	//relativa de los puntos debe mantenerse, solo hay que hace el cambio de seistema de referencia en el plano XY
+	vTemp[x] = cx * cos(-anguloAbsolutoPosLineXY() + PI / 2) - cy * sin(-anguloAbsolutoPosLineXY() + PI / 2);
+	vTemp[y] = cy * cos(-anguloAbsolutoPosLineXY() + PI / 2) + cx * sin(-anguloAbsolutoPosLineXY() + PI / 2);
+	//Ahora convertimos los puntos en una recta y hallamos la interseccion con el plano
+	Vector proyeccionOjo = vectorPosOjos() - (vTemp + vectorPosMira());
+	Vector planoMundo(0, 0, 1);
+	float lamda = -((planoMundo*vectorPosOjos()) / (planoMundo*proyeccionOjo));
+	return vectorPosOjos() + proyeccionOjo*lamda;
+	//return vTemp + vectorPosMira();
+}
+
 void Camera::orbit(float d)
 {
 	_o[x] = vectorPosLine()[x] * cosf(step_dif*d) - vectorPosLine()[y] * sinf(step_dif*d) + _v[x];
@@ -28,12 +52,12 @@ void Camera::zoomCamera(float d)
 
 void Camera::setPV(float _x, float _y, float _z)
 {
-	_v[x] = _x, _v[y] = _y, _v[z] = _z;
+	_v = Vector(_x, _y, _z);
 }
 
 void Camera::setCamera(float _x, float _y, float _z)
 {
-	_o[x] = _x, _o[y] = _y, _o[z] = _z;
+	_o = Vector(_x, _y, _z);
 }
 
 void Camera::setSpeed(float s)
@@ -44,11 +68,6 @@ void Camera::setSpeed(float s)
 void Camera::setStepOrb(float s)
 {
 	step_dif = s;
-}
-
-void Camera::setDim(float d)
-{
-	dim = d;
 }
 
 void Camera::getBackCamera(float *v)
@@ -62,29 +81,6 @@ void Camera::getBackCamera(float *v)
 	v[6] = 0;
 	v[7] = 0;
 	v[8] = 1;
-}
-
-//Interaccion
-
-Vector Camera::posicionCursor(int _x, int _y)
-{
-	//Corregimos el offset
-	double x_ = ((double)_x - WWW / 2) / (820.2438662 / vectorPosLine().norma3D());
-	double y_ = ((double)_y - HHH / 2) / (820.2438662 / vectorPosLine().norma3D());
-	Vector vTemp;
-	//Primera aproximacion trabajando sobre el plano virtual
-	double cx = cos(-anguloAbsolutoPosElevacion())*y_;
-	double cy = x_;
-	vTemp[z] = sin(-anguloAbsolutoPosElevacion())*y_;
-	//Ahora tratamos de alinear la proyeccion girada en trs ejes con el sistema de referencia base, tenemos en cuenta que la possicion relativa de los puntos debe mantenerse, solo hay que hace el cambio de seistema de referencia en el plano XY
-	vTemp[x] = cx * cos(-anguloAbsolutoPosLineXY() + PI / 2) - cy * sin(-anguloAbsolutoPosLineXY() + PI / 2);
-	vTemp[y] = cy * cos(-anguloAbsolutoPosLineXY() + PI / 2) + cx * sin(-anguloAbsolutoPosLineXY() + PI / 2);
-	//Ahora convertimos los puntos en una recta y hallamos la interseccion con el plano
-	Vector proyeccionOjo = vectorPosOjos() - (vTemp + vectorPosMira());
-	Vector planoMundo(0, 0, 1);
-	float lamda = -((planoMundo*vectorPosOjos()) / (planoMundo*proyeccionOjo));
-	return vectorPosOjos() + proyeccionOjo*lamda;
-	//return vTemp + vectorPosMira();
 }
 
 //Operaciones internas

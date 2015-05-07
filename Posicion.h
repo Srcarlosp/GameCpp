@@ -1,22 +1,22 @@
 #pragma once
+#include "Constantes.h"
+
 class Posicion
 {
-	int x, y;
+	int v[2];
+
 public:
 	inline Posicion(int _x = 0, int _y = 0)
 	{
-		x = _x;
-		y = _y;
+		v[x] = _x, v[y] = _y;
 	}
 	inline void setPos(int _x, int _y)
 	{
-		x = _x;
-		y = _y;
+		*this = Posicion(_x, _y);
 	}
-	inline int getPos(int c)
+	inline int & operator [] (const int d)  //Operador de acceso
 	{
-		int v[] = { x, y };
-		return v[c];
+		return v[d];
 	}
 };
 

@@ -14,7 +14,6 @@ class Camera
 	//Velocidad de desplazamiento de vista
 	float vmove = 0.1F;
 	//Datos orbita
-	float dim = 0;
 	float step_dif = 0.01F;
 
 public:
@@ -25,15 +24,14 @@ public:
 	void zoomCamera(float);						//Hace zoom la escena
 
 	//Metodos interfaz
-	void setPV(float,float,float);
-	void setCamera(float,float,float);
-	void setSpeed(float);
-	void setStepOrb(float);
-	void setDim(float);
-	void getBackCamera(float *);
+	void setPV(float,float,float);		//Cambia el lugar a donde se mira
+	void setCamera(float,float,float);	//Coloca los ojos en la posicion
+	void setSpeed(float);				//Cambia la velocidad de movimiento de la camara
+	void setStepOrb(float);				//Cambia la velocidad de orbita
+	void getBackCamera(float *);		//Devuelve el estado de la camara en un vector de nueve elementos
 
 	//Operacion de interaccion
-	Vector posicionCursor(int, int);		//Devulve la posicion que ocupa el raton sobre el plano del mundo segun su poscion en la ventana
+	Vector posicionCursor(int, int);	//Devulve la posicion que ocupa el raton sobre el plano del mundo segun su poscion en la ventana
 
 	//constructor
 	Camera(float _x, float _y, float _z);

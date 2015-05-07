@@ -9,6 +9,7 @@
 //Constantes del mundo
 #define WORLDSIZE 101			//Define el tamaño de la matriz del mundo y los perimetros a generar
 #define PERIFERIASIZE(X) (6 * X)
+
 //Enums utiles
 enum RGB { rojo, verde, azul };
 enum ejes { x, y, z };
@@ -17,5 +18,8 @@ enum Subsistems {Hull, Engines, Power, Armament, Crew};
 enum Medios { Air, Water, Underwater };
 
 //Ejes equivalente para el dibujo de la matriz de casillas
-const float dirx[] = { 1, 0 };
-const float diry[] = { sin(2.0F*3.1416F / 3.0F), cos(2.0F*3.1416F / 3.0F) };
+const float dirx[] = { sin(2.0F*3.1416F / 3.0F), cos(2.0F*3.1416F / 3.0F) };
+const float diry[] = { 1, 0 };
+
+//Constantes del tablero
+const float offx = -0.25, offy = 0.25 , wscale = 0.866;

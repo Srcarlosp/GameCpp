@@ -1,4 +1,7 @@
-//#pragma once
+#pragma once
+
+#include <cmath>
+#include <iostream>
 
 #include "Casilla.h"
 #include "Constantes.h"
