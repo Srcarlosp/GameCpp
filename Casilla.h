@@ -15,5 +15,6 @@ public:
 	Elemento * getElem();		//Devuelve la direccion del elemento contenido en la celda
 	
 	//Metodos de dibujo
-	void lightUp(int, int);
+	static void lightUp(int, int);
+	static void lightUp(float, float);
 };

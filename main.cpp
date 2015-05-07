@@ -22,7 +22,7 @@ Interfaz interfaz;
 Elemento a(p, 0, 0);
 World superficie;
 Camera camera(15,7,10);
-Vector pos;
+Vector posRaton;
 
 //Vector para periferias
 Posicion * periferias[((WORLDSIZE - 1) / 2)];
@@ -117,9 +117,9 @@ void OnDraw(void) {
 			);
 
 		glColor3ub(2, 2, 2);
-		glTranslatef(pos[x], pos[y], pos[z]);
-		glutSolidSphere(0.05, 20, 20);
-		glTranslatef(-pos[x], -pos[y], -pos[z]);
+		//glTranslatef(pos[x], pos[y], pos[z]);
+		Casilla::lightUp(posRaton[x], posRaton[y]);
+		//glTranslatef(-pos[x], -pos[y], -pos[z]);
 
 		superficie.doDrawWorldContent();
 
@@ -140,13 +140,13 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 
 void OnMouseMotion(int x, int y)
 {
-	pos = camera.posicionCursor(x, y);
-	std::cout << pos[z] << "\n";
+	posRaton = camera.posicionCursor(x, y);
+	std::cout << posRaton[z] << "\n";
 }
 
 void OnMouseMotionTwo(int p, int pp, int x, int y)
 {
-	pos = camera.posicionCursor(x, y);
+	posRaton = camera.posicionCursor(x, y);
 	std::cout << "Key";
 }
 
