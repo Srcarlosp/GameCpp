@@ -8,6 +8,7 @@
 #include "Interfaz.h"
 #include "funciones_inline.h"
 #include "Vector.h"
+#include "OpenGL.h"
 
 void OnDraw(void);
 void OnTimer(int value);
@@ -91,6 +92,7 @@ int main(int argc,char* argv[])
 
 	//Poner contenido a mundo
 	superficie.addElem(&a);
+	
 	//Entrada en el bucle de funcion
 	glutMainLoop();
 
@@ -105,6 +107,7 @@ void OnDraw(void) {
 		//Menu
 		case 0:
 			interfaz.Menu();
+			//if (interfaz.sMenu == 0)OpenGL::Print("Enter", 400, 500, 256, 256, 256);
 			break;
 		//Tanto para el caso del jugador 1 como el 2, se pinta el mismo mundo, solo se pone la camara al otro lado del tablero
 		case 1:
@@ -112,7 +115,8 @@ void OnDraw(void) {
 			
 			if(interfaz.sMenu==1)interfaz.Jugador1();
 			if (interfaz.sMenu == 2)interfaz.Jugador2();
-	
+		//Etapa Libre
+		case 3:
 
 		
 
@@ -132,8 +136,10 @@ void OnDraw(void) {
 			//glTranslatef(-pos[x], -pos[y], -pos[z]);
 
 			superficie.doDrawWorldContent();
-
 			interfaz.pintarPlanos();
+			
+			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
+			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
 			break;
 	}
 	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
