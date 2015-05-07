@@ -11,7 +11,8 @@ public:
 	typedef unsigned char Byte;
 	int select = 0;
 	int sMenu = 0;
-	bool var;
+	bool var1=0;
+	bool var2 = 0;
 
 	void InterfazTeclado(Byte key, Camera *, Elemento *);
 	void pintarPlanos();
