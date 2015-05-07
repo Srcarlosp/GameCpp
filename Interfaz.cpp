@@ -3,24 +3,85 @@
 
 #include "Interfaz.h"
 
+void Interfaz::Menu(){
+	char a[] = "Hola";
+	float vista[9];
+	vista[0] = 0;
+	vista[1] = 0;
+	vista[2] = -10;
+	vista[3] = 0;
+	vista[4] = 0;
+	vista[5] = 0;
+	vista[6] = 0;
+	vista[7] = 1;
+	vista[8] = 0;
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(
+		vista[0], vista[1], vista[2], // posicion del ojo
+		vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
+		vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
+		);
 
+	unsigned int menu = OpenGL::CargaTextura("menu.bmp");
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, menu);
+	glDisable(GL_LIGHTING);
+	glColor3ub(255, 255, 255);
+	glColor3f(1, 1, 1);
+	//pintar plano de arriba
+	glBegin(GL_POLYGON);
+	//glColor3ub((0, 153, 153);
+	glTexCoord2d(1.0f, 0.0f);
+	glVertex3f(-5.0f, -5, 0);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(1.0f, 1.0);
+	glVertex3f(-5.0f, 5.0f, 0);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(0.0f, 1.0f);
+	glVertex3f(5.0f, 5.0f, 0);
+	//glColor3ub(0, 153, 153);
+	glTexCoord2d(0.0f, 0.0f);
+	glVertex3f(5.0f, -5.0f, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+
+	glTranslatef(2, 2, -1);
+	glScalef(0.2, 0.2, 0.2);
+
+	glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+
+	glPopMatrix();
+
+}
 void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 {
-	//Control del movimeto de camara
-	if (key == 'w') camara->moveCamera(-1, 0, 0);
-	if (key == 's') camara->moveCamera(1, 0, 0);
-	if (key == 'd') camara->moveCamera(0, -1, 0);
-	if (key == 'a') camara->moveCamera(0, 1, 0);
-	//Control de la orbita de camara
-	if (key == 'e') camara->orbit(1);
-	if (key == 'q') camara->orbit(-1);
-	//Control del zoom de la camara
-	if (key == 'r') camara->zoomCamera(1);
-	if (key == 'f') camara->zoomCamera(-1);
-	//Control de movimento de Elemetos
-	if (key == '0') this->select = 0;
-	if (key == '1') this->select = 1;
-	if (key == '2') this->select = 2;
+	switch (sMenu){
+	//si estas en el menu
+	case 0:
+		if (key == '1') this->sMenu = 1;
+		break;
+		//si estas jugando
+	case 1:
+		//Control del movimeto de camara
+		if (key == 'w') camara->moveCamera(-1, 0, 0);
+		if (key == 's') camara->moveCamera(1, 0, 0);
+		if (key == 'd') camara->moveCamera(0, -1, 0);
+		if (key == 'a') camara->moveCamera(0, 1, 0);
+		//Control de la orbita de camara
+		if (key == 'e') camara->orbit(1);
+		if (key == 'q') camara->orbit(-1);
+		//Control del zoom de la camara
+		if (key == 'r') camara->zoomCamera(1);
+		if (key == 'f') camara->zoomCamera(-1);
+		//Control de movimento de Elemetos
+		if (key == '0') this->select = 0;
+		if (key == '1') this->select = 1;
+		if (key == '2') this->select = 2;
+		break;
+	}
 }
 void Interfaz::pintarPlanos()
 {
@@ -182,63 +243,5 @@ void Interfaz::pintarPlanos()
 		y -= (float)(0.866 / 10);
 	}
 	glEnable(GL_LIGHTING);
-
-}
-void Interfaz::pintarHexagono(float x2, float y2){
-	//angulo paralelo a z
-	int cont = 0;
-
-
-	while (cont <= 6){
-		float x = x2, y = y2;
-		if (cont == 1){
-			y = y2 + 0.866;
-		}
-		if (cont == 2){
-			x = x2 + 0.75;
-			y = y2 + 0.433;
-		}
-		if (cont == 3){
-			x = x2 + 0.75;
-			y = y2 - 0.433;
-		}
-		if (cont == 4){
-			y = y2 - 0.866;
-		}
-		if (cont == 5){
-			x = x2 - 0.75;
-			y = y2 - 0.433;
-		}
-		if (cont == 6){
-			x = x2 - 0.75;
-			y = y2 + 0.433;
-		}
-
-
-
-
-
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
-
-
-		glColor3ub(100, 250, 250);
-		glVertex3f(x + 0.25, y + 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(x + 0.5, y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(x + 0.25, y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(x - 0.25, y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(x - 0.5, y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(x - 0.25, y + 0.433, 0.01);
-		glEnd();
-		glEnable(GL_LIGHTING);
-		cont++;
-	}
-	
-	
 
 }

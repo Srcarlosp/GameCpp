@@ -10,7 +10,8 @@ public:
 	Casilla();	//Constructor
 	void assign(Elemento *_e);	//Assigna una nueva dirreccion a la celda y activa full
 	void clean();				//Vacia la celda (full a 0) y deja el vector apuntando a 0;
-	bool getFull();				//Comprueba si hay algo en la celda
+	bool getFull();	
+	void pintarHexagono(float, float);//Comprueba si hay algo en la celda
 	Elemento * getElem();		//Devuelve la direccion del elemento contenido en la celda
 	
 	//Metodos de dibujo

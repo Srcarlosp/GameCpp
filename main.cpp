@@ -53,14 +53,6 @@ Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
 }*/
 
-void ControlRaton(int button, int state, int x, int y) {
-	if ( state == GLUT_UP && x>800) {
-		interfaz.pintarHexagono(0.25, -0.2165);
-	}
-}
-
-
-
 //Secuencia de inicializacion
 void inicializaVentana(int argc, char* argv[])
 {
@@ -105,29 +97,37 @@ int main(int argc,char* argv[])
 } 
 
 void OnDraw(void) {
-	float vista[9];
-	camera.getBackCamera(vista);
+	switch (interfaz.sMenu){
+	case 0:
+		interfaz.Menu();
+	break;
+	case 1:
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
-	glMatrixMode(GL_MODELVIEW); 
-	glLoadIdentity();
+		float vista[9];
+		camera.getBackCamera(vista);
 
-	gluLookAt(
-		vista[0], vista[1], vista[2], // posicion del ojo
-		vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
-		vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
-	);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 
-	glColor3ub(2, 2, 2);
-	glTranslatef(pos[x], pos[y], pos[z]);
-	glutSolidSphere(0.05, 20, 20);
-	glTranslatef(-pos[x], -pos[y], -pos[z]);
+		gluLookAt(
+			vista[0], vista[1], vista[2], // posicion del ojo
+			vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
+			vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
+			);
 
-	superficie.doDrawWorldContent();
+		glColor3ub(2, 2, 2);
+		glTranslatef(pos[x], pos[y], pos[z]);
+		glutSolidSphere(0.05, 20, 20);
+		glTranslatef(-pos[x], -pos[y], -pos[z]);
 
-	interfaz.pintarPlanos();
-	
-	glutSwapBuffers();					//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
+		superficie.doDrawWorldContent();
+
+		interfaz.pintarPlanos();
+		break;
+	}
+
+	glutSwapBuffers();							//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
 
 void OnTimer(int value)					//poner aqui el codigo de animacion
