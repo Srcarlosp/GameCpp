@@ -14,66 +14,50 @@ void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnMouseMotion(int x, int y);
-void OnMouseMotionTwo(int, int, int x, int y);
+void OnMouseMotionClick(int, int, int x, int y);
 
-//Objetos Primarios
-
+//Objetos Primarios (Temporal)
 int p[15];
-Interfaz interfaz;
 Elemento a(p, 0, 0);
+
+//Mundo y camara del juego
 World superficie;
 Camera camera(15, 7, 10);
+
+//Funciones de interaccion con el mundo
+Interfaz interfaz;
+
+//Variable global que permite a todas las funciones acceder a la posicion del ratorn
 Vector posRaton;
 
 //Vector para periferias
 Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
-/*void animacion(){
-	float x = 0.25, y = -4.567;
-	for (y = 5; y >= -5;){
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x + 0.25, y + 0.433, 0.02);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x + 0.5, y, 0.02);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x + 0.25, y - 0.433, 0.02);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x - 0.25, y - 0.433, 0.02);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x - 0.5, y, 0.02);
-		glColor3ub(253, 253, 253);
-		glVertex3f(x - 0.25, y + 0.433, 0.02);
-		glEnd();
-		glEnable(GL_LIGHTING);
-		glutSwapBuffers();
-		y -= 1;
-		Sleep(300);
-	}
-
-}*/
-
-//Secuencia de inicializacion
+//Secuencia de inicializacion de la ventana
 void inicializaVentana(int argc, char* argv[])
 {
-	//Inicializar el gestor de ventanas GLUT 
-	//y crear la ventana 
+	//Inicializar el gestor de ventanas GLUT y crear la ventana
+
 	glutInit(&argc, argv);
 	glutInitWindowSize(WWW, HHH);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutCreateWindow("MiJuego");
-	//habilitar luces y definir perspectiva 
+
+	//habilitar luces y definir perspectiva
+
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, WWW / HHH, 0.1, HHH); //Registrar los callbacks
+	
+	//llama a los calbacks del juego
+	
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
-	glutMouseFunc(OnMouseMotionTwo);
+	glutMouseFunc(OnMouseMotionClick);
 	glutPassiveMotionFunc(OnMouseMotion);
 	srand(time(NULL));
 	glClearColor(0.7,1.0,1.0,0);
@@ -159,10 +143,10 @@ void OnMouseMotion(int x, int y)
 	std::cout << posRaton[z] << "\n";
 }
 
-void OnMouseMotionTwo(int p, int pp, int x, int y)
+void OnMouseMotionClick(int p, int pp, int x, int y)
 {
 	posRaton = camera.posicionCursor(x, y);
-	std::cout << "Key";
+	Posicion pt = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));  /////////OFFSET/////////
 }
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)

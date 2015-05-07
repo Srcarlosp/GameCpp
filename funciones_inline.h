@@ -32,7 +32,7 @@ inline Posicion * periferiaFinder(int n)				//Genera las periferias que se usan 
 	return v;
 }
 
-inline Vector ejeDirector(int d)
+inline Vector ejeDirector(int d)			//Devuelve los ejes directorres del plano de dibujo (Redundante???)
 {
 	if (d)
 		return Vector(diry[x], diry[y]);
@@ -40,14 +40,12 @@ inline Vector ejeDirector(int d)
 		return Vector(dirx[x], dirx[y]);
 }
 
-inline Vector goWorld(Posicion pt)
+inline Vector goWorld(Posicion pt)			//Ofset sin tener en cuenta
 {
 	return Vector((float)ejeDirector(x)[x] * (float)pt[x] - ejeDirector(y)[y] * (float)pt[y], ejeDirector(x)[y] * (float)pt[x] + ejeDirector(y)[x] * (float)pt[y], 0);
 }
 
-inline Posicion goMemory(Vector vt)
+inline Posicion goMemory(Vector vt)			//Offset sin tener en cuenta
 {
-	float ux = (vt[x] - vt[y] * ejeDirector(x)[x] / ejeDirector(x)[y]) / (ejeDirector(y)[x] - ejeDirector(x)[x] * ejeDirector(y)[y] / ejeDirector(x)[y]);
-	float uy = (vt[x] - vt[y] * ejeDirector(x)[x] / ejeDirector(x)[y]) / (ejeDirector(y)[x] - ejeDirector(x)[x] * ejeDirector(y)[y] / ejeDirector(x)[y]);
-//	return Posicion(ejeDirector(x)*ux ,ejeDirector(y)*u);
+	return Posicion(round((vt[x] / abs(vt[x]))*sqrt(vt[x] * vt[x] + (dirx[y] * vt[x])*(dirx[y] * vt[x]))), round(vt[y] - dirx[y] * vt[x]));
 }

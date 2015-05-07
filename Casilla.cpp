@@ -31,110 +31,54 @@ Elemento * Casilla::getElem()
 
 void Casilla::lightUp(int x_, int y_)
 {
-	//angulo paralelo a z
-	int cont = 0;
 
-	float xx = (dirx[x] * (float)x_ - diry[y] * (float)y_) * wscale + offx;
-	float yy = (dirx[y] * (float)x_ + diry[x] * (float)y_) * wscale + offy;
+	float _x = (dirx[x] * (float)x_ - diry[y] * (float)y_) * wscale + offx;
+	float _y = (dirx[y] * (float)x_ + diry[x] * (float)y_) * wscale + offy;
 
-	while (cont <= 6){
-		float _x = xx, _y = yy;
-		if (cont == 1){
-			_y = yy + 0.866;
-		}
-		if (cont == 2){
-			_x = xx + 0.75;
-			_y = yy + 0.433;
-		}
-		if (cont == 3){
-			_x = xx + 0.75;
-			_y = yy - 0.433;
-		}
-		if (cont == 4){
-			_y = yy - 0.866;
-		}
-		if (cont == 5){
-			_x = xx - 0.75;
-			_y = yy - 0.433;
-		}
-		if (cont == 6){
-			_x = xx - 0.75;
-			_y = yy + 0.433;
-		}
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
 
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.25, _y + 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.5, _y, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.25, _y - 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.25, _y - 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.5, _y, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.25, _y + 0.433, 0.01);
+	glEnd();
+	glEnable(GL_LIGHTING);
 
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.25, _y + 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.5, _y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.25, _y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.25, _y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.5, _y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.25, _y + 0.433, 0.01);
-		glEnd();
-		glEnable(GL_LIGHTING);
-		
-		cont++;
-	}
 }
 
 void Casilla::lightUp(float x_, float y_)
 {
-	//angulo paralelo a z
-	int cont = 0;
 
-	float xx = (dirx[x] * (float)x_ - diry[y] * (float)y_) * wscale + offx;
-	float yy = (dirx[y] * (float)x_ + diry[x] * (float)y_) * wscale + offy;
+	Posicion pt = goMemory(Vector((x_ - offx) / wscale , (y_ - offy) / wscale));   /////////OFFSET/////////
 
-	while (cont <= 6){
-		float _x = xx, _y = yy;
-		if (cont == 1){
-			_y = yy + 0.866;
-		}
-		if (cont == 2){
-			_x = xx + 0.75;
-			_y = yy + 0.433;
-		}
-		if (cont == 3){
-			_x = xx + 0.75;
-			_y = yy - 0.433;
-		}
-		if (cont == 4){
-			_y = yy - 0.866;
-		}
-		if (cont == 5){
-			_x = xx - 0.75;
-			_y = yy - 0.433;
-		}
-		if (cont == 6){
-			_x = xx - 0.75;
-			_y = yy + 0.433;
-		}
+	float _x = (dirx[x] * (float)pt[x] - diry[y] * (float)pt[y]) * wscale + offx;
+	float _y = (dirx[y] * (float)pt[x] + diry[x] * (float)pt[y]) * wscale + offy;
 
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
 
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.25, _y + 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.5, _y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x + 0.25, _y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.25, _y - 0.433, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.5, _y, 0.01);
-		glColor3ub(100, 250, 250);
-		glVertex3f(_x - 0.25, _y + 0.433, 0.01);
-		glEnd();
-		glEnable(GL_LIGHTING);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.25, _y + 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.5, _y, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x + 0.25, _y - 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.25, _y - 0.433, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.5, _y, 0.01);
+	glColor3ub(100, 250, 250);
+	glVertex3f(_x - 0.25, _y + 0.433, 0.01);
+	glEnd();
+	glEnable(GL_LIGHTING);
 
-		cont++;
-	}
 }
