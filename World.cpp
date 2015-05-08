@@ -1,7 +1,9 @@
 #include "World.h"
 
-
 extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
+
+
+//Acciones sobre mundo
 
 World::World(unsigned char _r, unsigned char _g, unsigned char _b)
 {
@@ -20,6 +22,26 @@ void World::addElem(Elemento *e)
 {
 	operatePoint(e->getPos()[x], e->getPos()[y])->assign(e);
 }
+
+void World::moveElem(Posicion oldPos, Posicion newPos)
+{
+	std::cout << "in\n";
+
+	Posicion des = newPos;
+
+	oldPos.modToWorld();
+	newPos.modToWorld();
+
+	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]))
+	{
+		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
+		world[oldPos[x]][oldPos[y]].clean();
+		world[newPos[x]][newPos[y]].getElem()->setPos(des);
+		std::cout << "done\n";
+	}
+}
+
+//Metodos de dibujo del mundo
 
 void World::doDrawWorldContent()
 {

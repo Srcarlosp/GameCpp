@@ -10,11 +10,18 @@
 #include "Vector.h"
 #include "OpenGL.h"
 
+//Funciones glut
 void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnMouseMotion(int x, int y);
 void OnMouseMotionClick(int, int, int x, int y);
+void OnIdleTime();
+//Flags
+bool mouseMotionFlag = false;
+Posicion pti;
+Posicion ptf;
+
 
 //Objetos Primarios (Temporal)
 int p[15];
@@ -58,7 +65,9 @@ void inicializaVentana(int argc, char* argv[])
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
 	glutMouseFunc(OnMouseMotionClick);
+	glutMotionFunc(OnMouseMotion);
 	glutPassiveMotionFunc(OnMouseMotion);
+	glutIdleFunc(OnIdleTime);
 	srand(time(NULL));
 	glClearColor(0.7,1.0,1.0,0);
 
@@ -114,10 +123,7 @@ void OnDraw(void) {
 				vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 				);
 
-			glColor3ub(2, 2, 2);
-			//glTranslatef(pos[x], pos[y], pos[z]);
 			Casilla::lightUp(posRaton[x], posRaton[y]);
-			//glTranslatef(-pos[x], -pos[y], -pos[z]);
 
 			superficie.doDrawWorldContent();
 			interfaz.pintarPlanos();
@@ -143,11 +149,27 @@ void OnMouseMotion(int x, int y)
 	std::cout << posRaton[z] << "\n";
 }
 
-void OnMouseMotionClick(int p, int pp, int x, int y)
+void OnMouseMotionClick(int p, int pp, int _x, int _y)
 {
-	posRaton = camera.posicionCursor(x, y);
-	Posicion pt = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));  /////////OFFSET/////////
+	if (pp)
+	{
+		posRaton = camera.posicionCursor(_x, _y);
+		ptf = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
+		superficie.moveElem(Posicion(pti), Posicion(ptf));
+		std::cout << pti[x] << " " << pti[y] << "\n";
+		std::cout << ptf[x] << " " << ptf[y] << "\n";
+ 		mouseMotionFlag = false;
+	}
+	else
+	{
+		posRaton = camera.posicionCursor(_x, _y);
+		pti = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
+		std::cout << "OK \n";
+		mouseMotionFlag = true;
+	}
 }
+
+void OnIdleTime() {}
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {

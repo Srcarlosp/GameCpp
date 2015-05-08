@@ -16,9 +16,6 @@ public:
 	bool getFull();	
 	void pintarHexagono(float, float);//Comprueba si hay algo en la celda
 	Elemento * getElem();		//Devuelve la direccion del elemento contenido en la celda
-	
-	//Funciones de juego
-	//void moveElem
 
 	//Metodos de dibujo
 	static void lightUp(int, int);

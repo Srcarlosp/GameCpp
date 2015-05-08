@@ -21,6 +21,7 @@ public:
 	//Metodos interfaz
 	void setColor(unsigned char r = 255, unsigned char v = 255, unsigned char a = 255);
 	void setPos(int, int);
+	void setPos(Posicion);
 	Posicion getPos();
 
 	//Metodos graficos

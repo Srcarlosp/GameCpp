@@ -1,6 +1,7 @@
 #include "Casilla.h"
 #include "glut.h"
 
+
 Casilla::Casilla()
 {
 	e = 0;

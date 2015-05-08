@@ -33,6 +33,13 @@ void Elemento::setPos(int _x, int _y)
 	posVec[y] = dirx[1] * (float)posAbs[x] + diry[0] * (float)posAbs[y];
 }
 
+void Elemento::setPos(Posicion pt)
+{
+	posAbs.setPos(pt[x], pt[y]);
+	posVec[x] = dirx[0] * (float)posAbs[x] - diry[1] * (float)posAbs[y];
+	posVec[y] = dirx[1] * (float)posAbs[x] + diry[0] * (float)posAbs[y];
+}
+
 Posicion Elemento::getPos()
 {
 	return posAbs;
