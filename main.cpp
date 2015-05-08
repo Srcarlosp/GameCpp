@@ -1,4 +1,5 @@
-﻿#include "glut.h"
+﻿#include "windows.h"
+#include "glut.h"
 #include <time.h>
 #include <math.h>
 #include <iostream>
@@ -23,6 +24,7 @@ Posicion pti;
 Posicion ptf;
 
 
+
 //Objetos Primarios (Temporal)
 int p[15];
 Elemento a(p, 0, 0);
@@ -36,9 +38,12 @@ Interfaz interfaz;
 
 //Variable global que permite a todas las funciones acceder a la posicion del ratorn
 Vector posRaton;
+Vector posClick(100,100);
+
 
 //Vector para periferias
 Posicion * periferias[((WORLDSIZE - 1) / 2)];
+
 
 //Secuencia de inicializacion de la ventana
 void inicializaVentana(int argc, char* argv[])
@@ -70,6 +75,7 @@ void inicializaVentana(int argc, char* argv[])
 	glutIdleFunc(OnIdleTime);
 	srand(time(NULL));
 	glClearColor(0.7,1.0,1.0,0);
+	
 
 }
 
@@ -78,6 +84,8 @@ int main(int argc,char* argv[])
 	
 	//Abre la ventana y GL
 	inicializaVentana(argc, argv);
+	
+	PlaySound(L"MaC.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 
 	//Creacion de periferias
 	for (int i = 0; i < ((WORLDSIZE - 1) / 2); i++)
@@ -124,7 +132,7 @@ void OnDraw(void) {
 				);
 
 			Casilla::lightUp(posRaton[x], posRaton[y]);
-
+			if (posClick[x]!=100)Casilla::lightR1(posClick[x], posClick[y]);
 			superficie.doDrawWorldContent();
 			interfaz.pintarPlanos();
 			
@@ -155,14 +163,22 @@ void OnMouseMotionClick(int p, int pp, int _x, int _y)
 	{
 		posRaton = camera.posicionCursor(_x, _y);
 		ptf = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
+			//angulo paralelo a z
+			//float a = atan2(camera.o_z - camera.v_z, sqrt((camera.o_x - camera.v_x)*(camera.o_x - camera.v_x) + (camera.o_y - camera.v_y)*(camera.o_y - camera.v_y)));
+			//float b = atan2((camera.o_y - camera.v_y), (camera.o_z - camera.v_z));
+		
 		superficie.moveElem(Posicion(pti), Posicion(ptf));
 		std::cout << pti[x] << " " << pti[y] << "\n";
 		std::cout << ptf[x] << " " << ptf[y] << "\n";
  		mouseMotionFlag = false;
 	}
+	
 	else
 	{
+		
 		posRaton = camera.posicionCursor(_x, _y);
+		posClick[x] = posRaton[x];
+		posClick[y] = posRaton[y];
 		pti = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
 		std::cout << "OK \n";
 		mouseMotionFlag = true;

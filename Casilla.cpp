@@ -83,3 +83,40 @@ void Casilla::lightUp(float x_, float y_)
 	glEnable(GL_LIGHTING);
 
 }
+void Casilla::lightR1(float _x, float _y){
+
+	/*Posicion *a = new Posicion[PERIFERIASIZE(1)];
+	a=periferiaFinder(1);
+	for (int i = 0; i < PERIFERIASIZE(1);i++)
+		Casilla::lightUp(a[i][0], a[i][1]);*/
+	int cont = 0;
+
+
+	while (cont <= 6){
+		float x = _x, y = _y;
+		if (cont == 1){
+			y = _y + 0.866;
+		}
+		if (cont == 2){
+			x = _x + 0.75;
+			y = _y + 0.433;
+		}
+		if (cont == 3){
+			x = _x + 0.75;
+			y = _y - 0.433;
+		}
+		if (cont == 4){
+			y = _y - 0.866;
+		}
+		if (cont == 5){
+			x = _x - 0.75;
+			y = _y - 0.433;
+		}
+		if (cont == 6){
+			x = _x - 0.75;
+			y = _y + 0.433;
+		}
+		cont++;
+		Casilla::lightUp(x, y);
+	}
+}
