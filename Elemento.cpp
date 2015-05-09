@@ -4,7 +4,7 @@
 #include "Elemento.h"
 #include "glut.h"
 
-Elemento::Elemento(int _x, int _y, unsigned char _r, unsigned char _g, unsigned char _b) :posAbs(_x, _y)
+Elemento::Elemento(int _x, int _y, BYTE _r, BYTE _g, BYTE _b) :posAbs(_x, _y)
 {
 	colorVec[rojo] = _r;
 	colorVec[verde] = _g;
@@ -15,7 +15,7 @@ Elemento::Elemento(int _x, int _y, unsigned char _r, unsigned char _g, unsigned 
 	posVec[z] = 0;
 }
 
-void Elemento::setColor(unsigned char _r, unsigned char _g, unsigned char _b)
+void Elemento::setColor(BYTE _r, BYTE _g, BYTE _b)
 {
 	colorVec[rojo] = _r;
 	colorVec[verde] = _g;

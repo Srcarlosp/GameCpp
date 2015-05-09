@@ -1,11 +1,8 @@
 #include "World.h"
 
-extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
-
-
 //Acciones sobre mundo
 
-World::World(unsigned char _r, unsigned char _g, unsigned char _b)
+World::World(BYTE _r, BYTE _g, BYTE _b)
 {
 	colorVec[rojo] = _r;
 	colorVec[verde] = _g;
@@ -16,6 +13,10 @@ Casilla World::getPoint(int _x, int _y)
 {
 	int x = _x + ((WORLDSIZE - 1) / 2), y = _x + ((WORLDSIZE - 1) / 2);
 	return world[x][y];
+}
+Casilla World::getPoint(Posicion pt)
+{
+	return getPoint(pt[x], pt[y]);
 }
 
 void World::addElem(Elemento *e)
@@ -54,6 +55,17 @@ void World::doDrawWorldContent()
 	loopMap(0, 0, World::drawElments);
 }
 
+void World::doDrawRange(Posicion pt)
+{
+	if (world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getFull())
+	{
+		Casilla::lightUp(pt, 200);
+		for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
+			for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
+				Casilla::lightUp(periferias[i][ii] + pt, 200 - (i + 1) * 20);
+	}
+}
+
 //funciones de interfaz
 float World::getH()
 {
@@ -75,12 +87,17 @@ void World::loopMap(int _x, int _y, void (*funcion)(Casilla *), int n, bool itSe
 	for (int i = 0; i < n; i++)
 		for (int ii = 0; ii < PERIFERIASIZE((i+1)); ii++)
 		{
-			funcion(&world[periferias[i][ii][x] + x_][periferias[i][ii][y] + y_]);	//Problema Enum  CUIDADO
+			funcion(&world[periferias[i][ii][x] + x_][periferias[i][ii][y] + y_]);
 		}
 }
-void World::loopMap(void(*funcion)(Posicion))
+void World::loopMap(Posicion pt, void(*funcion)(Casilla *), int n, bool itSelf)
 {
-	for (int i = 0; i < (WORLDSIZE - 1) / 2; i++)
+	loopMap(pt[x], pt[y], funcion, n, itSelf);
+}
+void World::loopMap(void(*funcion)(Posicion), int n)
+{
+	funcion(Posicion(0,0));
+	for (int i = 0; i < n; i++)
 		for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
 		{
 			funcion(periferias[i][ii]);

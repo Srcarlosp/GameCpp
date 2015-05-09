@@ -2,6 +2,7 @@
 #include "Elemento.h"
 #include "Posicion.h"
 #include "Vector.h"
+#include "Constantes.h"
 
 class Casilla
 {
@@ -17,6 +18,7 @@ public:
 	Elemento * getElem();		//Devuelve la direccion del elemento contenido en la celda
 
 	//Metodos de dibujo
-	static void lightUp(int, int);
-	static void lightUp(float, float);
+	static void lightUp(int, int, BYTE _r = 100, BYTE _g = 255, BYTE _b = 255);
+	static void lightUp(Posicion, BYTE _r = 100, BYTE _g = 255, BYTE _b = 255);
+	static void lightUp(float, float, BYTE _r = 100, BYTE _g = 255, BYTE _b = 255);
 };

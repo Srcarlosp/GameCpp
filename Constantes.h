@@ -10,6 +10,9 @@
 #define WORLDSIZE 101			//Define el tamaño de la matriz del mundo y los perimetros a generar
 #define PERIFERIASIZE(X) (6 * X)
 
+//Definicion de tipos
+typedef unsigned char BYTE;
+
 //Enums utiles
 enum RGB { rojo, verde, azul };
 enum ejes { x, y, z };

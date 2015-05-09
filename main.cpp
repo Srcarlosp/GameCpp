@@ -14,7 +14,7 @@
 //Funciones glut
 void OnDraw(void);
 void OnTimer(int value);
-void OnKeyboardDown(unsigned char key, int x, int y);
+void OnKeyboardDown(BYTE key, int x, int y);
 void OnMouseMotion(int x, int y);
 void OnMouseMotionClick(int, int, int x, int y);
 
@@ -29,6 +29,9 @@ Vector posRaton;					//Guarda la posicion del raton en todo momento
 Elemento a(0, 0);
 Elemento b(1, 0);
 Elemento c(2, 0);
+Elemento d(-1, 0);
+Elemento e(-2, 0);
+Elemento f(1, 1);
 
 
 //Mundo y camara del juego
@@ -91,7 +94,11 @@ int main(int argc,char* argv[])
 	superficie.addElem(&a);
 	superficie.addElem(&b);
 	superficie.addElem(&c);
-	
+	superficie.addElem(&d);
+	superficie.addElem(&e);
+	superficie.addElem(&f);
+
+
 	//Entrada en el bucle de funcion
 	glutMainLoop();
 
@@ -147,6 +154,8 @@ void OnDraw(void) {
 
 			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
+
+			superficie.doDrawRange(pti);
 			
 			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
 			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
@@ -202,7 +211,7 @@ void OnMouseMotionClick(int p, int pp, int _x, int _y)
 //------------------------------------------------------------------------------------------------------------------------------------------
 //
 
-void OnKeyboardDown(unsigned char key, int x_t, int y_t)
+void OnKeyboardDown(BYTE key, int x_t, int y_t)
 {
 	interfaz.InterfazTeclado(key, &camera, &a);
 	std::cout << "Key";

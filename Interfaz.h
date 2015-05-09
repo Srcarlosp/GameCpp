@@ -10,7 +10,7 @@
 class Interfaz{
 public:
 	
-	typedef unsigned char Byte;
+	typedef BYTE Byte;
 	int select = 0;
 	int sMenu = 0;
 	bool var1=0;

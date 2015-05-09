@@ -16,8 +16,13 @@ class Elemento
 	cVector colorVec;
 
 public:
+
+///////////////////////TEMP////////////////////////////
+	int range = 4;
+///////////////////////////////////////////////////////
+
 	//Metodos interfaz
-	void setColor(unsigned char r = 255, unsigned char v = 255, unsigned char a = 255);
+	void setColor(BYTE r = 255, BYTE v = 255, BYTE a = 255);
 	void setPos(int, int);
 	void setPos(Posicion);
 
@@ -27,5 +32,5 @@ public:
 	void doDraw();		//El elemento se dibuja a si mismo
 
 	//constructor
-	Elemento(int _x, int _y, unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255);
+	Elemento(int _x, int _y, BYTE _r = 255, BYTE _g = 255, BYTE _b = 255);
 };

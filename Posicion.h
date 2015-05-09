@@ -19,6 +19,12 @@ public:
 	{
 		return v[d];
 	}
+
+	inline Posicion operator + (Posicion pt)  //Operador de acceso
+	{
+		return Posicion(v[x] + pt[x], v[y] + pt[y]);
+	}
+
 	inline Posicion modToWorld()
 	{
 		v[x] = v[x] + ((WORLDSIZE - 1) / 2);
