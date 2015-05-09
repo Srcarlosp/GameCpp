@@ -17,17 +17,19 @@ void OnTimer(int value);
 void OnKeyboardDown(unsigned char key, int x, int y);
 void OnMouseMotion(int x, int y);
 void OnMouseMotionClick(int, int, int x, int y);
-void OnIdleTime();
-//Flags
-bool mouseMotionFlag = false;
-Posicion pti;
-Posicion ptf;
 
+//Flags y variables globales
+Posicion pti;						//Variable de click
+Posicion ptf;						//Variable de click
+Vector posRatonW;					//Guarda la posicion del raton en la ventana
+Vector posRaton;					//Guarda la posicion del raton en todo momento
 
 
 //Objetos Primarios (Temporal)
-int p[15];
-Elemento a(p, 0, 0);
+Elemento a(0, 0);
+Elemento b(1, 0);
+Elemento c(2, 0);
+
 
 //Mundo y camara del juego
 World superficie;
@@ -35,10 +37,6 @@ Camera camera(15, 7, 10);
 
 //Funciones de interaccion con el mundo
 Interfaz interfaz;
-
-//Variable global que permite a todas las funciones acceder a la posicion del ratorn
-Vector posRaton;
-Vector posClick(100,100);
 
 
 //Vector para periferias
@@ -72,10 +70,8 @@ void inicializaVentana(int argc, char* argv[])
 	glutMouseFunc(OnMouseMotionClick);
 	glutMotionFunc(OnMouseMotion);
 	glutPassiveMotionFunc(OnMouseMotion);
-	glutIdleFunc(OnIdleTime);
 	srand(time(NULL));
 	glClearColor(0.7,1.0,1.0,0);
-	
 
 }
 
@@ -85,7 +81,7 @@ int main(int argc,char* argv[])
 	//Abre la ventana y GL
 	inicializaVentana(argc, argv);
 	
-	PlaySound(L"MaC.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
+	//PlaySound(L"MaC.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 
 	//Creacion de periferias
 	for (int i = 0; i < ((WORLDSIZE - 1) / 2); i++)
@@ -93,12 +89,24 @@ int main(int argc,char* argv[])
 
 	//Poner contenido a mundo
 	superficie.addElem(&a);
+	superficie.addElem(&b);
+	superficie.addElem(&c);
 	
 	//Entrada en el bucle de funcion
 	glutMainLoop();
 
 	return 0; 
 } 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+//			Funciones CALLBACK
+//
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 void OnDraw(void) {
 
@@ -119,8 +127,6 @@ void OnDraw(void) {
 		//Etapa Libre
 		case 3:
 
-		
-
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
@@ -131,10 +137,16 @@ void OnDraw(void) {
 				vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 				);
 
-			Casilla::lightUp(posRaton[x], posRaton[y]);
-			if (posClick[x]!=100)Casilla::lightR1(posClick[x], posClick[y]);
+
+			Casilla::lightUp(posRaton[x], posRaton[y]);			//Es la funcion que ilumina la casilla donde esta el raton
+
+			glColor3ub(2, 2, 2);
+			glTranslatef(posRaton[x], posRaton[y], posRaton[z]);
+			glutSolidSphere(0.05, 20, 20);
+			glTranslatef(-posRaton[x], -posRaton[y], -posRaton[z]);
+
+			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
-			interfaz.pintarPlanos();
 			
 			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
 			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
@@ -142,6 +154,10 @@ void OnDraw(void) {
 	}
 	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
+
+//
+//------------------------------------------------------------------------------------------------------------------------------------------
+//
 
 void OnTimer(int value)					//poner aqui el codigo de animacion
 {
@@ -151,41 +167,40 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 
 }
 
+//
+//------------------------------------------------------------------------------------------------------------------------------------------
+//
+
 void OnMouseMotion(int x, int y)
 {
 	posRaton = camera.posicionCursor(x, y);
 	std::cout << posRaton[z] << "\n";
 }
 
+//
+//------------------------------------------------------------------------------------------------------------------------------------------
+//
+
 void OnMouseMotionClick(int p, int pp, int _x, int _y)
 {
-	if (pp)
+	if (pp && p==GLUT_LEFT_BUTTON)
 	{
+		std::cout << "in \n";
 		posRaton = camera.posicionCursor(_x, _y);
-		ptf = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
-			//angulo paralelo a z
-			//float a = atan2(camera.o_z - camera.v_z, sqrt((camera.o_x - camera.v_x)*(camera.o_x - camera.v_x) + (camera.o_y - camera.v_y)*(camera.o_y - camera.v_y)));
-			//float b = atan2((camera.o_y - camera.v_y), (camera.o_z - camera.v_z));
-		
+		ptf = goMemory(Vector(posRaton[x], posRaton[y]));
 		superficie.moveElem(Posicion(pti), Posicion(ptf));
-		std::cout << pti[x] << " " << pti[y] << "\n";
-		std::cout << ptf[x] << " " << ptf[y] << "\n";
- 		mouseMotionFlag = false;
 	}
 	
 	else
 	{
-		
 		posRaton = camera.posicionCursor(_x, _y);
-		posClick[x] = posRaton[x];
-		posClick[y] = posRaton[y];
-		pti = goMemory(Vector((posRaton[x] - offx) / wscale, (posRaton[y] - offy) / wscale));		/////////OFFSET/////////
-		std::cout << "OK \n";
-		mouseMotionFlag = true;
+		pti = goMemory(Vector(posRaton[x], posRaton[y]));
 	}
 }
 
-void OnIdleTime() {}
+//
+//------------------------------------------------------------------------------------------------------------------------------------------
+//
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
