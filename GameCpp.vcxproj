@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClInclude Include="Casilla.h" />
     <ClInclude Include="Constantes.h" />
+    <ClInclude Include="cVector.h" />
     <ClInclude Include="funciones_inline.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Interfaz.h" />

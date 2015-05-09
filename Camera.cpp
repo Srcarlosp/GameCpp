@@ -28,6 +28,7 @@ Vector Camera::posicionCursor(int _x, int _y)
 
 void Camera::orbit(float d)
 {
+	float step_dif = 0.001 + vectorPosLine().norma3D() / 1000;
 	_o[x] = vectorPosLine()[x] * cosf(step_dif*d) - vectorPosLine()[y] * sinf(step_dif*d) + _v[x];
 	_o[y] = vectorPosLine()[x] * sinf(step_dif*d) + vectorPosLine()[y] * cosf(step_dif*d) + _v[y];
 }
@@ -35,6 +36,9 @@ void Camera::orbit(float d)
 void Camera::moveCamera(float _x, float _y, float _z)
 {
 	Vector dir = vectorPosLine().normaUnitario(2);
+
+	float vmove = vectorPosLine().norma3D() / 50;
+
 	_o[x] += _x * dir[x] * vmove + _y * dir[y] * vmove;
 	_v[x] += _x * dir[x] * vmove + _y * dir[y] * vmove;
 	_o[y] += _x * dir[y] * vmove - _y * dir[x] * vmove;
@@ -45,7 +49,19 @@ void Camera::moveCamera(float _x, float _y, float _z)
 
 void Camera::zoomCamera(float d)
 {
-	if (5<vectorPosLine().norma3D()) _o = (vectorPosLine() - vectorPosLine().normaUnitario()*d) + vectorPosMira();
+	if (5<vectorPosLine().norma3D() || d<0) _o = (vectorPosLine() - vectorPosLine().normaUnitario()*d) + vectorPosMira();
+}
+
+void Camera::changeVertical(float h, bool diff)
+{
+	if (diff)	_o[z] += h;
+	else		_o[z] = h;
+}
+
+void Camera::changePerspective(float g, float _x, float _y, float _z)
+{
+	orbit(g);
+	moveCamera(_x, _y, 0);
 }
 
 //Interfaz
@@ -58,16 +74,6 @@ void Camera::setPV(float _x, float _y, float _z)
 void Camera::setCamera(float _x, float _y, float _z)
 {
 	_o = Vector(_x, _y, _z);
-}
-
-void Camera::setSpeed(float s)
-{
-	vmove = s;
-}
-
-void Camera::setStepOrb(float s)
-{
-	step_dif = s;
 }
 
 void Camera::getBackCamera(float *v)

@@ -1,8 +1,7 @@
-#include <math.h>
-#include "OpenGL.h"
-#include  "Casilla.h"
 #include "Interfaz.h"
-#include "stdio.h"
+
+#include "OpenGL.h"
+#include "glut.h"
 
 extern Camera camera;
 
@@ -119,41 +118,20 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 		break;
 	}
 }
+
+/*
 void Interfaz::pintarPlanos()
 {
 	int cont = 0;
 	float ALTURA_PLANO_SUP = 0.0;
 	const float ALTURA_PLANO_INF = -5.0;
 	unsigned int width = 0, height = 0;
-	unsigned int image1 = OpenGL::CargaTextura("oceano.bmp");
 	unsigned int image2 = OpenGL::CargaTextura("fondo.bmp");
 	switch (select){
 	case 0:
 	case 1:
 
 		//Cargar textura de arriba
-
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, image1);
-		glDisable(GL_LIGHTING);
-		glColor3ub(255, 255, 255);
-		glColor3f(1, 1, 1);
-		//pintar plano de arriba
-		glBegin(GL_POLYGON);
-		//glColor3ub((0, 153, 153);
-		glTexCoord2d(0.0f, 0.0f);
-		glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_SUP);
-		//glColor3ub(0, 153, 153);
-		glTexCoord2d(0.0f, 1.0);
-		glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_SUP);
-		//glColor3ub(0, 153, 153);
-		glTexCoord2d(1.0f, 1.0f);
-		glVertex3f(5.0f, 5.0f, ALTURA_PLANO_SUP);
-		//glColor3ub(0, 153, 153);
-		glTexCoord2d(1.0f, 0.0f);
-		glVertex3f(5.0f, -5.0f, ALTURA_PLANO_SUP);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
 		
 		//malla superior
 		for (float x = 5; x >= -5;)
@@ -261,9 +239,7 @@ void Interfaz::pintarPlanos()
 
 	}
 
-	
-	//////////////////////////////////////////////////////////////////
-	//Regla
+	///////////////////////Regla/////////////////////
 	glBegin(GL_LINES);
 	glColor3ub(0, 0, 0);
 	glVertex3f(+0.25f, 5.0f, 0.011f);
@@ -281,6 +257,8 @@ void Interfaz::pintarPlanos()
 	glEnable(GL_LIGHTING);
 
 }
+*/
+
 void Interfaz::Jugador1(){
 	
 	if (var1==0)camera.setCamera(10, 0, 15);var1=1;

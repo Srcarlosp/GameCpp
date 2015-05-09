@@ -2,6 +2,7 @@
 #include "glut.h"
 
 
+
 Casilla::Casilla()
 {
 	e = 0;
@@ -33,24 +34,31 @@ Elemento * Casilla::getElem()
 void Casilla::lightUp(int x_, int y_)
 {
 
-	float _x = (dirx[x] * (float)x_ - diry[y] * (float)y_) * wscale + offx;
-	float _y = (dirx[y] * (float)x_ + diry[x] * (float)y_) * wscale + offy;
+	float _x = (dirx[x] * (float)x_ - diry[y] * (float)y_);
+	float _y = (dirx[y] * (float)x_ + diry[x] * (float)y_);
+
+	Vector vt = Vector(_x, _y, 0.02);	//Vector de posicion en el mundo del punto en memoria
+	float escaleFactor = 0.57735F;
+	Vector escale = Vector(escaleFactor, escaleFactor, escaleFactor);
+	//Recorremos las aristas en el sentido horario
+	Vector arista1 = vt - ejeDirector(y) / escale;
+	Vector arista2 = vt + Vector(ejeDirector(x)[y], ejeDirector(x)[x]) / escale;
+	Vector arista3 = vt + Vector(-ejeDirector(x)[y], ejeDirector(x)[x]) / escale;
+	Vector arista4 = vt + ejeDirector(y) / escale;
+	Vector arista5 = vt + Vector(-ejeDirector(x)[y], -ejeDirector(x)[x]) / escale;
+	Vector arista6 = vt + Vector(ejeDirector(x)[y], -ejeDirector(x)[x]) / escale;
+	Vector arista7 = vt - ejeDirector(y) / escale;
 
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
-
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.25, _y + 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.5, _y, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.25, _y - 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.25, _y - 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.5, _y, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.25, _y + 0.433, 0.01);
+	glColor3ub(100, 255, 255);
+	glVertex3f(arista1[x], arista1[y], arista1[z]);
+	glVertex3f(arista2[x], arista2[y], arista2[z]);
+	glVertex3f(arista3[x], arista3[y], arista3[z]);
+	glVertex3f(arista4[x], arista4[y], arista4[z]);
+	glVertex3f(arista5[x], arista5[y], arista5[z]);
+	glVertex3f(arista6[x], arista6[y], arista6[z]);
+	glVertex3f(arista7[x], arista7[y], arista7[z]);
 	glEnd();
 	glEnable(GL_LIGHTING);
 
@@ -59,64 +67,8 @@ void Casilla::lightUp(int x_, int y_)
 void Casilla::lightUp(float x_, float y_)
 {
 
-	Posicion pt = goMemory(Vector((x_ - offx) / wscale , (y_ - offy) / wscale));   /////////OFFSET/////////
+	Posicion pt = goMemory(Vector(x_, y_));
 
-	float _x = (dirx[x] * (float)pt[x] - diry[y] * (float)pt[y]) * wscale + offx;
-	float _y = (dirx[y] * (float)pt[x] + diry[x] * (float)pt[y]) * wscale + offy;
+	lightUp(pt[x], pt[y]);
 
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.25, _y + 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.5, _y, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x + 0.25, _y - 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.25, _y - 0.433, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.5, _y, 0.01);
-	glColor3ub(100, 250, 250);
-	glVertex3f(_x - 0.25, _y + 0.433, 0.01);
-	glEnd();
-	glEnable(GL_LIGHTING);
-
-}
-void Casilla::lightR1(float _x, float _y){
-
-	/*Posicion *a = new Posicion[PERIFERIASIZE(1)];
-	a=periferiaFinder(1);
-	for (int i = 0; i < PERIFERIASIZE(1);i++)
-		Casilla::lightUp(a[i][0], a[i][1]);*/
-	int cont = 0;
-
-
-	while (cont <= 6){
-		float x = _x, y = _y;
-		if (cont == 1){
-			y = _y + 0.866;
-		}
-		if (cont == 2){
-			x = _x + 0.75;
-			y = _y + 0.433;
-		}
-		if (cont == 3){
-			x = _x + 0.75;
-			y = _y - 0.433;
-		}
-		if (cont == 4){
-			y = _y - 0.866;
-		}
-		if (cont == 5){
-			x = _x - 0.75;
-			y = _y - 0.433;
-		}
-		if (cont == 6){
-			x = _x - 0.75;
-			y = _y + 0.433;
-		}
-		cont++;
-		Casilla::lightUp(x, y);
-	}
 }

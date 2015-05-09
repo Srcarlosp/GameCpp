@@ -20,6 +20,3 @@ enum Medios { Air, Water, Underwater };
 //Ejes equivalente para el dibujo de la matriz de casillas
 const float dirx[] = { sin(2.0F*3.1416F / 3.0F), cos(2.0F*3.1416F / 3.0F) };
 const float diry[] = { 1, 0 };
-
-//Constantes del tablero
-const float offx = -0.25, offy = 0.25 , wscale = 0.866;

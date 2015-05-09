@@ -43,10 +43,24 @@ void World::moveElem(Posicion oldPos, Posicion newPos)
 
 //Metodos de dibujo del mundo
 
+void World::doDrawWorldMap()
+{
+	loopMap(World::drawMaya);
+	//drawPlano();
+}
+
 void World::doDrawWorldContent()
 {
-	loopMap(0, 0, drawElments);
+	loopMap(0, 0, World::drawElments);
 }
+
+//funciones de interfaz
+float World::getH()
+{
+	return h;
+}
+
+//Funciones privadas
 
 Casilla * World::operatePoint(int _x, int _y)
 {
@@ -62,5 +76,13 @@ void World::loopMap(int _x, int _y, void (*funcion)(Casilla *), int n, bool itSe
 		for (int ii = 0; ii < PERIFERIASIZE((i+1)); ii++)
 		{
 			funcion(&world[periferias[i][ii][x] + x_][periferias[i][ii][y] + y_]);	//Problema Enum  CUIDADO
+		}
+}
+void World::loopMap(void(*funcion)(Posicion))
+{
+	for (int i = 0; i < (WORLDSIZE - 1) / 2; i++)
+		for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
+		{
+			funcion(periferias[i][ii]);
 		}
 }

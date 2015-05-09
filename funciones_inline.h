@@ -42,10 +42,28 @@ inline Vector ejeDirector(int d)			//Devuelve los ejes directorres del plano de 
 
 inline Vector goWorld(Posicion pt)			//Ofset sin tener en cuenta
 {
-	return Vector((float)ejeDirector(x)[x] * (float)pt[x] - ejeDirector(y)[y] * (float)pt[y], ejeDirector(x)[y] * (float)pt[x] + ejeDirector(y)[x] * (float)pt[y], 0);
+	return Vector(
+		(float)ejeDirector(x)[x] * (float)pt[x] - ejeDirector(y)[y] * (float)pt[y],
+		ejeDirector(x)[y] * (float)pt[x] + ejeDirector(y)[x] * (float)pt[y],
+		0
+		);
 }
 
 inline Posicion goMemory(Vector vt)			//Offset sin tener en cuenta
 {
-	return Posicion(round((vt[x] / abs(vt[x]))*sqrt(vt[x] * vt[x] + (dirx[y] * vt[x])*(dirx[y] * vt[x]))), round(vt[y] - dirx[y] * vt[x]));
+	//Operacion para punto x, se despeja de las ecuaciones goWorld
+	float px =
+		(vt[x] + vt[y] *(ejeDirector(y)[y] / ejeDirector(y)[x]))
+		/ //--------------------------------------------------------------------//  Division
+		(ejeDirector(x)[x] + ejeDirector(y)[y] * (ejeDirector(x)[y] / ejeDirector(y)[x]));
+	//Operacion para punto y (en funcion de px), del mismo mode se despeja de ecuaciones goWorld
+	float py =
+		(vt[y] - ejeDirector(x)[y] * px)
+		/ //--------------------------------------------------------------------//
+		ejeDirector(y)[x];
+	return Posicion(
+		round(px)
+		, ///////////////////////////////////////////////////////////////////////
+		round(py)
+		);
 }

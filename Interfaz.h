@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cmath>
+#include "Casilla.h"
 #include "Elemento.h"
+#include "World.h"
 #include "Camera.h"
 #include "windows.h"
-#include "glut.h"
 
 class Interfaz{
 public:
@@ -15,7 +17,6 @@ public:
 	bool var2 = 0;
 
 	void InterfazTeclado(Byte key, Camera *, Elemento *);
-	void pintarPlanos();
 	void Menu();
 	void Jugador1();
 	void Jugador2();

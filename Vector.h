@@ -5,6 +5,7 @@
 
 class Vector
 {
+protected:
 
 	float v[3];
 
@@ -93,5 +94,8 @@ public:
 	{
 		return Vector(v[x] * m, v[y] * m, v[z] * m);
 	}
-
+	inline Vector operator/ (Vector vr)		//Sirve para escalar vectores
+	{
+		return Vector(v[x] * vr[x], v[y] * vr[y], v[z] * vr[z]);
+	}
 };
