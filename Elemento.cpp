@@ -41,6 +41,11 @@ Posicion Elemento::getPos()
 	return posAbs;
 }
 
+void Elemento::setH(float _f)
+{
+	posVec[z] = _f;
+}
+
 void Elemento::doDraw()
 {
 	glDisable(GL_LIGHTING);

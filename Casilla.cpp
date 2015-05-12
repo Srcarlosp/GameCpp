@@ -31,7 +31,7 @@ Elemento * Casilla::getElem()
 	return e;
 }
 
-void Casilla::lightUp(int x_, int y_, BYTE _r, BYTE _g, BYTE _b)
+void Casilla::lightUp(int x_, int y_, float _h, BYTE _r, BYTE _g, BYTE _b)
 {
 
 	float _x = (dirx[x] * (float)x_ - diry[y] * (float)y_);
@@ -49,6 +49,8 @@ void Casilla::lightUp(int x_, int y_, BYTE _r, BYTE _g, BYTE _b)
 	Vector arista6 = vt + Vector(ejeDirector(x)[y], -ejeDirector(x)[x]) / escale;
 	Vector arista7 = vt - ejeDirector(y) / escale;
 
+	arista1[z] = arista2[z] = arista3[z] = arista4[z] = arista5[z] = arista6[z] = arista7[z] = _h;
+
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3ub(_r, _g, _b);
@@ -64,18 +66,18 @@ void Casilla::lightUp(int x_, int y_, BYTE _r, BYTE _g, BYTE _b)
 
 }
 
-void Casilla::lightUp(Posicion pt, BYTE _r, BYTE _g, BYTE _b)
+void Casilla::lightUp(Posicion pt, float _h, BYTE _r, BYTE _g, BYTE _b)
 {
 
-	lightUp(pt[x], pt[y], _r, _g, _b);
+	lightUp(pt[x], pt[y], _h, _r, _g, _b);
 
 }
 
-void Casilla::lightUp(float x_, float y_, BYTE _r, BYTE _g, BYTE _b)
+void Casilla::lightUp(float x_, float y_, float _h, BYTE _r, BYTE _g, BYTE _b)
 {
 
 	Posicion pt = goMemory(Vector(x_, y_));
 
-	lightUp(pt[x], pt[y], _r, _g, _b);
+	lightUp(pt[x], pt[y], _h, _r, _g, _b);
 
 }

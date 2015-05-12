@@ -35,7 +35,7 @@ Elemento f(1, 1);
 
 
 //Mundo y camara del juego
-World superficie;
+World superficie(0), profundidades(-2);
 Camera camera(15, 7, 10);
 
 //Funciones de interaccion con el mundo
@@ -96,7 +96,7 @@ int main(int argc,char* argv[])
 	superficie.addElem(&c);
 	superficie.addElem(&d);
 	superficie.addElem(&e);
-	superficie.addElem(&f);
+	profundidades.addElem(&f);
 
 
 	//Entrada en el bucle de funcion
@@ -156,6 +156,11 @@ void OnDraw(void) {
 			superficie.doDrawWorldContent();
 
 			superficie.doDrawRange(pti);
+
+			profundidades.doDrawWorldMap();
+			profundidades.doDrawWorldContent();
+
+			profundidades.doDrawRange(pti);
 			
 			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
 			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
@@ -198,6 +203,7 @@ void OnMouseMotionClick(int p, int pp, int _x, int _y)
 		posRaton = camera.posicionCursor(_x, _y);
 		ptf = goMemory(Vector(posRaton[x], posRaton[y]));
 		superficie.moveElem(Posicion(pti), Posicion(ptf));
+		profundidades.moveElem(Posicion(pti), Posicion(ptf));
 	}
 	
 	else

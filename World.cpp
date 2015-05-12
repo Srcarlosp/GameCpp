@@ -2,8 +2,10 @@
 
 //Acciones sobre mundo
 
-World::World(BYTE _r, BYTE _g, BYTE _b)
+World::World(float _h, BYTE _r, BYTE _g, BYTE _b)
 {
+	h = _h;
+
 	colorVec[rojo] = _r;
 	colorVec[verde] = _g;
 	colorVec[azul] = _b;
@@ -22,6 +24,7 @@ Casilla World::getPoint(Posicion pt)
 void World::addElem(Elemento *e)
 {
 	operatePoint(e->getPos()[x], e->getPos()[y])->assign(e);
+	e->setH(h);
 }
 
 void World::moveElem(Posicion oldPos, Posicion newPos)
@@ -59,10 +62,10 @@ void World::doDrawRange(Posicion pt)
 {
 	if (world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getFull())
 	{
-		Casilla::lightUp(pt, 200);
+		Casilla::lightUp(pt, h, 200);
 		for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
 			for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-				Casilla::lightUp(periferias[i][ii] + pt, 200 - (i + 1) * 20);
+				Casilla::lightUp(periferias[i][ii] + pt, h, 200 - (i + 1) * 20);
 	}
 }
 
@@ -94,12 +97,12 @@ void World::loopMap(Posicion pt, void(*funcion)(Casilla *), int n, bool itSelf)
 {
 	loopMap(pt[x], pt[y], funcion, n, itSelf);
 }
-void World::loopMap(void(*funcion)(Posicion), int n)
+void World::loopMap(void(*funcion)(Posicion, float), int n)
 {
-	funcion(Posicion(0,0));
+	funcion(Posicion(0,0), h);
 	for (int i = 0; i < n; i++)
 		for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
 		{
-			funcion(periferias[i][ii]);
+			funcion(periferias[i][ii], h);
 		}
 }

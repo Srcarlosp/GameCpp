@@ -25,6 +25,7 @@ public:
 	void setColor(BYTE r = 255, BYTE v = 255, BYTE a = 255);
 	void setPos(int, int);
 	void setPos(Posicion);
+	void setH(float);
 
 	Posicion getPos();
 

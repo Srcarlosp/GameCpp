@@ -22,7 +22,7 @@ class World
 
 public:
 	//Constructor
-	World(BYTE _r = 255, BYTE _g = 255, BYTE _b = 255); //Solo permite elegir el color del plano
+	World(float _h, BYTE _r = 255, BYTE _g = 255, BYTE _b = 255); //Solo permite elegir el color del plano
 	
 	//Acciones
 	Casilla getPoint(int, int);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
@@ -48,13 +48,13 @@ private:
 	Casilla * operatePoint(int, int);			//Devulelve un detreminado punto permitiendo operar con el
 	void loopMap(int, int, void(*funcion)(Casilla *), int n = ((WORLDSIZE - 1) / 2), bool itSelf = true);		//Recorre el mapa en perimetros partiendo de el punto x y y llegando hata el perimetro n aplicando en estos la funcion funcion, itself permite elegir si aplicarse la funcuion funcion a la misma casilla de origen
 	void loopMap(Posicion, void(*funcion)(Casilla *), int n = ((WORLDSIZE - 1) / 2), bool itSelf = true);
-	void loopMap(void(*funcion)(Posicion), int n = ((WORLDSIZE - 1) / 2));
+	void loopMap(void(*funcion)(Posicion, float), int n = ((WORLDSIZE - 1) / 2));
 
 
 	//funciones para loopMap
-	static inline void drawMaya(Posicion pt)
+	static inline void drawMaya(Posicion pt, float _h = 0)
 	{
-		Vector vt = goWorld(Posicion(pt)) + Vector(0, 0, 0.02);	//Vector de posicion en el mundo del punto en memoria
+		Vector vt = goWorld(Posicion(pt)) + Vector(0, 0, 0.02 + _h);	//Vector de posicion en el mundo del punto en memoria
 		float escaleFactor = 0.57735F;
 		Vector escale = Vector(escaleFactor, escaleFactor, escaleFactor);
 		//Recorremos las aristas en el sentido horario
