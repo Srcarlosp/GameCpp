@@ -54,13 +54,13 @@ void Casilla::lightUp(int x_, int y_, float _h, BYTE _r, BYTE _g, BYTE _b)
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3ub(_r, _g, _b);
-	glVertex3f(arista1[x], arista1[y], arista1[z]);
-	glVertex3f(arista2[x], arista2[y], arista2[z]);
-	glVertex3f(arista3[x], arista3[y], arista3[z]);
-	glVertex3f(arista4[x], arista4[y], arista4[z]);
-	glVertex3f(arista5[x], arista5[y], arista5[z]);
-	glVertex3f(arista6[x], arista6[y], arista6[z]);
-	glVertex3f(arista7[x], arista7[y], arista7[z]);
+	glVertex3f(arista1[x], arista1[y], arista1[z]+0.01);
+	glVertex3f(arista2[x], arista2[y], arista2[z]+0.01);
+	glVertex3f(arista3[x], arista3[y], arista3[z]+0.01);
+	glVertex3f(arista4[x], arista4[y], arista4[z]+0.01);
+	glVertex3f(arista5[x], arista5[y], arista5[z]+0.01);
+	glVertex3f(arista6[x], arista6[y], arista6[z]+0.01);
+	glVertex3f(arista7[x], arista7[y], arista7[z]+0.01);
 	glEnd();
 	glEnable(GL_LIGHTING);
 

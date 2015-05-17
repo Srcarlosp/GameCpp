@@ -50,7 +50,7 @@ void World::moveElem(Posicion oldPos, Posicion newPos)
 void World::doDrawWorldMap()
 {
 	loopMap(World::drawMaya);
-	//drawPlano();
+	drawPlano();
 }
 
 void World::doDrawWorldContent()
@@ -65,7 +65,7 @@ void World::doDrawRange(Posicion pt)
 		Casilla::lightUp(pt, h, 200);
 		for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
 			for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-				Casilla::lightUp(periferias[i][ii] + pt, h, 200 - (i + 1) * 20);
+				Casilla::lightUp(periferias[i][ii] + pt, h+0.01, 200 - (i + 1) * 20);
 	}
 }
 

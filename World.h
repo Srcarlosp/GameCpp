@@ -38,8 +38,8 @@ public:
 
 	void doDrawRange(Posicion);
 
-	unsigned int image1 = OpenGL::CargaTextura("oceano.bmp");	/////////////Temporal Debug///////////////
-
+		/////////////Temporal Debug///////////////
+	unsigned int image1;
 	//Interfaz
 	float getH();
 
@@ -81,6 +81,11 @@ private:
 	}
 	inline void drawPlano()
 	{
+		if (h == 0)
+		image1 = OpenGL::CargaTextura("oceano.bmp");
+		if (h == -2)
+			image1 = OpenGL::CargaTextura("fondo.bmp");
+
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, image1);
 		glDisable(GL_LIGHTING);
