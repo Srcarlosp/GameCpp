@@ -12,7 +12,7 @@
 class Barco :
 	public Elemento
 {
-	int type, range;
+	int type;
 	int size, pwr, def;
 	int weight, life;
 	float stats[3];
@@ -26,8 +26,11 @@ public:
 	int getWeight();
 	int getMovRange();
 	int getAttRange();
+	int getLife();
 	int * getSubsistems();
 	void dealDamage(int enemyType, int *enemySubsistems);
-	void doDraw();
+	void do
+		
+		();
 };
 

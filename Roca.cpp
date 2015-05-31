@@ -5,6 +5,7 @@ Roca::Roca(int _x, int _y) :Elemento(_x, _y, 6, 10, 5)
 {
 	size = 3;
 	movil = 0;
+	
 }
 
 

@@ -15,14 +15,15 @@ class Elemento
 	//Parametros de dibujo
 	Vector posVec;
 	cVector colorVec;
+
+	bool movil = 0;
+	int propietario = 0;
 	
 
 public:
 
 ///////////////////////TEMP////////////////////////////
 	int range = 4;
-	bool movil=0;
-	int propietario = 0;
 ///////////////////////////////////////////////////////
 
 	//Metodos interfaz
@@ -30,6 +31,8 @@ public:
 	void setPos(int, int);
 	void setPos(Posicion);
 	void setH(float);
+	bool getMovil();
+
 
 	Posicion getPos();
 

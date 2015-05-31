@@ -80,3 +80,4 @@ void Elemento::doDraw()
 	//glTranslatef(- this->posVec[x], - this->posVec[y], - this->posVec[z]);
 	glEnable(GL_LIGHTING);
 }
+bool Elemento::getMovil(){ return movil; }

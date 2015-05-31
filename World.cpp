@@ -37,7 +37,7 @@ void World::moveElem(Posicion oldPos, Posicion newPos)
 	oldPos.modToWorld();
 	newPos.modToWorld();
 
-	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->movil!=0))
+	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil()!=0))
 	{
 		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
 		world[oldPos[x]][oldPos[y]].clean();

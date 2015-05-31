@@ -8,6 +8,7 @@
 #include "funciones_inline.h"
 #include "Vector.h"
 #include "Posicion.h"
+#include "Barco.h"
 
 #include "glut.h"
 #include "OpenGL.h"

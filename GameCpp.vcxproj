@@ -81,6 +81,7 @@
     <ClCompile Include="Casilla.cpp" />
     <ClCompile Include="Elemento.cpp" />
     <ClCompile Include="Interfaz.cpp" />
+    <ClCompile Include="ListaBarcos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="Constantes.h" />
     <ClInclude Include="cVector.h" />
     <ClInclude Include="funciones_inline.h" />
+    <ClInclude Include="ListaBarcos.h" />
     <ClInclude Include="Roca.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Interfaz.h" />

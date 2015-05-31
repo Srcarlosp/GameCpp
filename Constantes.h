@@ -5,6 +5,7 @@
 #define WWW 800.0F
 #define HHH 600.0F
 #define PI 3.14159F
+#define MAXBARCOS 50
 
 //Constantes del mundo
 #define WORLDSIZE 101			//Define el tamaño de la matriz del mundo y los perimetros a generar

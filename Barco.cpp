@@ -7,8 +7,10 @@ Barco::Barco(int _x, int _y) :Elemento(_x,  _y,90, 85, 85)
 	weight = 5;
 	size = 5;
 	pwr = 4;
-	range = 5;
+	attRange = 4;
+	movRange = 3;
 	movil = 1;
+	life = 10;
 
 }
 
@@ -20,12 +22,7 @@ Barco::~Barco()
 
 
 
-int Barco::getWeight(){
-	return weight;
-}
-int Barco::getMovRange(){
-	return range;
-}
+
 
 int * getSubsistems();
 void dealDamage(int enemyType, int *enemyShip){
@@ -66,3 +63,8 @@ void Barco::doDraw()
 	//glTranslatef(- this->posVec[x], - this->posVec[y], - this->posVec[z]);
 	glEnable(GL_LIGHTING);
 }
+int Barco::getMovRange(){ return movRange; }
+int Barco::getAttRange(){ return attRange; }
+
+int Barco::getWeight(){ return weight; }
+int Barco::getLife(){ return life; }
