@@ -10,6 +10,8 @@
 #include "funciones_inline.h"
 #include "Vector.h"
 #include "OpenGL.h"
+#include "Barco.h"
+#include "Roca.h"
 
 //Funciones glut
 void OnDraw(void);
@@ -26,8 +28,8 @@ Vector posRaton;					//Guarda la posicion del raton en todo momento
 
 
 //Objetos Primarios (Temporal)
-Elemento a(0, 0);
-Elemento b(1, 0);
+Barco a(0, 0);
+Roca b(1, 0);
 Elemento c(2, 0);
 Elemento d(-1, 0);
 Elemento e(-2, 0);
@@ -154,14 +156,14 @@ void OnDraw(void) {
 
 			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
-
+			superficie.drawOption(posRatonW[x], posRatonW[y], pti);
 			superficie.doDrawRange(pti);
 
 			profundidades.doDrawWorldMap();
 			profundidades.doDrawWorldContent();
 
-			profundidades.doDrawRange(pti);
 			
+			superficie.drawOption(posRatonW[x], posRatonW[y],pti);
 			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
 			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
 			break;
@@ -197,19 +199,28 @@ void OnMouseMotion(int x, int y)
 
 void OnMouseMotionClick(int p, int pp, int _x, int _y)
 {
-	if (pp && p==GLUT_LEFT_BUTTON)
-	{
-		std::cout << "in \n";
-		posRaton = camera.posicionCursor(_x, _y);
-		ptf = goMemory(Vector(posRaton[x], posRaton[y]));
-		superficie.moveElem(Posicion(pti), Posicion(ptf));
-		profundidades.moveElem(Posicion(pti), Posicion(ptf));
-	}
 	
+		if (pp && p == GLUT_LEFT_BUTTON)
+		{
+			posRatonW[x] = _x;
+			posRatonW[y] = _y;
+			if (superficie.select != 2){
+				std::cout << "in \n";
+				posRaton = camera.posicionCursor(_x, _y);
+
+				ptf = goMemory(Vector(posRaton[x], posRaton[y]));
+				superficie.moveElem(Posicion(pti), Posicion(ptf));
+				profundidades.moveElem(Posicion(pti), Posicion(ptf));
+				superficie.select = 1;
+			}
+			superficie.select += 1;
+		}
 	else
 	{
-		posRaton = camera.posicionCursor(_x, _y);
-		pti = goMemory(Vector(posRaton[x], posRaton[y]));
+		if (superficie.select != 2){
+			posRaton = camera.posicionCursor(_x, _y);
+			pti = goMemory(Vector(posRaton[x], posRaton[y]));
+		}
 	}
 }
 

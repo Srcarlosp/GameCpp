@@ -19,8 +19,12 @@ class World
 	BYTE colorVec[3];					//defina el color de fondo del plano del mundo
 	Casilla world[WORLDSIZE][WORLDSIZE];		//crea el tablero del mundo
 	float h;
+	Posicion posRatonWAnt;
+	
 
 public:
+	int select = 1;
+	bool ataque = 0, mover = 0;
 	//Constructor
 	World(float _h, BYTE _r = 255, BYTE _g = 255, BYTE _b = 255); //Solo permite elegir el color del plano
 	
@@ -37,7 +41,7 @@ public:
 	void doDrawWorldPlane();
 
 	void doDrawRange(Posicion);
-
+	void drawOption(float, float, Posicion);
 		/////////////Temporal Debug///////////////
 	unsigned int image1;
 	//Interfaz
@@ -49,6 +53,7 @@ private:
 	void loopMap(int, int, void(*funcion)(Casilla *), int n = ((WORLDSIZE - 1) / 2), bool itSelf = true);		//Recorre el mapa en perimetros partiendo de el punto x y y llegando hata el perimetro n aplicando en estos la funcion funcion, itself permite elegir si aplicarse la funcuion funcion a la misma casilla de origen
 	void loopMap(Posicion, void(*funcion)(Casilla *), int n = ((WORLDSIZE - 1) / 2), bool itSelf = true);
 	void loopMap(void(*funcion)(Posicion, float), int n = ((WORLDSIZE - 1) / 2));
+	
 
 
 	//funciones para loopMap

@@ -77,20 +77,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barco.cpp" />
     <ClCompile Include="Casilla.cpp" />
     <ClCompile Include="Elemento.cpp" />
     <ClCompile Include="Interfaz.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="OpenGL.cpp" />
+    <ClCompile Include="Roca.cpp" />
     <ClCompile Include="ShipClass.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barco.h" />
     <ClInclude Include="Casilla.h" />
     <ClInclude Include="Constantes.h" />
     <ClInclude Include="cVector.h" />
     <ClInclude Include="funciones_inline.h" />
+    <ClInclude Include="Roca.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Elemento.h" />

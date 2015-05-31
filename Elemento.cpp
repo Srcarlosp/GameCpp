@@ -59,7 +59,7 @@ void Elemento::doDraw()
 	/*glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, image3);*/
 	glBegin(GL_POLYGON);
-	glColor3ub(98, 95, 95);
+	
 
 	glVertex3f(this->posVec[x] + 0.4, this->posVec[y], this->posVec[z] + 0.03);
 	

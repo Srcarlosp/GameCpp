@@ -9,16 +9,20 @@
 
 class Elemento
 {
+	protected:
 	//Parametros de memoria 
 	Posicion posAbs;
 	//Parametros de dibujo
 	Vector posVec;
 	cVector colorVec;
+	
 
 public:
 
 ///////////////////////TEMP////////////////////////////
 	int range = 4;
+	bool movil=0;
+	int propietario = 0;
 ///////////////////////////////////////////////////////
 
 	//Metodos interfaz
@@ -30,7 +34,7 @@ public:
 	Posicion getPos();
 
 	//Metodos graficos
-	void doDraw();		//El elemento se dibuja a si mismo
+	virtual void doDraw();		//El elemento se dibuja a si mismo
 
 	//constructor
 	Elemento(int _x, int _y, BYTE _r = 255, BYTE _g = 255, BYTE _b = 255);
