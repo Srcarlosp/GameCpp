@@ -1,31 +1,39 @@
 #pragma once
+//Recursos del juego
 #include "Elemento.h"
-#include "Constantes.h"
-#include "OpenGL.h"
-#include "glut.h"
+
 class Barco :
 	public Elemento
 {
-	int type;
+	//////////////////////////////////////////////////////////////////
+	//							Atributos							//
+	//////////////////////////////////////////////////////////////////
+	cVector colorVec;
+	/////////////////////////////Stats////////////////////////////////
+	ShipClasses type;
 	int medium;
 	int pwr, def;
 
+	///////////////////////////Parametros/////////////////////////////
 	int attRange, movRange;
-	int attModifiers[3];
 
 public:
-	//Contruccion
-	Barco(int _x, int _y);
-	
-	//Funcion de dibujo
-	void doDraw();
+	//////////////////////////////////////////////////////////////////
+	//							Metodos								//
+	//////////////////////////////////////////////////////////////////
 
-	//Interfaz
-	int getDef() { return def; };
-	int getMovRange(){ return attRange; };
-	int getAttRange(){ return movRange; };
+	/////////////////////////////Dibujo////////////////////////////////
+	void doDraw();		//Dibuja la figura del barco
 
-	//Interaccion
-	void dealDamage(int enemyType, int *enemySubsistems);
+	////////////////////////////Interfaz///////////////////////////////
+	int getDef() { return def; };				//Devulave la defensa restante
+	int getMovRange(){ return attRange; };		//Devuelve el rango de ataque
+	int getAttRange(){ return movRange; };		//Devuelve el rango de movimiento
+
+	//////////////////////////Interaccion//////////////////////////////
+	void dealDamage(Barco &);		//Permite infingir daño a otras naves
+
+	//////////////////////////Constructor//////////////////////////////
+	Barco(int _x, int _y, int fact, ShipClasses type);
 };
 

@@ -6,7 +6,7 @@
 #include <time.h>
 #include <math.h>
 #include <iostream>
-//Funciones de Juego
+//Recursos de juego
 #include "FuncionesIni.h"
 #include "Elemento.h"
 #include "World.h"
@@ -87,10 +87,10 @@ void func(int value)
 
 int main(int argc,char* argv[])
 {
-	//Abre la ventana y GL
+	//////////////////////////Abre la ventana y GL//////////////////////////
 	inicializaVentana(argc, argv);
 
-	//llama a los calbacks del juego
+	////////////////////Llama a los calbacks del juego///////////////////////
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
@@ -100,18 +100,32 @@ int main(int argc,char* argv[])
 	srand(time(NULL));
 	glClearColor(0.7, 1.0, 1.0, 0);
 	
+	//////////////////////Inicia la musica del juego/////////////////////////
 	//PlaySound(L"MaC.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 
-	//Creacion de periferias
+	///////////////////////Creacion de periferias////////////////////////////
 	for (int i = 0; i < ((WORLDSIZE - 1) / 2); i++)
 		periferias[i] = periferiaFinder(i + 1);
 
+	///////////////////////////////////////////////////////////////////////
+	////////////////////////////TEMP//////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////
 	//Poner contenido a mundo
-	pList[0].myShips.addShip(new Barco(2, 2));
+	pList.addPlayer(new Player("Jugador 1", 1, ePlayer));
+	pList[1].myShips.addShip(new Barco(2, 1, 1, lightCrusier));
+	pList[1].myShips.addShip(new Barco(2, 0, 1, Crusier));
+	pList[1].myShips.addShip(new Barco(2, -1, 1, battleCrusier));
+	pList.addPlayer(new Player("Jugador 2", 2, ePlayer));
+	pList[2].myShips.addShip(new Barco(-2, 1, 2, lightCrusier));
+	pList[2].myShips.addShip(new Barco(-2, 0, 2, Crusier));
+	pList[2].myShips.addShip(new Barco(-2, -1, 2, battleCrusier));
+
 	pList.addWorldContent(&superficie);
 
 	//inicializar los turnos
 	turno.iniGameCounter(&pList);
+
+	///////////////////////////////////////////////////////////////
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -169,7 +183,7 @@ void OnDraw(void) {
 			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
 			superficie.drawOption(posRatonW[x], posRatonW[y], pti);
-			superficie.doDrawRange(pti);
+			superficie.doDrawRange(pti, 1);
 
 			superficie.drawOption(posRatonW[x], posRatonW[y],pti);
 			break;

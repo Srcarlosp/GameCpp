@@ -1,26 +1,29 @@
 #pragma once
+//Standart C++
 #include <cmath>
-
+//Recursos del juego
 #include "Constantes.h"
 
 class Vector
 {
 protected:
-
+	//////////////////////////////////////////////////////////////////
+	//							Atributos							//
+	//////////////////////////////////////////////////////////////////
 	float v[3];
 
 public:
-	
-	inline Vector(float _x = 0, float _y = 0, float _z = 0)
-	{
-		v[x] = _x, v[y] = _y, v[z] = _z;
-	}
+	//////////////////////////////////////////////////////////////////
+	//							Metodos								//
+	//////////////////////////////////////////////////////////////////
 
+	///////////////////////////////Interfaz//////////////////////////
 	inline float & operator [] (const int d)  //Operador de acceso
 	{
 		return v[d];
 	}
 
+	///////////////////////Operaciones usuales/////////////////////////
 	inline double norma2D()	//Devulve modulo del vector para xy
 	{
 		float modulo = 0;
@@ -65,8 +68,7 @@ public:
 		return *this;
 	}
 
-	//Operadores aritmeticos
-
+	/////////////////////Operadores aritmeticos///////////////////////
 	inline Vector operator- (Vector vr)
 	{
 		return Vector(v[x] - vr[x], v[y] - vr[y], v[z] - vr[z]);
@@ -97,5 +99,11 @@ public:
 	inline Vector operator/ (Vector vr)		//Sirve para escalar vectores
 	{
 		return Vector(v[x] * vr[x], v[y] * vr[y], v[z] * vr[z]);
+	}
+	
+	//////////////////////////Constructor//////////////////////////////
+	inline Vector(float _x = 0, float _y = 0, float _z = 0)
+	{
+		v[x] = _x, v[y] = _y, v[z] = _z;
 	}
 };

@@ -41,7 +41,7 @@ public:
 
 	void doDrawWorldPlane();
 
-	void doDrawRange(Posicion);
+	void doDrawRange(Posicion, int);
 	void drawOption(float, float, Posicion);
 		/////////////Temporal Debug///////////////
 	unsigned int image1;

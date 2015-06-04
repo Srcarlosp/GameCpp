@@ -59,37 +59,17 @@ void World::doDrawWorldContent()
 	loopMap(0, 0, World::drawElments);
 }
 
-void World::doDrawRange(Posicion pt)
+void World::doDrawRange(Posicion pt, int fact)
 {
-	if (ataque == 1){
-		if (world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getFull())
-		{
-			
-			Casilla::lightUp(pt, h, 200,1);
-			for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
-				for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-					Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20,50);
-		}
-	}
-	if (mover == 1){
-		if (world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getFull())
-		{
-
-			Casilla::lightUp(pt, h, 200, 30);
-			for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
-				for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-					Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 150 - (i + 1) * 20, 30);
-		}
-	}
-	if (mover==0 && ataque==0){
-		if (world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getFull())
-		{
-			Casilla::lightUp(pt, h, 200);
-			Casilla::lightUp(pt, h, 200);
-			for (int i = 0; i < world[pt[x] + ((WORLDSIZE - 1) / 2)][pt[y] + ((WORLDSIZE - 1) / 2)].getElem()->range; i++)
-				for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-					Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20);
-		}
+	//Cambio a ptm
+	Posicion ptm = Posicion(pt[x] + ((WORLDSIZE - 1) / 2), pt[y] + ((WORLDSIZE - 1) / 2));
+	if (world[ptm[x]][ptm[y]].getFull() && world[ptm[x]][ptm[y]].getElem()->getMovil())
+	{
+		Barco *br = static_cast<Barco *>(world[ptm[x]][ptm[y]].getElem());
+		Casilla::lightUp(pt, h, 200,1);
+		for (int i = 0; i < br->getMovRange(); i++)
+			for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
+				Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20,50);
 	}
 }
 
