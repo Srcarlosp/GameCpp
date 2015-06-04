@@ -1,74 +1,96 @@
-﻿#include "windows.h"
+﻿//Graficos
+#include "windows.h"
+#include "OpenGL.h"
 #include "glut.h"
+//Standar C++
 #include <time.h>
 #include <math.h>
 #include <iostream>
+//Funciones de Juego
+#include "FuncionesIni.h"
 #include "Elemento.h"
 #include "World.h"
 #include "Camera.h"
 #include "Interfaz.h"
 #include "funciones_inline.h"
 #include "Vector.h"
-#include "OpenGL.h"
 #include "Barco.h"
 #include "Roca.h"
+#include "PlayerList.h"
+#include "GameCounter.h"
 
-//Funciones glut
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////																	////
+////							Inicializacion							////
+////																	////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//                          Funciones glut								//
+//////////////////////////////////////////////////////////////////////////
+
 void OnDraw(void);
 void OnTimer(int value);
 void OnKeyboardDown(BYTE key, int x, int y);
 void OnMouseMotion(int x, int y);
 void OnMouseMotionClick(int, int, int x, int y);
 
-//Flags y variables globales
-Posicion pti;						//Variable de click
-Posicion ptf;						//Variable de click
-Vector posRatonW;					//Guarda la posicion del raton en la ventana
-Vector posRaton;					//Guarda la posicion del raton en todo momento
+//////////////////////////////////////////////////////////////////////////
+//                    Flags y variables globales						//
+//////////////////////////////////////////////////////////////////////////
 
+Posicion pti;									//Variable de click inicio
+Posicion ptf;									//Variable de click final
+Vector posRatonW;								//Guarda la posicion del raton en la ventana
+Vector posRaton;								//Guarda la posicion del raton en todo momento
+Posicion *periferias[((WORLDSIZE - 1) / 2)];	//Vector de periferias de analisis
+Camera *camera = new Camera(20,20,20);			//Camara en uso por el jugador
 
-//Objetos Primarios (Temporal)
-Barco a(0, 0);
-Roca b(1, 0);
-Elemento c(2, 0);
-Elemento d(-1, 0);
-Elemento e(-2, 0);
-Elemento f(1, 1);
+//////////////////////////////////////////////////////////////////////////
+//                    Inicializacion de jugadores						//
+//////////////////////////////////////////////////////////////////////////
 
+PlayerList pList;
 
-//Mundo y camara del juego
-World superficie(0), profundidades(-2);
-Camera camera(15, 7, 10);
+//////////////////////////////////////////////////////////////////////////
+//								 Mundo									//
+//////////////////////////////////////////////////////////////////////////
 
-//Funciones de interaccion con el mundo
+World superficie(0);
+
+//////////////////////////////////////////////////////////////////////////
+//                         Intrefaz Jugador								//
+//////////////////////////////////////////////////////////////////////////
+
 Interfaz interfaz;
 
+//////////////////////////////////////////////////////////////////////////
+//                         Gestion del turno							//
+//////////////////////////////////////////////////////////////////////////
 
-//Vector para periferias
-Posicion * periferias[((WORLDSIZE - 1) / 2)];
+GameCounter turno;
 
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////																	////
+////							Main									////
+////																	////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-//Secuencia de inicializacion de la ventana
-void inicializaVentana(int argc, char* argv[])
+void func(int value)
 {
-	//Inicializar el gestor de ventanas GLUT y crear la ventana
+	std::cout << value;
+}
 
-	glutInit(&argc, argv);
-	glutInitWindowSize(WWW, HHH);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow("MiJuego");
+int main(int argc,char* argv[])
+{
+	//Abre la ventana y GL
+	inicializaVentana(argc, argv);
 
-	//habilitar luces y definir perspectiva
-
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_COLOR_MATERIAL);
-	glMatrixMode(GL_PROJECTION);
-	gluPerspective(40.0, WWW / HHH, 0.1, HHH); //Registrar los callbacks
-	
 	//llama a los calbacks del juego
-	
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(10, OnTimer, 0); //10 ms
 	glutKeyboardFunc(OnKeyboardDown);
@@ -76,15 +98,7 @@ void inicializaVentana(int argc, char* argv[])
 	glutMotionFunc(OnMouseMotion);
 	glutPassiveMotionFunc(OnMouseMotion);
 	srand(time(NULL));
-	glClearColor(0.7,1.0,1.0,0);
-
-}
-
-int main(int argc,char* argv[])
-{
-	
-	//Abre la ventana y GL
-	inicializaVentana(argc, argv);
+	glClearColor(0.7, 1.0, 1.0, 0);
 	
 	//PlaySound(L"MaC.wav", NULL, SND_ASYNC | SND_FILENAME | SND_LOOP);
 
@@ -93,13 +107,11 @@ int main(int argc,char* argv[])
 		periferias[i] = periferiaFinder(i + 1);
 
 	//Poner contenido a mundo
-	superficie.addElem(&a);
-	superficie.addElem(&b);
-	superficie.addElem(&c);
-	superficie.addElem(&d);
-	superficie.addElem(&e);
-	profundidades.addElem(&f);
+	pList[0].myShips.addShip(new Barco(2, 2));
+	pList.addWorldContent(&superficie);
 
+	//inicializar los turnos
+	turno.iniGameCounter(&pList);
 
 	//Entrada en el bucle de funcion
 	glutMainLoop();
@@ -107,34 +119,34 @@ int main(int argc,char* argv[])
 	return 0; 
 } 
 
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////																	////
+////						funciones CALLBACK							////
+////																	////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//
-//			Funciones CALLBACK
-//
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////////////
+//								 Dibujo									//
+//////////////////////////////////////////////////////////////////////////
 
 void OnDraw(void) {
-
 	float vista[9];
-	camera.getBackCamera(vista);
+	camera->getBackCamera(vista);
 	switch (interfaz.sMenu){
 		//Menu
 		case 0:
-			interfaz.Menu();
+			interfaz.Menu(camera);
 			//if (interfaz.sMenu == 0)OpenGL::Print("Enter", 400, 500, 256, 256, 256);
 			break;
 		//Tanto para el caso del jugador 1 como el 2, se pinta el mismo mundo, solo se pone la camara al otro lado del tablero
-		case 1:
-		case 2:
-			
-			if(interfaz.sMenu==1)interfaz.Jugador1();
-			if (interfaz.sMenu == 2)interfaz.Jugador2();
 		//Etapa Libre
-		case 3:
+		default:
+
+			///////////////////////////////////TEMP////////////////////////////////////
+			camera = &pList[0].pCamera;
+			///////////////////////////////////////////////////////////////////////////
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
 			glMatrixMode(GL_MODELVIEW);
@@ -159,22 +171,15 @@ void OnDraw(void) {
 			superficie.drawOption(posRatonW[x], posRatonW[y], pti);
 			superficie.doDrawRange(pti);
 
-			profundidades.doDrawWorldMap();
-			profundidades.doDrawWorldContent();
-
-			
 			superficie.drawOption(posRatonW[x], posRatonW[y],pti);
-			if (interfaz.sMenu == 1)OpenGL::Print("Jugador 1", 10, 10, 1, 0, 0);
-			if (interfaz.sMenu == 2)OpenGL::Print("Jugador 2", 10, 10, 1, 0, 0);
 			break;
 	}
 	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
 }
 
-//
-//------------------------------------------------------------------------------------------------------------------------------------------
-//
-
+//////////////////////////////////////////////////////////////////////////
+//                         Temporizada									//
+//////////////////////////////////////////////////////////////////////////
 void OnTimer(int value)					//poner aqui el codigo de animacion
 {
 
@@ -183,53 +188,34 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 
 }
 
-//
-//------------------------------------------------------------------------------------------------------------------------------------------
-//
+//////////////////////////////////////////////////////////////////////////
+//                         Movimiento de raton							//
+//////////////////////////////////////////////////////////////////////////
 
 void OnMouseMotion(int x, int y)
 {
-	posRaton = camera.posicionCursor(x, y);
-	std::cout << posRaton[z] << "\n";
+	interfaz.MovimientoRaton(x, y);
 }
 
-//
-//------------------------------------------------------------------------------------------------------------------------------------------
-//
+//////////////////////////////////////////////////////////////////////////
+//							  Click de raton							//
+//////////////////////////////////////////////////////////////////////////
 
 void OnMouseMotionClick(int p, int pp, int _x, int _y)
 {
-	
-		if (pp && p == GLUT_LEFT_BUTTON)
-		{
-			posRatonW[x] = _x;
-			posRatonW[y] = _y;
-			if (superficie.select != 2){
-				std::cout << "in \n";
-				posRaton = camera.posicionCursor(_x, _y);
-
-				ptf = goMemory(Vector(posRaton[x], posRaton[y]));
-				superficie.moveElem(Posicion(pti), Posicion(ptf));
-				profundidades.moveElem(Posicion(pti), Posicion(ptf));
-				superficie.select = 1;
-			}
-			superficie.select += 1;
-		}
-	else
-	{
-		if (superficie.select != 2){
-			posRaton = camera.posicionCursor(_x, _y);
-			pti = goMemory(Vector(posRaton[x], posRaton[y]));
-		}
-	}
+	interfaz.InterfazRaton(p, pp, _x, _y);
 }
 
-//
-//------------------------------------------------------------------------------------------------------------------------------------------
-//
+//////////////////////////////////////////////////////////////////////////
+//                         Pulsacion de teclado							//
+//////////////////////////////////////////////////////////////////////////
 
 void OnKeyboardDown(BYTE key, int x_t, int y_t)
 {
-	interfaz.InterfazTeclado(key, &camera, &a);
+	interfaz.InterfazTeclado(key, camera);
 	std::cout << "Key";
 }
+
+//////////////////////////////////////////////////////////////////////////
+//									FIN									//
+//////////////////////////////////////////////////////////////////////////

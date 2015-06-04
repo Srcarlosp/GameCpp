@@ -18,6 +18,7 @@ public:
 	void orbit(float);									//Inicia una orbita entorno al punto actual
 	void moveCamera(float,float,float);					//Movimiento diferencial
 	void zoomCamera(float);								//Hace zoom la escena
+	void elevationCamera(float);
 	void changeVertical(float, bool = false);			//Cambia el angulo de caida de la camara
 	void changePerspective(float g, float _x , float _y, float _z);		//Cambia la orbita g grados y mueve la camara x y
 

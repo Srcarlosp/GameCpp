@@ -2,7 +2,6 @@
 #include "Constantes.h"
 #include "funciones_inline.h"
 #include "Posicion.h"
-#include "ShipClass.h"
 #include "Vector.h"
 #include "cVector.h"
 
@@ -40,5 +39,6 @@ public:
 	virtual void doDraw();		//El elemento se dibuja a si mismo
 
 	//constructor
+	Elemento() {};
 	Elemento(int _x, int _y, BYTE _r = 255, BYTE _g = 255, BYTE _b = 255);
 };

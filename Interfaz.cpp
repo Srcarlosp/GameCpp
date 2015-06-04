@@ -1,14 +1,35 @@
 #include "Interfaz.h"
-
 #include "OpenGL.h"
 #include "glut.h"
 
-extern Camera camera;
+//////////////////////////////////////////////////////////////////////////
+//					Llamada a variables globales main					//
+//////////////////////////////////////////////////////////////////////////
 
-void Interfaz::Menu(){
-	camera.setCamera(-12, 0, 0);
+extern Camera *camera;			//Puntero a la camara actual
+extern GameCounter turno;		//Variable de turno
+extern Posicion pti;			//Variable de click inicio
+extern Posicion ptf;			//Variable de click final
+extern Vector posRatonW;		//Guarda la posicion del raton en la ventana
+extern Vector posRaton;			//Guarda la posicion del raton en todo momento
+extern World superficie;		//Superfcie del mar
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+////																	////
+////				Declaracion de funciones Interfaz					////
+////																	////
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//					Gestion Menu de inicio								//
+//////////////////////////////////////////////////////////////////////////
+void Interfaz::Menu(Camera *camera)
+{
+	camera->setCamera(-12, 0, 0);
 	float vista[9];
-	camera.getBackCamera(vista);
+	camera->getBackCamera(vista);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -43,9 +64,49 @@ void Interfaz::Menu(){
 	glEnable(GL_LIGHTING);
 	OpenGL::Print("Presiona ENTER", 380, 525, 0,0,0);
 	
-
 }
-void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
+
+//////////////////////////////////////////////////////////////////////////
+//					Gestion Movimiento de raton							//
+//////////////////////////////////////////////////////////////////////////
+void Interfaz::MovimientoRaton(int x, int y)
+{
+	posRaton = camera->posicionCursor(x, y);
+	std::cout << posRaton[z] << "\n";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//					Gestion pulsacion de reton							//
+//////////////////////////////////////////////////////////////////////////
+void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
+{
+	if (pp && p == GLUT_LEFT_BUTTON)
+	{
+		posRatonW[x] = _x;
+		posRatonW[y] = _y;
+		if (superficie.select != 2){
+			std::cout << "in \n";
+			posRaton = camera->posicionCursor(_x, _y);
+
+			ptf = goMemory(Vector(posRaton[x], posRaton[y]));
+			superficie.moveElem(Posicion(pti), Posicion(ptf));
+			superficie.select = 1;
+		}
+		superficie.select += 1;
+	}
+	else
+	{
+		if (superficie.select != 2){
+			posRaton = camera->posicionCursor(_x, _y);
+			pti = goMemory(Vector(posRaton[x], posRaton[y]));
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+//					Gestion pulsacion de teclado						//
+//////////////////////////////////////////////////////////////////////////
+void Interfaz::InterfazTeclado(Byte key, Camera *camara)
 {
 	switch (sMenu){
 		//si estas en el menu
@@ -53,7 +114,7 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 		if (key == 13) this->sMenu = 1;
 		break;
 		//si estas jugando
-	case 1:
+	default:
 		//Control del movimeto de camara
 		if (key == 'w') camara->moveCamera(-1, 0, 0);
 		if (key == 's') camara->moveCamera(1, 0, 0);
@@ -65,59 +126,19 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara, Elemento *elem)
 		//Control del zoom de la camara
 		if (key == 'r') camara->zoomCamera(1);
 		if (key == 'f') camara->zoomCamera(-1);
-		//Control de movimento de Elemetos
-
-		if (key == '0') this->select = 0;
-		if (key == '1') this->select = 1;
-		if (key == '2') this->select = 2;
-		if (key == 27) this->sMenu = 0;
-		if (key == '9') this->sMenu = 2; 
-		if (key == '5') this->sMenu = 3;
-		break;
-	case 2:
-		//Control del movimeto de camara
-		if (key == 'w') camara->moveCamera(-1, 0, 0);
-		if (key == 's') camara->moveCamera(1, 0, 0);
-		if (key == 'd') camara->moveCamera(0, -1, 0);
-		if (key == 'a') camara->moveCamera(0, 1, 0);
-		//Control de la orbita de camara
-		if (key == 'e') camara->orbit(1);
-		if (key == 'q') camara->orbit(-1);
 		//Control del zoom de la camara
-		if (key == 'r') camara->zoomCamera(1);
-		if (key == 'f') camara->zoomCamera(-1);
-		//Control de movimento de Elemetos
-	
-		if (key == '0') this->select = 0;
-		if (key == '1') this->select = 1;
-		if (key == '2') this->select = 2;
+		if (key == 'z') camara->elevationCamera(1);
+		if (key == 'x') camara->elevationCamera(-1);
+		//Control de flujo
+		if (key == 't') turno.advanceTurn();
 		if (key == 27) this->sMenu = 0;
-		if (key == '9') this->sMenu = 1; 
-		if (key == '5') this->sMenu = 3;
-		break;
-	case 3:
-		//Control del movimeto de camara
-		if (key == 'w') camara->moveCamera(-1, 0, 0);
-		if (key == 's') camara->moveCamera(1, 0, 0);
-		if (key == 'd') camara->moveCamera(0, -1, 0);
-		if (key == 'a') camara->moveCamera(0, 1, 0);
-		//Control de la orbita de camara
-		if (key == 'e') camara->orbit(1);
-		if (key == 'q') camara->orbit(-1);
-		//Control del zoom de la camara
-		if (key == 'r') camara->zoomCamera(1);
-		if (key == 'f') camara->zoomCamera(-1);
-		//Control de movimento de Elemetos
-
-		if (key == '0') this->select = 0;
-		if (key == '1') this->select = 1;
-		if (key == '2') this->select = 2;
-		if (key == 27) this->sMenu = 0;
-		if (key == '9') this->sMenu = 1;
-		
 		break;
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////
+//									FIN									//
+//////////////////////////////////////////////////////////////////////////
 
 /*
 void Interfaz::pintarPlanos()
@@ -258,13 +279,3 @@ void Interfaz::pintarPlanos()
 
 }
 */
-
-void Interfaz::Jugador1(){
-	
-	if (var1==0)camera.setCamera(10, 0, 15);var1=1;
-	var2 = 0;
-	}
-void Interfaz::Jugador2(){
-	if (var2 == 0)camera.setCamera(-10, 0, 15); var2 = 1; 
-	var1 = 0;
-}

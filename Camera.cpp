@@ -52,6 +52,11 @@ void Camera::zoomCamera(float d)
 	if (5<vectorPosLine().norma3D() || d<0) _o = (vectorPosLine() - vectorPosLine().normaUnitario()*d) + vectorPosMira();
 }
 
+void Camera::elevationCamera(float d)
+{
+	_o[z] += d;
+}
+
 void Camera::changeVertical(float h, bool diff)
 {
 	if (diff)	_o[z] += h;

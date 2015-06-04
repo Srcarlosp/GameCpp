@@ -80,13 +80,14 @@
     <ClCompile Include="Barco.cpp" />
     <ClCompile Include="Casilla.cpp" />
     <ClCompile Include="Elemento.cpp" />
+    <ClCompile Include="GameCounter.cpp" />
     <ClCompile Include="Interfaz.cpp" />
-    <ClCompile Include="ListaBarcos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="OpenGL.cpp" />
+    <ClCompile Include="PlayerList.cpp" />
     <ClCompile Include="Roca.cpp" />
-    <ClCompile Include="ShipClass.cpp" />
+    <ClCompile Include="shipList.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,16 +95,20 @@
     <ClInclude Include="Casilla.h" />
     <ClInclude Include="Constantes.h" />
     <ClInclude Include="cVector.h" />
+    <ClInclude Include="FuncionesIni.h" />
     <ClInclude Include="funciones_inline.h" />
-    <ClInclude Include="ListaBarcos.h" />
+    <ClInclude Include="GameCounter.h" />
+    <ClInclude Include="ID.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerList.h" />
     <ClInclude Include="Roca.h" />
+    <ClInclude Include="ShipList.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Elemento.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="Posicion.h" />
-    <ClInclude Include="ShipClass.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
