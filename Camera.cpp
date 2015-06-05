@@ -1,8 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera(float _x, float _y, float _z) :_o(_x, _y, _z) {}
-
-//Interaccion
+//////////////////////////////////////////////////////////////////
+//						Gestion de Interfaz						//
+//////////////////////////////////////////////////////////////////
 
 Vector Camera::posicionCursor(int _x, int _y)
 {
@@ -69,8 +69,6 @@ void Camera::changePerspective(float g, float _x, float _y, float _z)
 	moveCamera(_x, _y, 0);
 }
 
-//Interfaz
-
 void Camera::setPV(float _x, float _y, float _z)
 {
 	_v = Vector(_x, _y, _z);
@@ -94,7 +92,15 @@ void Camera::getBackCamera(float *v)
 	v[8] = 1;
 }
 
-//Operaciones internas
+//////////////////////////////////////////////////////////////////
+//							Constructor							//
+//////////////////////////////////////////////////////////////////
+
+Camera::Camera(float _x, float _y, float _z) :_o(_x, _y, _z) {}
+
+//////////////////////////////////////////////////////////////////
+//						Metodos	privados						//
+//////////////////////////////////////////////////////////////////
 
 Vector Camera::vectorPosOjos()
 {

@@ -46,16 +46,18 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses type) : Elemento(_x, _y, true
 	//	Orden de atributos
 	// {tipo, medio, ataque, defensa/vida, rango de ataque, rango de movimento}
 
-	int ligth_crusier[] = { lightCrusier, Water, 5, 10, 4, 6 };
-	int crusier[] = { Crusier, Water, 7, 15, 5, 5 };
-	int battle_crusier[] = { battleCrusier, Water, 10, 25, 7, 3 };
+	static int ligth_crusier[] = { lightCrusier, Water, 5, 10, 4, 6 };
+	static int crusier[] = { Crusier, Water, 7, 15, 5, 5 };
+	static int battle_crusier[] = { battleCrusier, Water, 10, 25, 7, 3 };
 
-	BYTE f1[] = { 255, 100, 100 };
-	BYTE f2[] = { 255, 255, 100 };
-	BYTE f3[] = { 100, 255, 255 };
-	BYTE f4[] = { 100, 255, 100 };
+	static BYTE f1[] = { 255, 100, 100 };
+	static BYTE f2[] = { 255, 255, 100 };
+	static BYTE f3[] = { 100, 255, 255 };
+	static BYTE f4[] = { 100, 255, 100 };
 
-	/////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//					Declaracion de contructor					//
+	//////////////////////////////////////////////////////////////////
 
 	int *stats;
 	switch (type)

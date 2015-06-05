@@ -6,7 +6,7 @@
 #include "vector.h"
 #include "Constantes.h"
 
-inline Posicion * periferiaFinder(int n)				//Genera las periferias que se usan para medir distancias en al espacio exagonal
+inline Posicion * periferiaFinder(int n)	//Genera las periferias que se usan para medir distancias en al espacio exagonal
 {
 	int c = 0;
 	Posicion *v = new Posicion[PERIFERIASIZE(n)];

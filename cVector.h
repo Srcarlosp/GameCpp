@@ -20,6 +20,5 @@ public:
 	{
 		return v[d];
 	}
-
 };
 
