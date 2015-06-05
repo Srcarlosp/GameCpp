@@ -25,7 +25,7 @@ void Elemento::setPos(Posicion pt)
 //////////////////////////////////////////////////////////////////////////
 //								Constructor								//
 //////////////////////////////////////////////////////////////////////////
-Elemento::Elemento(int _x, int _y, bool mov, int fact) :posAbs(_x, _y), movil(mov), faction(fact)
+Elemento::Elemento(int _x, int _y, bool mov, int _fact) :posAbs(_x, _y), movil(mov), faction(_fact)
 {
 	posVec[x] = dirx[0] * (float)posAbs[x] - diry[1] * (float)posAbs[y];
 	posVec[y] = dirx[1] * (float)posAbs[x] + diry[0] * (float)posAbs[y];

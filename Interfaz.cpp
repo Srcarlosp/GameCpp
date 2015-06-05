@@ -10,9 +10,14 @@ extern Camera *camera;			//Puntero a la camara actual
 extern GameCounter turno;		//Variable de turno
 extern Posicion pti;			//Variable de click inicio
 extern Posicion ptf;			//Variable de click final
-extern Vector posRatonW;		//Guarda la posicion del raton en la ventana
+extern Posicion posRatonW;		//Guarda la posicion del raton en la ventana
 extern Vector posRaton;			//Guarda la posicion del raton en todo momento
 extern World superficie;		//Superfcie del mar
+extern GameCounter turno;		//Turno
+extern ButtonList dialog;		//Botonera
+
+extern bool flagMove;
+extern bool flagAttack;
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -76,30 +81,56 @@ void Interfaz::MovimientoRaton(int x, int y)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//					Gestion pulsacion de reton							//
+//					Gestion pulsacion de raton							//
 //////////////////////////////////////////////////////////////////////////
 void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 {
+	posRaton = camera->posicionCursor(_x, _y);
+	posRatonW = Posicion(_x, _y);
+
 	if (pp && p == GLUT_LEFT_BUTTON)
 	{
-		posRatonW[x] = _x;
-		posRatonW[y] = _y;
-		if (superficie.select != 2){
-			std::cout << "in \n";
-			posRaton = camera->posicionCursor(_x, _y);
-
-			ptf = goMemory(Vector(posRaton[x], posRaton[y]));
-			superficie.moveElem(Posicion(pti), Posicion(ptf));
-			superficie.select = 1;
-		}
-		superficie.select += 1;
+		posRaton = camera->posicionCursor(_x, _y);
+		ptf = goMemory(posRaton);
+		if (flagMove) 
+			superficie.moveElem(pti, ptf, interactuable(turno.enableFaction()));
+		//if (flagAttack)
+			//static_cast<Barco *>(superficie.getPoint(pti).getElem())->dealDamage(*static_cast<Barco *>(superficie.getPoint(ptf).getElem()));
+		if(!dialog.activo) flagAttack = false, flagMove = false;
 	}
 	else
 	{
-		if (superficie.select != 2){
-			posRaton = camera->posicionCursor(_x, _y);
-			pti = goMemory(Vector(posRaton[x], posRaton[y]));
+		pti = goMemory(posRaton);
+		if (dialog.activo)
+		{
+			switch (dialog.checkButtons(posRatonW))
+			{
+			case 0:
+				dialog.activo = false;
+				std::cout << "nada";
+				break;
+			case 1:
+				flagMove = true;
+				std::cout << "mueve";
+				break;
+			case 2:
+				flagAttack = true;
+				std::cout << "ataca";
+				break;
+			}
+			dialog.clearButtons();
 		}
+		else
+		{
+			dialog.activo = false;
+		}
+
+	}
+	if (pp && p == GLUT_RIGHT_BUTTON)
+	{
+		dialog.activo = true;
+		dialog.addButton(new Boton("Mover", 1, posRatonW, Posicion(20, 20)));
+		dialog.addButton(new Boton("Atacar", 2, posRatonW, Posicion(-80, -80)));
 	}
 }
 
@@ -137,145 +168,18 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara)
 }
 
 //////////////////////////////////////////////////////////////////////////
+//						Gestion de interaccion							//
+//////////////////////////////////////////////////////////////////////////
+bool Interfaz::interactuable(int fact)
+{
+	if (superficie.getPoint(pti).getFull())
+	{
+		if (fact == 0) return true;
+		if ((superficie.getPoint(pti).getElem()->getFaction() == fact )&&(superficie.getPoint(pti).getElem()->getMovil())) return true;
+	}
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
 //									FIN									//
 //////////////////////////////////////////////////////////////////////////
-
-/*
-void Interfaz::pintarPlanos()
-{
-	int cont = 0;
-	float ALTURA_PLANO_SUP = 0.0;
-	const float ALTURA_PLANO_INF = -5.0;
-	unsigned int width = 0, height = 0;
-	unsigned int image2 = OpenGL::CargaTextura("fondo.bmp");
-	switch (select){
-	case 0:
-	case 1:
-
-		//Cargar textura de arriba
-		
-		//malla superior
-		for (float x = 5; x >= -5;)
-		{
-			if (cont % 2 == 0){
-				for (float y = -5; y <= 5;){
-					glBegin(GL_LINES);
-					glColor3ub(255, 255, 255);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
-					glEnd();
-					y += 0.866;
-				}
-				x -= 0.75;
-				cont++;
-			}
-			else
-			{
-				for (float y = -5.433; y <= 5;){
-					glBegin(GL_LINES);
-					glColor3ub(255, 255, 255);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - 0.5f, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_SUP + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_SUP + 0.02f);
-					glEnd();
-					y += 0.866;
-				}
-				cont++;
-				x -= 0.75;
-			}
-		}
-		if (select == 1)break;
-	case 2:
-		//pintar plano de abajo
-
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, image2);
-		glDisable(GL_LIGHTING);
-		glColor3ub(255, 255, 255);
-		glColor3f(1, 1, 1);
-		glBegin(GL_POLYGON);
-		//glColor3ub(0, 51, 51);
-		glTexCoord2d(0.0f, 0.0f);
-		glVertex3f(-5.0f, -5.0f, ALTURA_PLANO_INF);
-		//(0, 51, 51);
-		glTexCoord2d(0.0f, 1.0);
-		glVertex3f(-5.0f, 5.0f, ALTURA_PLANO_INF);
-		//glColor3ub(0, 51, 51);
-		glTexCoord2d(1.0f, 1.0);
-		glVertex3f(5.0f, 5.0f, ALTURA_PLANO_INF);
-		//glColor3ub(0, 51, 51
-		glTexCoord2d(1.0f, 0.0);
-		glVertex3f(5.0f, -5.0f, ALTURA_PLANO_INF);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		
-
-		//malla inferior
-		for (float x = 5; x >= -5;)
-		{
-			if (cont % 2 == 0){
-				for (float y = -5; y <= 5;){
-					glBegin(GL_LINES);
-					glColor3ub(255, 255, 255);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
-					glEnd();
-					y += 0.866;
-
-				}
-				x -= 0.75;
-				cont++;
-			}
-			else
-			{
-				for (float y = -5.433; y <= 5;){
-					glBegin(GL_LINES);
-					glColor3ub(255, 255, 255);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y + (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - 0.5f, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x, y, ALTURA_PLANO_INF + 0.02f);
-					glVertex3f(x - (float)0.5*cos(float(2.0944)), y - (float)0.5*sin(float(2.0944)), ALTURA_PLANO_INF + 0.02f);
-					glEnd();
-					y += 0.866;
-
-				}cont++;
-				x -= 0.75;
-			}
-
-		}break;
-		
-
-	}
-
-	///////////////////////Regla/////////////////////
-	glBegin(GL_LINES);
-	glColor3ub(0, 0, 0);
-	glVertex3f(+0.25f, 5.0f, 0.011f);
-	glVertex3f(+0.25f, -5.0f, 0.011f);
-	glEnd();
-	for (float y = 5; y >= -5;)
-	{
-
-		glBegin(GL_LINES);
-		glVertex3f(0.15f, y, 0.011f);
-		glVertex3f(0.35f, y, 0.011f);
-		glEnd();
-		y -= (float)(0.866 / 10);
-	}
-	glEnable(GL_LIGHTING);
-
-}
-*/

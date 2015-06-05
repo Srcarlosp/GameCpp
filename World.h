@@ -25,21 +25,21 @@ class World
 	float h;
 	Posicion posRatonWAnt;
 
+
 public:
 	//////////////////////////////////////////////////////////////////
 	//							Metodos								//
 	//////////////////////////////////////////////////////////////////
 	
 	/////////////////////////////?????////////////////////////////////
-	int select = 1;				//??????????
-	bool ataque = 0, mover = 0;	//??????????
+	//int select = 1;				//Marcador de seleccion (QUTAR)
+	//bool ataque = 0, mover = 0;	//??????????
 
 	////////////////////////////Interfaz///////////////////////////////
 	Casilla getPoint(int, int);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	Casilla getPoint(Posicion);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	void addElem(Elemento *);			//Permite añadir un elemento al mundo, lo coloca en posicion automaticamente
-	void moveElem(Posicion, Posicion);	//Permite mover del mundo, lo coloca en posicion seleccionada
-	void drawOption(float, float, Posicion);	//Dibjua el cuadro de dialogo y lee la interaccion
+	void moveElem(Posicion, Posicion, bool);	//Permite mover del mundo, lo coloca en posicion seleccionada
 	float getH();						//Devuelve la altura del elemento
 	Casilla * operatePoint(int, int);	//Devulelve un detreminado punto permitiendo operar con el
 
@@ -47,7 +47,7 @@ public:
 	void doDrawWorldMap();				//Dibuja el plano del mundo y los hexagonos
 	void doDrawWorldContent();			//Dibuja todos los elementos que estan en el mapa
 	void doDrawWorldPlane();			//Dibja la imagen de fondo del mundo
-	void doDrawRange(Posicion, int);	//Dibuja los perimetros de seleccion		
+	void doDrawRange(Posicion pt, bool dib, int ty = 0);	//Dibuja los perimetros de seleccion		
 
 	/////////////Temporal Debug///////////////
 	unsigned int image1;

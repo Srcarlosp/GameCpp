@@ -37,7 +37,7 @@ void Barco::doDraw()
 //////////////////////////////////////////////////////////////////
 //							Constructor							//
 //////////////////////////////////////////////////////////////////
-Barco::Barco(int _x, int _y, int fact, ShipClasses type) : Elemento(_x, _y, true, fact)
+Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true, fact)
 {
 	//////////////////////////////////////////////////////////////////
 	//				Estadisticas de barcos por tipo					//
@@ -60,7 +60,7 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses type) : Elemento(_x, _y, true
 	//////////////////////////////////////////////////////////////////
 
 	int *stats;
-	switch (type)
+	switch (typ)
 	{
 	case lightCrusier:
 		type = lightCrusier;

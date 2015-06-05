@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Barco.cpp" />
+    <ClCompile Include="Boton.cpp" />
     <ClCompile Include="Casilla.cpp" />
     <ClCompile Include="Elemento.cpp" />
     <ClCompile Include="GameCounter.cpp" />
@@ -92,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barco.h" />
+    <ClInclude Include="Boton.h" />
+    <ClInclude Include="ButtonList.h" />
     <ClInclude Include="Casilla.h" />
     <ClInclude Include="Constantes.h" />
     <ClInclude Include="cVector.h" />
@@ -99,6 +102,7 @@
     <ClInclude Include="funciones_inline.h" />
     <ClInclude Include="GameCounter.h" />
     <ClInclude Include="ID.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerList.h" />
     <ClInclude Include="Roca.h" />

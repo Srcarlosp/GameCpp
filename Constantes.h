@@ -7,7 +7,6 @@
 #define WWW 800.0F
 #define HHH 600.0F
 #define PI 3.14159F
-#define MAXBARCOS 50
 
 //////////////////////////////////////////////////////////////////
 //						ctes del mundo							//

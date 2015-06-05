@@ -22,8 +22,8 @@ class Elemento				//Clase abstracta//
 	Vector posVec;
 
 	/////////////////////Parametros de control////////////////////////
-	bool movil = 0;
-	int faction = 0;
+	bool movil;
+	int faction;
 	
 public:
 	//////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ public:
 	Posicion getPos() { return posAbs; }		//Devulve la posisicon del elemento
 	void setH(float _f) { posVec[z] = _f; }		//Coloca el elemento a una altura determinada
 	bool getMovil() { return movil; }			//Devulve verdadero si se puede mover
-	bool getFaction() { return faction; }		//Devuelve la faccion del objeto
+	int getFaction() { return faction; }		//Devuelve la faccion del objeto
 	
 	//////////////////////Metodos graficos///////////////////////////
 	virtual void doDraw() = 0;		//El elemento se dibuja a si mismo

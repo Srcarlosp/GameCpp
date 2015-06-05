@@ -6,12 +6,12 @@
 
 Casilla World::getPoint(int _x, int _y)
 {
-	int x = _x + ((WORLDSIZE - 1) / 2), y = _x + ((WORLDSIZE - 1) / 2);
-	return world[x][y];
+	return world[_x][_y];
 }
 Casilla World::getPoint(Posicion pt)
 {
-	return getPoint(pt[x], pt[y]);
+	Posicion ptm = Posicion(pt[x] + ((WORLDSIZE - 1) / 2), pt[y] + ((WORLDSIZE - 1) / 2));
+	return getPoint(ptm[x], ptm[y]);
 }
 
 void World::addElem(Elemento *e)
@@ -20,10 +20,10 @@ void World::addElem(Elemento *e)
 	e->setH(h);
 }
 
-void World::moveElem(Posicion oldPos, Posicion newPos)
+void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 {
-	
-	std::cout << "in\n";
+	if (inter == 0) return;
+	//if (world[newPos[x]][newPos[y]].getFull()) return;
 
 	Posicion des = newPos;
 
@@ -59,18 +59,32 @@ void World::doDrawWorldContent()
 	loopMap(0, 0, World::drawElments);
 }
 
-void World::doDrawRange(Posicion pt, int fact)
+void World::doDrawRange(Posicion pt, bool dib, int ty)
 {
+	if (dib == false) return;
 	//Cambio a ptm
 	Posicion ptm = Posicion(pt[x] + ((WORLDSIZE - 1) / 2), pt[y] + ((WORLDSIZE - 1) / 2));
-	if (world[ptm[x]][ptm[y]].getFull() && world[ptm[x]][ptm[y]].getElem()->getMovil())
-	{
-		Barco *br = static_cast<Barco *>(world[ptm[x]][ptm[y]].getElem());
-		Casilla::lightUp(pt, h, 200,1);
-		for (int i = 0; i < br->getMovRange(); i++)
-			for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
-				Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20,50);
-	}
+
+	if (world[ptm[x]][ptm[y]].getFull())
+		if (world[ptm[x]][ptm[y]].getElem()->getMovil())
+		{
+			Barco *br = static_cast<Barco *>(world[ptm[x]][ptm[y]].getElem());
+			switch (ty)
+			{
+			case 0:
+				Casilla::lightUp(pt, h, 0, 20, 255);
+				for (int i = 0; i < br->getMovRange(); i++)
+					for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
+						Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20, 255);
+				break;
+			case 1:
+				Casilla::lightUp(pt, h, 0, 20, 0);
+				for (int i = 0; i < br->getAttRange(); i++)
+					for (int ii = 0; ii < PERIFERIASIZE((i + 1)); ii++)
+						Casilla::lightUp(periferias[i][ii] + pt, h + 0.01, 200 - (i + 1) * 20, 0);
+				break;
+			}
+		}
 }
 
 //////////////////////////////////////////////////////////////////
@@ -96,30 +110,6 @@ Casilla * World::operatePoint(int _x, int _y)
 	return &world[x][y];
 }
 
-void World::drawOption(float _x, float _y,Posicion pti){
-	switch (select){
-	case 2:
-		posRatonWAnt[x] = _x;
-		posRatonWAnt[y] = _y;
-		OpenGL::Print("Atacar", _x + 5, _y + 5, 1, 0, 0);
-		OpenGL::Print("Mover", _x + 5, _y + 20, 1, 0, 0);
-		ataque = 0;
-		mover = 0;
-		break;
-	case 3:
-		if ((posRatonWAnt[y] - _y + 5)>-20 && (posRatonWAnt[y] - _y + 5)<0){ //EVALUA SI HAS DADO A ATACAR
-			ataque = 1;
-			mover = 0;
-		}
-		if ((posRatonWAnt[y] - _y + 5)>-45 && (posRatonWAnt[y] - _y + 5)<-21){ //evalua si has dado a mover
-			ataque = 0;
-			mover = 1;
-		}
-
-		if (select == 3) select = 1;
-	
-	}
-}
 
 void World::loopMap(int _x, int _y, void(*funcion)(Casilla *), int n, bool itSelf)
 {

@@ -19,9 +19,9 @@ public:
 	///////////////////////Metodos interfaz///////////////////////////
 	void iniGameCounter(PlayerList * pl);
 	void advanceTurn();
-	int enableFaction() { return factionList[subturnsCnt]; }
+	int enableFaction() { return factionList[subturnsCnt-1]; }
 	int thisTurn() { return turn; }
-	int thisSubturn() { return subturnsCnt; }
+	int thisSubturn() { return factionList[subturnsCnt-1]; }
 
 	GameCounter();
 	~GameCounter();

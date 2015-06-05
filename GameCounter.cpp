@@ -8,11 +8,11 @@ turn(0), subturnsCnt(1) {}
 
 void GameCounter::iniGameCounter(PlayerList * pl)
 {
-	subturns = pl->listLeng();
+	subturns = pl->listLeng() -1;
 	factionList = new int[subturns];
-	for (int i = 0; i < pl->listLeng(); i++)
+	for (int i = 0; i < subturns; i++)
 	{
-		factionList[i] = pl->operator[](i).faction;
+		factionList[i] = pl->operator[](i+1).getFACT();
 	}
 }
 
@@ -22,7 +22,7 @@ void GameCounter::advanceTurn()
 	if (subturnsCnt > subturns)
 	{
 		turn++;
-		subturns = 1;
+		subturnsCnt = 1;
 	}
 }
 

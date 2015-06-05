@@ -26,7 +26,8 @@ public:
 	void doDraw();		//Dibuja la figura del barco
 
 	////////////////////////////Interfaz///////////////////////////////
-	int getDef() { return def; };				//Devulave la defensa restante
+	int getAtt() { return pwr; };				//Devuelve el ataque
+	int getDef() { return def; };				//Devuelve la defensa restante
 	int getMovRange(){ return attRange; };		//Devuelve el rango de ataque
 	int getAttRange(){ return movRange; };		//Devuelve el rango de movimiento
 

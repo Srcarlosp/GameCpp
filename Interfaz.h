@@ -1,5 +1,4 @@
 #pragma once
-
 #include <cmath>
 #include "Casilla.h"
 #include "Elemento.h"
@@ -7,14 +6,7 @@
 #include "Camera.h"
 #include "windows.h"
 #include "GameCounter.h"
-
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-////																	////
-////					Llamada a globales main							////
-////																	////
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
+#include "ButtonList.h"
 
 class Interfaz{
 public:
@@ -32,4 +24,5 @@ public:
 	void InterfazRaton(int p, int pp, int _x, int _y);
 	void InterfazTeclado(Byte key, Camera *);
 	void Menu(Camera *camera);
+	static bool interactuable(int fact);		//Chequea si se puede interactuar con el elemnto seleccionado
 };

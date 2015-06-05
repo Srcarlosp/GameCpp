@@ -18,6 +18,7 @@ public:
 	//////////////////////////////////////////////////////////////////
 	//							Metodos								//
 	//////////////////////////////////////////////////////////////////
+	int getFACT() { return faction; }
 	Player(char id[], int fact, int acceslev) :
 		name(id), faction(fact), accesLevel(acceslev), pCamera(15, 15, 10) {}
 

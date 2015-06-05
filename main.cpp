@@ -18,6 +18,8 @@
 #include "Roca.h"
 #include "PlayerList.h"
 #include "GameCounter.h"
+#include "Info.h"
+#include "ButtonList.h"
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -43,10 +45,12 @@ void OnMouseMotionClick(int, int, int x, int y);
 
 Posicion pti;									//Variable de click inicio
 Posicion ptf;									//Variable de click final
-Vector posRatonW;								//Guarda la posicion del raton en la ventana
+Posicion posRatonW;								//Guarda la posicion del raton en la ventana
 Vector posRaton;								//Guarda la posicion del raton en todo momento
 Posicion *periferias[((WORLDSIZE - 1) / 2)];	//Vector de periferias de analisis
 Camera *camera = new Camera(20,20,20);			//Camara en uso por el jugador
+bool flagMove = 0;
+bool flagAttack = 0;
 
 //////////////////////////////////////////////////////////////////////////
 //                    Inicializacion de jugadores						//
@@ -65,6 +69,8 @@ World superficie(0);
 //////////////////////////////////////////////////////////////////////////
 
 Interfaz interfaz;
+Info cuadro;
+ButtonList dialog;
 
 //////////////////////////////////////////////////////////////////////////
 //                         Gestion del turno							//
@@ -120,11 +126,13 @@ int main(int argc,char* argv[])
 	pList[2].myShips.addShip(new Barco(-2, 0, 2, Crusier));
 	pList[2].myShips.addShip(new Barco(-2, -1, 2, battleCrusier));
 
+	turno.iniGameCounter(&pList);
 	pList.addWorldContent(&superficie);
 
-	//inicializar los turnos
-	turno.iniGameCounter(&pList);
+	//std::cout << pList[2].faction << pList[2].myShips[0]->getFaction();
 
+	//inicializar los turnos
+	
 	///////////////////////////////////////////////////////////////
 
 	//Entrada en el bucle de funcion
@@ -152,10 +160,8 @@ void OnDraw(void) {
 		//Menu
 		case 0:
 			interfaz.Menu(camera);
-			//if (interfaz.sMenu == 0)OpenGL::Print("Enter", 400, 500, 256, 256, 256);
 			break;
-		//Tanto para el caso del jugador 1 como el 2, se pinta el mismo mundo, solo se pone la camara al otro lado del tablero
-		//Etapa Libre
+		//Juego normal
 		default:
 
 			///////////////////////////////////TEMP////////////////////////////////////
@@ -172,7 +178,6 @@ void OnDraw(void) {
 				vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
 				);
 
-
 			Casilla::lightUp(posRaton[x], posRaton[y]);			//Es la funcion que ilumina la casilla donde esta el raton
 
 			glColor3ub(2, 2, 2);
@@ -182,10 +187,15 @@ void OnDraw(void) {
 
 			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
-			superficie.drawOption(posRatonW[x], posRatonW[y], pti);
-			superficie.doDrawRange(pti, 1);
+			//////////////////////////Dibujo de rango////////////////////////////
+			if (flagAttack)
+				superficie.doDrawRange(pti, Interfaz::interactuable(turno.enableFaction()), 1);
+			if (flagMove)
+				superficie.doDrawRange(pti, Interfaz::interactuable(turno.enableFaction()), 0);
+			//////////////////////////Dibujo de menus////////////////////////////
+			cuadro.putInfoFull(pti);
+			dialog.drawButtos();
 
-			superficie.drawOption(posRatonW[x], posRatonW[y],pti);
 			break;
 	}
 	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
@@ -206,9 +216,9 @@ void OnTimer(int value)					//poner aqui el codigo de animacion
 //                         Movimiento de raton							//
 //////////////////////////////////////////////////////////////////////////
 
-void OnMouseMotion(int x, int y)
+void OnMouseMotion(int _x, int _y)
 {
-	interfaz.MovimientoRaton(x, y);
+	interfaz.MovimientoRaton(_x, _y);
 }
 
 //////////////////////////////////////////////////////////////////////////
