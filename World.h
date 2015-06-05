@@ -16,8 +16,7 @@
 extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
 
 class World
-{
-	//////////////////////////////////////////////////////////////////
+{//////////////////////////////////////////////////////////////////
 	//							Atributos							//
 	//////////////////////////////////////////////////////////////////
 	BYTE colorVec[3];					//defina el color de fondo del plano del mundo
@@ -30,7 +29,7 @@ public:
 	//////////////////////////////////////////////////////////////////
 	//							Metodos								//
 	//////////////////////////////////////////////////////////////////
-	
+
 	/////////////////////////////?????////////////////////////////////
 	//int select = 1;				//Marcador de seleccion (QUTAR)
 	//bool ataque = 0, mover = 0;	//??????????
@@ -39,7 +38,8 @@ public:
 	Casilla getPoint(int, int);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	Casilla getPoint(Posicion);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	void addElem(Elemento *);			//Permite añadir un elemento al mundo, lo coloca en posicion automaticamente
-	void moveElem(Posicion, Posicion, bool);	//Permite mover del mundo, lo coloca en posicion seleccionada
+	void moveElem(Posicion, Posicion, bool);
+	void attackElem(Posicion, Posicion, bool);
 	float getH();						//Devuelve la altura del elemento
 	Casilla * operatePoint(int, int);	//Devulelve un detreminado punto permitiendo operar con el
 
@@ -59,7 +59,7 @@ private:
 	//////////////////////////////////////////////////////////////////
 	//						Metodos	privados						//
 	//////////////////////////////////////////////////////////////////
-	
+
 	///////////////////////Metodos internos///////////////////////////
 	//Recorre el mapa en perimetros partiendo de el punto x y y llegando hata el perimetro n
 	//aplicando en cada elemento la funcion "funcion", itself permite elegir si aplicarse la

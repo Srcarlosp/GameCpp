@@ -1,7 +1,6 @@
 #pragma once
 //Recursos del juego
 #include "Elemento.h"
-
 class Barco :
 	public Elemento
 {
@@ -13,7 +12,7 @@ class Barco :
 	ShipClasses type;
 	int medium;
 	int pwr, def;
-
+	bool alive;
 	///////////////////////////Parametros/////////////////////////////
 	int attRange, movRange;
 
@@ -30,6 +29,8 @@ public:
 	int getDef() { return def; };				//Devuelve la defensa restante
 	int getMovRange(){ return attRange; };		//Devuelve el rango de ataque
 	int getAttRange(){ return movRange; };		//Devuelve el rango de movimiento
+	int getAlive(){ return alive; };
+
 
 	//////////////////////////Interaccion//////////////////////////////
 	void dealDamage(Barco &);		//Permite infingir daño a otras naves
@@ -37,4 +38,3 @@ public:
 	//////////////////////////Constructor//////////////////////////////
 	Barco(int _x, int _y, int fact, ShipClasses type);
 };
-

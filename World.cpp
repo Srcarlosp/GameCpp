@@ -1,5 +1,6 @@
 #include "World.h"
 
+
 //////////////////////////////////////////////////////////////////
 //						Gestion de Interfaz						//
 //////////////////////////////////////////////////////////////////
@@ -30,13 +31,23 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 	oldPos.modToWorld();
 	newPos.modToWorld();
 
-	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil()!=0))
+	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil() != 0))
 	{
 		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
 		world[oldPos[x]][oldPos[y]].clean();
 		world[newPos[x]][newPos[y]].getElem()->setPos(des);
 		std::cout << "done\n";
 	}
+}
+void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
+{
+	if (inter == 0) return;
+	if (getPoint(newPos).getFull())
+		static_cast<Barco *>(getPoint(oldPos).getElem())->dealDamage(*static_cast<Barco *>(getPoint(newPos).getElem()));
+	if (!(static_cast<Barco *>(getPoint(newPos).getElem())->getAlive()))
+		getPoint(newPos).clean();
+
+
 }
 
 float World::getH()

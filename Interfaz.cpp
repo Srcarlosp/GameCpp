@@ -92,11 +92,12 @@ void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 	{
 		posRaton = camera->posicionCursor(_x, _y);
 		ptf = goMemory(posRaton);
-		if (flagMove) 
+		if (flagMove)
 			superficie.moveElem(pti, ptf, interactuable(turno.enableFaction()));
-		//if (flagAttack)
-			//static_cast<Barco *>(superficie.getPoint(pti).getElem())->dealDamage(*static_cast<Barco *>(superficie.getPoint(ptf).getElem()));
-		if(!dialog.activo) flagAttack = false, flagMove = false;
+		if (flagAttack)
+			superficie.attackElem(pti, ptf, interactuable(turno.enableFaction()));
+
+		if (!dialog.activo) flagAttack = false, flagMove = false;
 	}
 	else
 	{

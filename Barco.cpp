@@ -1,36 +1,99 @@
 #include "Barco.h"
+#include "iostream"
+using namespace std;
+
 
 //////////////////////////////////////////////////////////////////
 //						Gestion de dibujo						//
 //////////////////////////////////////////////////////////////////
 void Barco::doDraw()
 {
-	//unsigned int image3 = OpenGL::CargaTextura("barco2.bmp");
-	glDisable(GL_LIGHTING);
-	glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
-	glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
-	glutSolidCube(0.3);
-	glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+	if (alive){
+	switch (type) {
+	case lightCrusier:
+		glDisable(GL_LIGHTING);
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
+		//glutSolidSphere(0.15, 20, 20);
 
-	glBegin(GL_POLYGON);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
 
-	glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+		glBegin(GL_POLYGON);
 
-	glVertex3f(this->posVec[x] + 0.4, this->posVec[y], this->posVec[z] + 0.03);
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 
-	glVertex3f(this->posVec[x] + 0.15, this->posVec[y] + 0.15, this->posVec[z] + 0.03);
+		glVertex3f(this->posVec[x] + 0.2, this->posVec[y], this->posVec[z] + 0.03);
 
-	glVertex3f(this->posVec[x] - 0.15, this->posVec[y] + 0.15, this->posVec[z] + 0.03);
+		glVertex3f(this->posVec[x] + 0.10, this->posVec[y] + 0.10, this->posVec[z] + 0.03);
 
-	glVertex3f(this->posVec[x] - 0.4, this->posVec[y], this->posVec[z] + 0.02);
+		glVertex3f(this->posVec[x] - 0.10, this->posVec[y] + 0.10, this->posVec[z] + 0.03);
 
-	glVertex3f(this->posVec[x] - 0.15, this->posVec[y] - 0.15, this->posVec[z] + 0.03);
+		glVertex3f(this->posVec[x] - 0.2, this->posVec[y], this->posVec[z] + 0.02);
 
-	glVertex3f(this->posVec[x] + 0.15, this->posVec[y] - 0.15, this->posVec[z] + 0.03);
-	
-	glEnd();
+		glVertex3f(this->posVec[x] - 0.10, this->posVec[y] - 0.10, this->posVec[z] + 0.03);
 
-	glEnable(GL_LIGHTING);
+		glVertex3f(this->posVec[x] + 0.10, this->posVec[y] - 0.10, this->posVec[z] + 0.03);
+
+		glEnd();
+
+		glEnable(GL_LIGHTING);
+		break;
+	case Crusier:
+		glDisable(GL_LIGHTING);
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
+		//glutSolidCube(0.25);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+
+		glBegin(GL_POLYGON);
+
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+
+		glVertex3f(this->posVec[x] + 0.4, this->posVec[y], this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] + 0.15, this->posVec[y] + 0.15, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] - 0.15, this->posVec[y] + 0.15, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] - 0.4, this->posVec[y], this->posVec[z] + 0.02);
+
+		glVertex3f(this->posVec[x] - 0.15, this->posVec[y] - 0.15, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] + 0.15, this->posVec[y] - 0.15, this->posVec[z] + 0.03);
+
+		glEnd();
+
+		glEnable(GL_LIGHTING);
+		break;
+	case battleCrusier:
+		glDisable(GL_LIGHTING);
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
+		//glutSolidCube(0.25);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+
+		glBegin(GL_POLYGON);
+
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+
+		glVertex3f(this->posVec[x] + 0.4, this->posVec[y], this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] + 0.15, this->posVec[y] + 0.25, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] - 0.15, this->posVec[y] + 0.25, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] - 0.4, this->posVec[y], this->posVec[z] + 0.02);
+
+		glVertex3f(this->posVec[x] - 0.15, this->posVec[y] - 0.25, this->posVec[z] + 0.03);
+
+		glVertex3f(this->posVec[x] + 0.15, this->posVec[y] - 0.25, this->posVec[z] + 0.03);
+
+		glEnd();
+
+		glEnable(GL_LIGHTING);
+		break;
+	}
+		}
 	
 }
 
@@ -45,10 +108,10 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true,
 
 	//	Orden de atributos
 	// {tipo, medio, ataque, defensa/vida, rango de ataque, rango de movimento}
-
-	static int ligth_crusier[] = { lightCrusier, Water, 5, 10, 4, 6 };
+	alive = 1;
+	static int ligth_crusier[] = { lightCrusier, Water, 5, 10, 6, 4 };
 	static int crusier[] = { Crusier, Water, 7, 15, 5, 5 };
-	static int battle_crusier[] = { battleCrusier, Water, 10, 25, 7, 3 };
+	static int battle_crusier[] = { battleCrusier, Water, 10, 25, 3, 7 };
 
 	static BYTE f1[] = { 255, 100, 100 };
 	static BYTE f2[] = { 255, 255, 100 };
@@ -96,6 +159,25 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true,
 		colorVec = cVector(f4[rojo], f4[verde], f4[azul]);
 		break;
 	}
+}
+void Barco::dealDamage(Barco &B){
+
+	if (this != &B){
+		int damage = 0;
+		damage = (this->pwr) - (B.getDef() / 3);
+		if (damage < 0)damage = 1;
+		B.def -= damage;
+		if (B.def <= 0){
+			B.alive = 0;
+
+		}
+		cout << B.def;
+	}
+
+
+
+
+
 }
 
 //////////////////////////////////////////////////////////////////
