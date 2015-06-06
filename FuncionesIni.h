@@ -2,6 +2,7 @@
 #include "OpenGL.h"
 #include "glut.h"
 #include "Constantes.h"
+#include "Barco.h"
 
 void inicializaVentana(int argc, char* argv[])
 {
@@ -20,5 +21,6 @@ void inicializaVentana(int argc, char* argv[])
 	glEnable(GL_COLOR_MATERIAL);
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, WWW / HHH, 0.1, HHH); //Registrar los callbacks
+
 
 }

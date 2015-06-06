@@ -4,7 +4,7 @@
 //								Contadores								//
 //////////////////////////////////////////////////////////////////////////
 GameCounter::GameCounter() :
-turn(0), subturnsCnt(1) {}
+turn(0), subturnsCnt(1),cont2(0){}
 
 void GameCounter::iniGameCounter(PlayerList * pl)
 {
@@ -18,7 +18,12 @@ void GameCounter::iniGameCounter(PlayerList * pl)
 
 void GameCounter::advanceTurn()
 {
-	subturnsCnt++;
+	cont2++;
+	if (cont2 == 2)
+	{
+		subturnsCnt++;
+		cont2 = 0;
+	}
 	if (subturnsCnt > subturns)
 	{
 		turn++;

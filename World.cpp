@@ -1,5 +1,5 @@
 #include "World.h"
-
+extern GameCounter turno;		//Turno
 extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
 extern bool flagRangeD;
 
@@ -25,7 +25,9 @@ void World::addElem(Elemento *e)
 
 void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 {
+	if (oldPos == newPos) return;
 	if (inter == false) return;
+	
 
 	Posicion des = newPos;
 
@@ -39,6 +41,7 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
 		world[oldPos[x]][oldPos[y]].clean();
 		world[newPos[x]][newPos[y]].getElem()->setPos(des);
+	turno.advanceTurn();
 		std::cout << "done\n";
 	}
 }
@@ -52,7 +55,7 @@ void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 	if (!world[newPos[x]][newPos[y]].getFull()) return;
 
 	static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->dealDamage(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem()));
-	
+	turno.advanceTurn();
 	if (!(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem())->getAlive()))
 		world[newPos[x]][newPos[y]].clean();
 	std::cout << "done\n";

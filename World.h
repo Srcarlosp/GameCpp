@@ -1,11 +1,13 @@
 #pragma once
 //Graficos
+
 #include "glut.h"
 #include "OpenGL.h"
 //Standar C++
 #include <cmath>
 #include <iostream>
 //Recursos del jego
+#include "GameCounter.h"
 #include "Casilla.h"
 #include "Constantes.h"
 #include "funciones_inline.h"

@@ -6,7 +6,9 @@
 #include <time.h>
 #include <math.h>
 #include <iostream>
+#include <stdlib.h>
 //Recursos de juego
+
 #include "FuncionesIni.h"
 #include "Elemento.h"
 #include "World.h"
@@ -20,6 +22,7 @@
 #include "GameCounter.h"
 #include "Info.h"
 #include "ButtonList.h"
+using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
@@ -118,6 +121,44 @@ int main(int argc,char* argv[])
 	////////////////////////////TEMP//////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////
 	//Poner contenido a mundo
+	//////////////Jugador 1////////////
+	system("CLS");
+	int num = 0;
+	pList.addPlayer(new Player("Jugador 1", 1, ePlayer));
+	system("CLS");
+	cout << "\n" << "Jugador 1: \n Numero de Light Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[1].myShips.addShip(new Barco(2, -1 + i, 1, lightCrusier));
+	///////////////////////////////////////////////////////////
+	cout << "\n" << "\n Numero de Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[1].myShips.addShip(new Barco(3, -1 + i, 1, Crusier));
+	///////////////////////////////////////////////////////////
+	cout << "\n" << "\n Numero de Battle Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[1].myShips.addShip(new Barco(4, -1 + i, 1, battleCrusier));
+	/////////////Jugador 2 ///////////////////
+	pList.addPlayer(new Player("Jugador 2", 2, ePlayer));
+	system("CLS");
+	cout << "\n" << "Jugador 2: \n Numero de Light Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[2].myShips.addShip(new Barco(-2, -3 + i, 2, lightCrusier));
+	///////////////////////////////////////////////////////////
+	cout << "\n" << "\n Numero de Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[2].myShips.addShip(new Barco(-3, -4 + i, 2, Crusier));
+	///////////////////////////////////////////////////////////
+	cout << "\n" << "\n Numero de Battle Cruisier:";
+	cin >> num;
+	for (int i = 0; i < num; i++)
+		pList[2].myShips.addShip(new Barco(-4, -5 + i, 2, battleCrusier));
+
+	/*
 	pList.addPlayer(new Player("Jugador 1", 1, ePlayer));
 	pList[1].myShips.addShip(new Barco(2, 1, 1, lightCrusier));
 	pList[1].myShips.addShip(new Barco(2, 0, 1, Crusier));
@@ -126,7 +167,7 @@ int main(int argc,char* argv[])
 	pList[2].myShips.addShip(new Barco(-2, 1, 2, lightCrusier));
 	pList[2].myShips.addShip(new Barco(-2, 0, 2, Crusier));
 	pList[2].myShips.addShip(new Barco(-2, -1, 2, battleCrusier));
-
+	*/
 	turno.iniGameCounter(&pList);
 	pList.addWorldContent(&superficie);
 

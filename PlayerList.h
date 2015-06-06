@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Player.h"
 #include "World.h"
-
+class World;
 class PlayerList
 {
 	//////////////////////////////////////////////////////////////////

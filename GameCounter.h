@@ -1,6 +1,6 @@
 #pragma once
 #include "PlayerList.h"
-
+class PlayerList;
 class GameCounter
 {
 	//////////////////////////////////////////////////////////////////
@@ -9,6 +9,7 @@ class GameCounter
 	int turn;
 	int subturns;
 	int subturnsCnt;
+	int cont2;
 	int *factionList;
 
 public:

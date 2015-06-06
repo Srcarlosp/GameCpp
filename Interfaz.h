@@ -24,5 +24,5 @@ public:
 	void InterfazRaton(int p, int pp, int _x, int _y);
 	void InterfazTeclado(Byte key, Camera *);
 	void Menu(Camera *camera);
-	static bool interactuable(int fact);		//Chequea si se puede interactuar con el elemnto seleccionado
+	static bool interactuable(int fact);//Chequea si se puede interactuar con el elemnto seleccionado
 };
