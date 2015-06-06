@@ -33,7 +33,7 @@ public:
 
 
 	//////////////////////////Interaccion//////////////////////////////
-	void dealDamage(Barco &);		//Permite infingir daño a otras naves
+	void dealDamage(Barco *);		//Permite infingir daño a otras naves
 
 	//////////////////////////Constructor//////////////////////////////
 	Barco(int _x, int _y, int fact, ShipClasses type);

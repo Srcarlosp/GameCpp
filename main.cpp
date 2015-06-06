@@ -51,6 +51,7 @@ Posicion *periferias[((WORLDSIZE - 1) / 2)];	//Vector de periferias de analisis
 Camera *camera = new Camera(20,20,20);			//Camara en uso por el jugador
 bool flagMove = 0;
 bool flagAttack = 0;
+bool flagRangeD = 1;
 
 //////////////////////////////////////////////////////////////////////////
 //                    Inicializacion de jugadores						//
@@ -188,9 +189,9 @@ void OnDraw(void) {
 			superficie.doDrawWorldMap();
 			superficie.doDrawWorldContent();
 			//////////////////////////Dibujo de rango////////////////////////////
-			if (flagAttack)
+			if (flagAttack&&flagRangeD)
 				superficie.doDrawRange(pti, Interfaz::interactuable(turno.enableFaction()), 1);
-			if (flagMove)
+			if (flagMove&&flagRangeD)
 				superficie.doDrawRange(pti, Interfaz::interactuable(turno.enableFaction()), 0);
 			//////////////////////////Dibujo de menus////////////////////////////
 			cuadro.putInfoFull(pti);

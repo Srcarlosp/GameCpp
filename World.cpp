@@ -1,5 +1,7 @@
 #include "World.h"
 
+extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
+extern bool flagRangeD;
 
 //////////////////////////////////////////////////////////////////
 //						Gestion de Interfaz						//
@@ -23,13 +25,14 @@ void World::addElem(Elemento *e)
 
 void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 {
-	if (inter == 0) return;
-	//if (world[newPos[x]][newPos[y]].getFull()) return;
+	if (inter == false) return;
 
 	Posicion des = newPos;
 
 	oldPos.modToWorld();
 	newPos.modToWorld();
+
+	if (world[newPos[x]][newPos[y]].getFull()) return;
 
 	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil() != 0))
 	{
@@ -41,13 +44,18 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 }
 void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 {
-	if (inter == 0) return;
-	if (getPoint(newPos).getFull())
-		static_cast<Barco *>(getPoint(oldPos).getElem())->dealDamage(*static_cast<Barco *>(getPoint(newPos).getElem()));
-	if (!(static_cast<Barco *>(getPoint(newPos).getElem())->getAlive()))
-		getPoint(newPos).clean();
+	if (inter == false) return;
 
+	oldPos.modToWorld();
+	newPos.modToWorld();
 
+	if (!world[newPos[x]][newPos[y]].getFull()) return;
+
+	static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->dealDamage(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem()));
+	
+	if (!(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem())->getAlive()))
+		world[newPos[x]][newPos[y]].clean();
+	std::cout << "done\n";
 }
 
 float World::getH()
@@ -74,8 +82,8 @@ void World::doDrawRange(Posicion pt, bool dib, int ty)
 {
 	if (dib == false) return;
 	//Cambio a ptm
-	Posicion ptm = Posicion(pt[x] + ((WORLDSIZE - 1) / 2), pt[y] + ((WORLDSIZE - 1) / 2));
-
+	Posicion ptm = pt;
+	ptm.modToWorld();
 	if (world[ptm[x]][ptm[y]].getFull())
 		if (world[ptm[x]][ptm[y]].getElem()->getMovil())
 		{
@@ -132,6 +140,7 @@ void World::loopMap(int _x, int _y, void(*funcion)(Casilla *), int n, bool itSel
 			funcion(&world[periferias[i][ii][x] + x_][periferias[i][ii][y] + y_]);
 		}
 }
+
 void World::loopMap(Posicion pt, void(*funcion)(Casilla *), int n, bool itSelf)
 {
 	loopMap(pt[x], pt[y], funcion, n, itSelf);

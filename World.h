@@ -13,17 +13,14 @@
 #include "Posicion.h"
 #include "Barco.h"
 
-extern Posicion * periferias[((WORLDSIZE - 1) / 2)];
-
 class World
-{//////////////////////////////////////////////////////////////////
+{
+	//////////////////////////////////////////////////////////////////
 	//							Atributos							//
 	//////////////////////////////////////////////////////////////////
 	BYTE colorVec[3];					//defina el color de fondo del plano del mundo
 	Casilla world[WORLDSIZE][WORLDSIZE];		//crea el tablero del mundo
 	float h;
-	Posicion posRatonWAnt;
-
 
 public:
 	//////////////////////////////////////////////////////////////////
@@ -38,8 +35,8 @@ public:
 	Casilla getPoint(int, int);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	Casilla getPoint(Posicion);			//Devuelve la informacion contenida en la casilla pero no permite operar con ella
 	void addElem(Elemento *);			//Permite añadir un elemento al mundo, lo coloca en posicion automaticamente
-	void moveElem(Posicion, Posicion, bool);
-	void attackElem(Posicion, Posicion, bool);
+	void moveElem(Posicion, Posicion, bool);		//Permite mover del mundo, lo coloca en posicion seleccionada
+	void attackElem(Posicion, Posicion, bool);		//Permite que un barco ataque a otro
 	float getH();						//Devuelve la altura del elemento
 	Casilla * operatePoint(int, int);	//Devulelve un detreminado punto permitiendo operar con el
 

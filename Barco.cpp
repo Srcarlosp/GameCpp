@@ -160,24 +160,14 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true,
 		break;
 	}
 }
-void Barco::dealDamage(Barco &B){
-
-	if (this != &B){
-		int damage = 0;
-		damage = (this->pwr) - (B.getDef() / 3);
-		if (damage < 0)damage = 1;
-		B.def -= damage;
-		if (B.def <= 0){
-			B.alive = 0;
-
-		}
-		cout << B.def;
-	}
-
-
-
-
-
+void Barco::dealDamage(Barco *B)
+{
+	int damage = 0;
+	damage = ((pwr*10) / (B->def)) * 3;
+	B -> def -= damage;
+	if (B -> def <= 0)
+		B -> alive = 0;
+	cout << B->def;
 }
 
 //////////////////////////////////////////////////////////////////

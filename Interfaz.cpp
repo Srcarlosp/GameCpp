@@ -15,7 +15,7 @@ extern Vector posRaton;			//Guarda la posicion del raton en todo momento
 extern World superficie;		//Superfcie del mar
 extern GameCounter turno;		//Turno
 extern ButtonList dialog;		//Botonera
-
+extern bool flagRangeD;
 extern bool flagMove;
 extern bool flagAttack;
 
@@ -92,12 +92,14 @@ void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 	{
 		posRaton = camera->posicionCursor(_x, _y);
 		ptf = goMemory(posRaton);
-		if (flagMove)
-			superficie.moveElem(pti, ptf, interactuable(turno.enableFaction()));
-		if (flagAttack)
-			superficie.attackElem(pti, ptf, interactuable(turno.enableFaction()));
-
-		if (!dialog.activo) flagAttack = false, flagMove = false;
+		if (!dialog.activo)
+		{
+			if (flagMove)
+				superficie.moveElem(pti, ptf, interactuable(turno.enableFaction()));
+			if (flagAttack)
+				superficie.attackElem(pti, ptf, interactuable(turno.enableFaction()));
+			flagAttack = false, flagMove = false;
+		}
 	}
 	else
 	{
@@ -175,9 +177,11 @@ bool Interfaz::interactuable(int fact)
 {
 	if (superficie.getPoint(pti).getFull())
 	{
+		std::cout << "inter";
 		if (fact == 0) return true;
 		if ((superficie.getPoint(pti).getElem()->getFaction() == fact )&&(superficie.getPoint(pti).getElem()->getMovil())) return true;
 	}
+	std::cout << "no";
 	return false;
 }
 
