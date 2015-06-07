@@ -196,24 +196,65 @@ void World::drawPlano()
 		image1 = OpenGL::CargaTextura("oceano.bmp");
 	if (h == -2)
 		image1 = OpenGL::CargaTextura("fondo.bmp");
+	int x = 0, y = 0;
+	for (int i = 0; i < 9; i++){
+		if (i == 0){
+			x = 0;
+			y = 0;
+		}
+		if (i == 1){
+			x = 10;
+			y = 0;
+		}
+		if (i == 2){
+			x = -10;
+			y = 0;
+		}
+		if (i == 3){
+			x = 0;
+			y = 10;
+		}
+		if (i == 4){
+			x = 0;
+			y = -10;
+		}
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, image1);
-	glDisable(GL_LIGHTING);
-	glColor3ub(100, 100, 100);
-	glColor3f(1, 1, 1);
-	glBegin(GL_POLYGON);
-	glTexCoord2d(0.0f, 0.0f);
-	glVertex3f(-5.0f, -5.0f, h);
-	glTexCoord2d(0.0f, 1.0);
-	glVertex3f(-5.0f, 5.0f, h);
-	glTexCoord2d(1.0f, 1.0f);
-	glVertex3f(5.0f, 5.0f, h);
-	glTexCoord2d(1.0f, 0.0f);
-	glVertex3f(5.0f, -5.0f, h);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
+		if (i == 5){
+			x = 10;
+			y = 10;
+		}
+		if (i == 6){
+			x =- 10;
+			y = 10;
+		}
+		if (i == 7){
+			x = 10;
+			y = -10;
+		}
+		if (i == 8){
+			x =- 10;
+			y = -10;
+		}
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, image1);
+		glDisable(GL_LIGHTING);
+		glColor3ub(100, 100, 100);
+		glColor3f(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glTexCoord2d(0.0f, 0.0f);
+		glVertex3f(x - 5.0f, y - 5.0f, h);
+		glTexCoord2d(0.0f, 1.0);
+		glVertex3f(x - 5.0f, y + 5.0f, h);
+		glTexCoord2d(1.0f, 1.0f);
+		glVertex3f(x + 5.0f, y + 5.0f, h);
+		glTexCoord2d(1.0f, 0.0f);
+		glVertex3f(x + 5.0f, y - 5.0f, h);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
+}
+	
+	
 }
 
 void World::drawElments(Casilla *C)		//Funcion se encarga de llamar a el dibujo de cada elemento

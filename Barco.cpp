@@ -11,12 +11,28 @@ void Barco::doDraw()
 	if (alive){
 	switch (type) {
 	case lightCrusier:
+	
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
+		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
-		//glutSolidSphere(0.15, 20, 20);
-
+		glutSolidCube(0.07);
 		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x] + 0.07, this->posVec[y], this->posVec[z]);
+		glutSolidCube(0.07);
+		glTranslatef(-this->posVec[x] - 0.07, -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x] + 0.07, this->posVec[y], this->posVec[z] + 0.07);
+		glutSolidCube(0.07);
+		glTranslatef(-this->posVec[x] - 0.07, -this->posVec[y], -this->posVec[z] - 0.07);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.07);
+		glutSolidCube(0.07);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.07);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.14);
+		glutSolidCube(0.07);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.14);;
+
+		
+	
 
 		glBegin(GL_POLYGON);
 
@@ -36,14 +52,28 @@ void Barco::doDraw()
 
 		glEnd();
 
+	
+
 		glEnable(GL_LIGHTING);
 		break;
 	case Crusier:
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
-		//glutSolidCube(0.25);
+		glutSolidCube(0.10);
 		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x]+0.1, this->posVec[y], this->posVec[z]);
+		glutSolidCube(0.10);
+		glTranslatef(-this->posVec[x]-0.1, -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x] + 0.1, this->posVec[y], this->posVec[z] + 0.1);
+		glutSolidCube(0.10);
+		glTranslatef(-this->posVec[x] - 0.1, -this->posVec[y], -this->posVec[z] - 0.1);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.1 );
+		glutSolidCube(0.10);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.1);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.2);
+		glutSolidCube(0.10);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.2);
 
 		glBegin(GL_POLYGON);
 
@@ -69,8 +99,23 @@ void Barco::doDraw()
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
-		//glutSolidCube(0.25);
+		glutSolidCube(0.15);
 		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x] + 0.15, this->posVec[y], this->posVec[z]);
+		glutSolidCube(0.15);
+		glTranslatef(-this->posVec[x] - 0.15, -this->posVec[y], -this->posVec[z]);
+		glTranslatef(this->posVec[x] + 0.15, this->posVec[y], this->posVec[z] + 0.15);
+		glutSolidCube(0.15);
+		glTranslatef(-this->posVec[x] - 0.15, -this->posVec[y], -this->posVec[z] - 0.15);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.15);
+		glutSolidCube(0.15);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.15);
+		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.3);
+		glutSolidCube(0.13);
+		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.3);;
+
+
+
 
 		glBegin(GL_POLYGON);
 
