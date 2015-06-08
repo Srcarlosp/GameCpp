@@ -18,7 +18,7 @@ void Boton::drawOption()
 
 BYTE Boton::chekClic(Posicion clickRaton)
 {
-	if (((esquina[x]) < clickRaton[x] && clickRaton[x] < (esquina[x]+100)) && ((esquina[y]) < clickRaton[y] && clickRaton[y] < (esquina[y]+20))) return Return;
+	if (((esquina[x]) < clickRaton[x] && clickRaton[x] < (esquina[x]+100)) && ((esquina[y]) < clickRaton[y] && clickRaton[y] < (esquina[y]+40))) return Return;
 	return 0;
 }
 
