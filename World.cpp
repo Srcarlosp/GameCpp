@@ -38,6 +38,10 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 	if (world[newPos[x]][newPos[y]].getFull()) return;
 	if (rangeFinder(newPos, oldPos) > static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getMovRange()) return;
 
+	if (static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getFlagMove()) return;
+
+	if (!turno.actionsLeft()) return;
+
 	///CONDICIONES DE ACTUACION///
 
 	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil() != 0))
@@ -45,12 +49,11 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
 		world[oldPos[x]][oldPos[y]].clean();
 		world[newPos[x]][newPos[y]].getElem()->setPos(des);
-	////////////////////////////
-		turno.advanceTurn();
-	////////////////////////////
-		std::cout << "done\n";
 	}
+	static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem())->setFlagMove();
+	turno.actionCount();
 }
+
 void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 {
 	///CONDICIONES DE ACTUACION///
@@ -64,15 +67,18 @@ void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 
 	if (rangeFinder(newPos, oldPos) > static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getAttRange()) return;
 
+	if (static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getFlagAttack()) return;
+
+	if (!turno.actionsLeft()) return;
+
 	///CONDICIONES DE ACTUACION///
 
 	static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->dealDamage(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem()));
-	/////////////////////////////
-	turno.advanceTurn();
-	/////////////////////////////
 	if (!(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem())->getAlive()))
 		world[newPos[x]][newPos[y]].clean();
-	std::cout << "done\n";
+	
+	static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->setFlagAttack();
+	turno.actionCount();
 }
 
 float World::getH()

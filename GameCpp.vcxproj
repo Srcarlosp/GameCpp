@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Barco.h" />
+    <ClInclude Include="bList.h" />
     <ClInclude Include="Boton.h" />
     <ClInclude Include="ButtonList.h" />
     <ClInclude Include="Casilla.h" />

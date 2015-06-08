@@ -12,9 +12,10 @@ class Barco :
 	ShipClasses type;
 	int medium;
 	int pwr, def;
-	bool alive;
 	///////////////////////////Parametros/////////////////////////////
 	int attRange, movRange;
+	bool alive;
+	bool flagM, flagA;
 
 public:
 	//////////////////////////////////////////////////////////////////
@@ -29,7 +30,12 @@ public:
 	int getDef() { return def; };				//Devuelve la defensa restante
 	int getMovRange(){ return attRange; };		//Devuelve el rango de ataque
 	int getAttRange(){ return movRange; };		//Devuelve el rango de movimiento
-	int getAlive(){ return alive; };
+	bool getAlive(){ return alive; };			//Gestion de flags
+	bool getFlagAttack(){ return flagA; };
+	bool getFlagMove(){ return flagM; };
+	void setFlagAttack(){ flagA = true; };
+	void setFlagMove(){ flagM = true; };
+	void resetFlags(){ flagA = flagM = false; }
 
 
 	//////////////////////////Interaccion//////////////////////////////

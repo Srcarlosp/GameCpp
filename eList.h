@@ -4,6 +4,7 @@
 
 class eList
 {
+protected:
 	//////////////////////////////////////////////////////////////////
 	//							Atributos							//
 	//////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@ public:
 
 	int listLeng() { return sList.size(); }
 
-	void addShip(Elemento *sh)
+	void addElem(Elemento *sh)
 	{
 		sList.push_back(sh);
 		std::cout << "	Elemento añadido\n";

@@ -8,7 +8,6 @@ using namespace std;
 //////////////////////////////////////////////////////////////////
 void Barco::doDraw()
 {
-	if (alive){
 	switch (type) {
 	case lightCrusier:
 	
@@ -31,9 +30,6 @@ void Barco::doDraw()
 		glutSolidCube(0.07);
 		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.14);;
 
-		
-	
-
 		glBegin(GL_POLYGON);
 
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
@@ -52,10 +48,10 @@ void Barco::doDraw()
 
 		glEnd();
 
-	
-
 		glEnable(GL_LIGHTING);
 		break;
+
+
 	case Crusier:
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
@@ -95,6 +91,8 @@ void Barco::doDraw()
 
 		glEnable(GL_LIGHTING);
 		break;
+
+
 	case battleCrusier:
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
@@ -113,9 +111,6 @@ void Barco::doDraw()
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z] + 0.3);
 		glutSolidCube(0.13);
 		glTranslatef(-this->posVec[x], -this->posVec[y], -this->posVec[z] - 0.3);;
-
-
-
 
 		glBegin(GL_POLYGON);
 
@@ -138,22 +133,20 @@ void Barco::doDraw()
 		glEnable(GL_LIGHTING);
 		break;
 	}
-		}
-	
 }
 
 //////////////////////////////////////////////////////////////////
 //							Constructor							//
 //////////////////////////////////////////////////////////////////
-Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true, fact)
+Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true, fact), flagA(false), flagM(false), alive(true)
 {
 	//////////////////////////////////////////////////////////////////
 	//				Estadisticas de barcos por tipo					//
 	//////////////////////////////////////////////////////////////////
 
 	//	Orden de atributos
-	// {tipo, medio, ataque, defensa/vida, rango de ataque, rango de movimento}
-	alive = 1;
+	// {tipo, medio, ataque, defensa/vida, rango de movimiento, rango de ataque}
+
 	static int ligth_crusier[] = { lightCrusier, Water, 5, 10, 6, 4 };
 	static int crusier[] = { Crusier, Water, 7, 15, 5, 5 };
 	static int battle_crusier[] = { battleCrusier, Water, 10, 25, 3, 7 };

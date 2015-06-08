@@ -3,8 +3,7 @@
 //////////////////////////////////////////////////////////////////////////
 //								Contadores								//
 //////////////////////////////////////////////////////////////////////////
-GameCounter::GameCounter() :
-turn(0), subturnsCnt(1),cont2(0){}
+GameCounter::GameCounter() : turn(0), subturnsCnt(1), actionLimit(NUM_ACTIONS) {}
 
 void GameCounter::iniGameCounter(PlayerList * pl)
 {
@@ -24,6 +23,8 @@ Camera * GameCounter::advanceTurn()
 		turn++;
 		subturnsCnt = 1;
 	}
+	limitReset();
+	pList[subturnsCnt].ressetFalgsMyShips();
 	return &pList[subturnsCnt].pCamera;
 }
 

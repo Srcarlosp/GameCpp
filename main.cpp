@@ -137,34 +137,34 @@ int main(int argc,char* argv[])
 	cout << "\n" << "Jugador 1: \n Numero de Light Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[1].myShips.addShip(new Barco(2, -1 + i, 1, lightCrusier));
+		pList[1].myShips.addElem(new Barco(2, -1 + i, 1, lightCrusier));
 	///////////////////////////////////////////////////////////
 	cout << "\n" << "\n Numero de Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[1].myShips.addShip(new Barco(3, -1 + i, 1, Crusier));
+		pList[1].myShips.addElem(new Barco(3, -1 + i, 1, Crusier));
 	///////////////////////////////////////////////////////////
 	cout << "\n" << "\n Numero de Battle Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[1].myShips.addShip(new Barco(4, -1 + i, 1, battleCrusier));
+		pList[1].myShips.addElem(new Barco(4, -1 + i, 1, battleCrusier));
 	/////////////Jugador 2 ///////////////////
 	pList.addPlayer(new Player("Jugador 2", 2, ePlayer));
 	system("CLS");
 	cout << "\n" << "Jugador 2: \n Numero de Light Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[2].myShips.addShip(new Barco(-2, -3 + i, 2, lightCrusier));
+		pList[2].myShips.addElem(new Barco(-2, -3 + i, 2, lightCrusier));
 	///////////////////////////////////////////////////////////
 	cout << "\n" << "\n Numero de Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[2].myShips.addShip(new Barco(-3, -4 + i, 2, Crusier));
+		pList[2].myShips.addElem(new Barco(-3, -4 + i, 2, Crusier));
 	///////////////////////////////////////////////////////////
 	cout << "\n" << "\n Numero de Battle Cruisier:";
 	cin >> num;
 	for (int i = 0; i < num; i++)
-		pList[2].myShips.addShip(new Barco(-4, -5 + i, 2, battleCrusier));
+		pList[2].myShips.addElem(new Barco(-4, -5 + i, 2, battleCrusier));
 
 	turno.iniGameCounter(&pList);
 	pList.addWorldContent(&superficie);
