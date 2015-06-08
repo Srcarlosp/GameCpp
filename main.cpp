@@ -118,8 +118,42 @@ int main(int argc,char* argv[])
 		periferias[i] = periferiaFinder(i+1);
 
 	///////////////////////////////////////////////////////////////////////
-	////////////////////////////TEMP//////////////////////////////////////
+	////////////////////////////Mundo//////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////
+	pList.addPlayer(new Player("Mundo", 0, Admin));
+	int 	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(1,v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(0,v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-1,v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(0,v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(1,v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(5, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(6, v1));
+
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(7, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(8, v1)); 
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(9, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-5, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-6, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-7, v1));
+	v1 = rand() % 25 - 13;;
+	pList[1].myShips.addShip(new Roca(-8, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-9, v1));
+	v1 = rand() % 25 - 13;
+	pList[1].myShips.addShip(new Roca(-10, v1));
 	
 	//////////////Jugador 1////////////
 	system("CLS");
