@@ -61,6 +61,7 @@ void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 	newPos.modToWorld();
 
 	if (!world[newPos[x]][newPos[y]].getFull()) return;
+
 	if (rangeFinder(newPos, oldPos) > static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getAttRange()) return;
 
 	///CONDICIONES DE ACTUACION///

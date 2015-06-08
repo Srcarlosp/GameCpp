@@ -31,7 +31,7 @@ inline int rangeFinder(Posicion P1, Posicion P2)
 	{
 		for (int p = 0; p < PERIFERIASIZE(i); p++)
 		{
-			if (periferias[i][p] == PT) return i;
+			if (PT == periferias[i-1][p]) return i;
 		}
 	}
 }
