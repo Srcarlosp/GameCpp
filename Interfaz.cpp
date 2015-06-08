@@ -133,7 +133,7 @@ void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 	{
 		dialog.activo = true;
 		dialog.addButton(new Boton("Mover", 1, posRatonW, Posicion(20, 20)));
-		dialog.addButton(new Boton("Atacar", 2, posRatonW, Posicion(-80, -80)));
+		dialog.addButton(new Boton("Atacar", 2, posRatonW, Posicion(20, 50)));
 	}
 }
 

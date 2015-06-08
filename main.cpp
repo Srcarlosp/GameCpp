@@ -227,7 +227,7 @@ void OnDraw(void) {
 			if (flagMove&&flagRangeD)
 				superficie.doDrawRange(pti, Interfaz::interactuable(turno.enableFaction()), 0);
 			//////////////////////////Dibujo de menus////////////////////////////
-			cuadro.putInfoFull(pti);
+			cuadro.putInfoFull(pti, posRatonW);
 			dialog.drawButtos();
 
 			break;
