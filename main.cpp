@@ -125,7 +125,7 @@ int main(int argc,char* argv[])
 	for (int i = -10; i < 11;i++)
 		if (i<-4 || (i>-2 && i<2) || i>4){
 			v1 = rand() % 20 - 13;
-			pList[1].myShips.addShip(new Roca(i, v1));
+			pList[1].myShips.addElem(new Roca(i, v1));
 		}
 
 		
