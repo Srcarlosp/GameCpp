@@ -4,13 +4,13 @@
 class Roca :
 	public Elemento
 {
-	int size;
+	int size; 
 	cVector colorVec;
 
 public:
 
-	Roca(int _x, int _y);
+	Roca(int _x, int _y); //Posicion de la roca
 	~Roca();
-	void doDraw();
+	void doDraw();//Pintar roca
 };
 

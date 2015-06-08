@@ -9,7 +9,7 @@ using namespace std;
 void Barco::doDraw()
 {
 	switch (type) {
-	case lightCrusier:
+	case lightCrusier: //Dibuja Barco ligero
 	
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
@@ -52,7 +52,7 @@ void Barco::doDraw()
 		break;
 
 
-	case Crusier:
+	case Crusier: //Dibuja Barco mediano
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
@@ -93,7 +93,7 @@ void Barco::doDraw()
 		break;
 
 
-	case battleCrusier:
+	case battleCrusier: //Dibuja Barco grande
 		glDisable(GL_LIGHTING);
 		glColor3ub(this->colorVec[rojo], this->colorVec[verde], this->colorVec[azul]);
 		glTranslatef(this->posVec[x], this->posVec[y], this->posVec[z]);
@@ -198,7 +198,7 @@ Barco::Barco(int _x, int _y, int fact, ShipClasses typ) : Elemento(_x, _y, true,
 		break;
 	}
 }
-void Barco::dealDamage(Barco *B)
+void Barco::dealDamage(Barco *B)//Función de asestar daño
 {
 	int damage = 0;
 	damage = ((pwr*10) / (B->def)) * 3;
