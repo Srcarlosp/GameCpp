@@ -13,6 +13,8 @@
 //////////////////////////////////////////////////////////////////
 #define WORLDSIZE 101			//Define el tamaño de la matriz del mundo y los perimetros a generar
 #define PERIFERIASIZE(X) (6 * X)
+#define MAX(x, y) x < y ? x : y
+
 //Ejes equivalente para el dibujo de la matriz de casillas
 const float dirx[] = { sin(2.0F*3.1416F / 3.0F), cos(2.0F*3.1416F / 3.0F) };
 const float diry[] = { 1, 0 };

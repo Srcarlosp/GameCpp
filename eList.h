@@ -2,7 +2,7 @@
 #include <vector>
 #include "Elemento.h"
 
-class ShipList
+class eList
 {
 	//////////////////////////////////////////////////////////////////
 	//							Atributos							//
@@ -14,9 +14,16 @@ public:
 	//							Metodos								//
 	//////////////////////////////////////////////////////////////////
 	Elemento * operator [] (int i) { return sList[i]; }
-	void addShip(Elemento *);
+
 	int listLeng() { return sList.size(); }
-	virtual ~ShipList()
+
+	void addShip(Elemento *sh)
+	{
+		sList.push_back(sh);
+		std::cout << "	Elemento añadido\n";
+	}
+
+	virtual ~eList()
 	{
 		for (int i = 0; i < sList.size(); i++)
 		{

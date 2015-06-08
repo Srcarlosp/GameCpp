@@ -6,6 +6,8 @@
 #include "vector.h"
 #include "Constantes.h"
 
+extern Posicion * periferias[];
+
 inline Posicion * periferiaFinder(int n)	//Genera las periferias que se usan para medir distancias en al espacio exagonal
 {
 	int c = 0;
@@ -19,6 +21,19 @@ inline Posicion * periferiaFinder(int n)	//Genera las periferias que se usan par
 				v[c].setPos(-i, -j), c++;
 	}
 	return v;
+}
+
+inline int rangeFinder(Posicion P1, Posicion P2)
+{
+	Posicion PT = P1 - P2;
+	int ini = MAX(PT[x], PT[y]);
+	for (int i = ini; true; i++)
+	{
+		for (int p = 0; p < PERIFERIASIZE(i); p++)
+		{
+			if (periferias[i][p] == PT) return i;
+		}
+	}
 }
 
 inline Vector ejeDirector(int d)			//Devuelve los ejes directorres del plano de dibujo (Redundante???)

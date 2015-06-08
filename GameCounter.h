@@ -1,6 +1,10 @@
 #pragma once
 #include "PlayerList.h"
+#include "Camera.h"
 class PlayerList;
+
+extern PlayerList pList;
+
 class GameCounter
 {
 	//////////////////////////////////////////////////////////////////
@@ -19,10 +23,10 @@ public:
 	
 	///////////////////////Metodos interfaz///////////////////////////
 	void iniGameCounter(PlayerList * pl);
-	void advanceTurn();
-	int enableFaction() { return factionList[subturnsCnt-1]; }
+	Camera * advanceTurn();
+	int enableFaction() { return factionList[subturnsCnt -1]; }
 	int thisTurn() { return turn; }
-	int thisSubturn() { return factionList[subturnsCnt-1]; }
+	int thisSubturn() { return factionList[subturnsCnt -1]; }
 
 	GameCounter();
 	~GameCounter();

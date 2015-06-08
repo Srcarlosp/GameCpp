@@ -25,9 +25,10 @@ void World::addElem(Elemento *e)
 
 void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 {
+	///CONDICIONES DE ACTUACION///
+
 	if (oldPos == newPos) return;
 	if (inter == false) return;
-	
 
 	Posicion des = newPos;
 
@@ -35,27 +36,39 @@ void World::moveElem(Posicion oldPos, Posicion newPos, bool inter)
 	newPos.modToWorld();
 
 	if (world[newPos[x]][newPos[y]].getFull()) return;
+	if (rangeFinder(newPos, oldPos) > static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getMovRange()) return;
+
+	///CONDICIONES DE ACTUACION///
 
 	if (world[oldPos[x]][oldPos[y]].getFull() && !(oldPos[x] == newPos[x] && oldPos[y] == newPos[y]) && (world[oldPos[x]][oldPos[y]].getElem()->getMovil() != 0))
 	{
 		world[newPos[x]][newPos[y]].assign(world[oldPos[x]][oldPos[y]].getElem());
 		world[oldPos[x]][oldPos[y]].clean();
 		world[newPos[x]][newPos[y]].getElem()->setPos(des);
-	turno.advanceTurn();
+	////////////////////////////
+		turno.advanceTurn();
+	////////////////////////////
 		std::cout << "done\n";
 	}
 }
 void World::attackElem(Posicion oldPos, Posicion newPos, bool inter)
 {
+	///CONDICIONES DE ACTUACION///
+	
 	if (inter == false) return;
 
 	oldPos.modToWorld();
 	newPos.modToWorld();
 
 	if (!world[newPos[x]][newPos[y]].getFull()) return;
+	if (rangeFinder(newPos, oldPos) > static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->getAttRange()) return;
+
+	///CONDICIONES DE ACTUACION///
 
 	static_cast<Barco *>(world[oldPos[x]][oldPos[y]].getElem())->dealDamage(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem()));
+	/////////////////////////////
 	turno.advanceTurn();
+	/////////////////////////////
 	if (!(static_cast<Barco *>(world[newPos[x]][newPos[y]].getElem())->getAlive()))
 		world[newPos[x]][newPos[y]].clean();
 	std::cout << "done\n";

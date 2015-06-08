@@ -49,6 +49,12 @@ public:
 	{
 		return Posicion(v[x] + pt[x], v[y] + pt[y]);
 	}
+
+	inline Posicion operator - (Posicion pt)  //Operador de acceso
+	{
+		return Posicion(v[x] - pt[x], v[y] - pt[y]);
+	}
+
 	inline bool operator == (Posicion pt)  //Operador de acceso
 	{
 		if ((v[x] == pt[x]) && (v[y] == pt[y])) return true;

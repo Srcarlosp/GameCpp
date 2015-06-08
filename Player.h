@@ -1,5 +1,5 @@
 #pragma once
-#include "ShipList.h"
+#include "eList.h"
 #include "ID.h"
 #include "Constantes.h"
 #include "Camera.h"
@@ -12,7 +12,7 @@ public:
 	const ID name;
 	const int faction;
 	const int accesLevel;
-	ShipList myShips;
+	eList myShips;
 	Camera pCamera;
 
 	//////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ public:
 	//////////////////////////////////////////////////////////////////
 	int getFACT() { return faction; }
 	Player(char id[], int fact, int acceslev) :
-		name(id), faction(fact), accesLevel(acceslev), pCamera(15, 15, 10) {}
+		name(id), faction(fact), accesLevel(acceslev), pCamera(20, 20, 10) {}
 
 };
 

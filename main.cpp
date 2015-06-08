@@ -102,7 +102,7 @@ int main(int argc,char* argv[])
 
 	////////////////////Llama a los calbacks del juego///////////////////////
 	glutDisplayFunc(OnDraw);
-	glutTimerFunc(10, OnTimer, 0); //10 ms
+	glutTimerFunc(10, OnTimer, 0);		//10 ms
 	glutKeyboardFunc(OnKeyboardDown);
 	glutMouseFunc(OnMouseMotionClick);
 	glutMotionFunc(OnMouseMotion);
@@ -120,7 +120,7 @@ int main(int argc,char* argv[])
 	///////////////////////////////////////////////////////////////////////
 	////////////////////////////TEMP//////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////
-	//Poner contenido a mundo
+	
 	//////////////Jugador 1////////////
 	system("CLS");
 	int num = 0;
@@ -158,23 +158,9 @@ int main(int argc,char* argv[])
 	for (int i = 0; i < num; i++)
 		pList[2].myShips.addShip(new Barco(-4, -5 + i, 2, battleCrusier));
 
-	/*
-	pList.addPlayer(new Player("Jugador 1", 1, ePlayer));
-	pList[1].myShips.addShip(new Barco(2, 1, 1, lightCrusier));
-	pList[1].myShips.addShip(new Barco(2, 0, 1, Crusier));
-	pList[1].myShips.addShip(new Barco(2, -1, 1, battleCrusier));
-	pList.addPlayer(new Player("Jugador 2", 2, ePlayer));
-	pList[2].myShips.addShip(new Barco(-2, 1, 2, lightCrusier));
-	pList[2].myShips.addShip(new Barco(-2, 0, 2, Crusier));
-	pList[2].myShips.addShip(new Barco(-2, -1, 2, battleCrusier));
-	*/
 	turno.iniGameCounter(&pList);
 	pList.addWorldContent(&superficie);
 
-	//std::cout << pList[2].faction << pList[2].myShips[0]->getFaction();
-
-	//inicializar los turnos
-	
 	///////////////////////////////////////////////////////////////
 
 	//Entrada en el bucle de funcion
@@ -206,9 +192,7 @@ void OnDraw(void) {
 		//Juego normal
 		default:
 
-			///////////////////////////////////TEMP////////////////////////////////////
-			camera = &pList[0].pCamera;
-			///////////////////////////////////////////////////////////////////////////
+			camera = &pList[turno.thisSubturn()].pCamera;
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
 			glMatrixMode(GL_MODELVIEW);
@@ -241,6 +225,7 @@ void OnDraw(void) {
 			break;
 	}
 	glutSwapBuffers();//Cambia los buffer de dibujo, no borrar esta linea ni poner nada despues
+	
 }
 
 //////////////////////////////////////////////////////////////////////////

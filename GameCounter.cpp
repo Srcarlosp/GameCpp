@@ -16,19 +16,15 @@ void GameCounter::iniGameCounter(PlayerList * pl)
 	}
 }
 
-void GameCounter::advanceTurn()
+Camera * GameCounter::advanceTurn()
 {
-	cont2++;
-	if (cont2 == 2)
-	{
-		subturnsCnt++;
-		cont2 = 0;
-	}
+	subturnsCnt++;
 	if (subturnsCnt > subturns)
 	{
 		turn++;
 		subturnsCnt = 1;
 	}
+	return &pList[subturnsCnt].pCamera;
 }
 
 GameCounter::~GameCounter()
