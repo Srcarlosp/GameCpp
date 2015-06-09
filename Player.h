@@ -20,7 +20,7 @@ public:
 	//////////////////////////////////////////////////////////////////
 	int getFACT() { return faction; }
 	Player(char id[], int fact, int acceslev) :
-		name(id), faction(fact), accesLevel(acceslev), pCamera(20, 20, 10) {}
+		name(id), faction(fact), accesLevel(acceslev), pCamera(10, 10, 15) {}
 	void ressetFalgsMyShips()
 	{
 		myShips.resetFlagList();
