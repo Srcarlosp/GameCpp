@@ -15,6 +15,7 @@ extern Vector posRaton;			//Guarda la posicion del raton en todo momento
 extern World superficie;		//Superfcie del mar
 extern GameCounter turno;		//Turno
 extern ButtonList dialog;		//Botonera
+extern PlayerList pList;
 extern bool flagRangeD;
 extern bool flagMove;
 extern bool flagAttack;
@@ -85,9 +86,9 @@ void Interfaz::MovimientoRaton(int x, int y)
 //////////////////////////////////////////////////////////////////////////
 void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 {
+
 	posRaton = camera->posicionCursor(_x, _y);
 	posRatonW = Posicion(_x, _y);
-
 	if (pp && p == GLUT_LEFT_BUTTON)
 	{
 		posRaton = camera->posicionCursor(_x, _y);
@@ -95,46 +96,104 @@ void Interfaz::InterfazRaton(int p, int pp, int _x, int _y)
 		if (!dialog.activo)
 		{
 			if (flagMove)
-				superficie.moveElem(pti, ptf, interactuable(turno.enableFaction()));
+				superficie.moveElem(pti, ptf, Interfaz::interactuable(turno.enableFaction()));
 			if (flagAttack)
-				superficie.attackElem(pti, ptf, interactuable(turno.enableFaction()));
+				superficie.attackElem(pti, ptf, Interfaz::interactuable(turno.enableFaction()));
 			flagAttack = false, flagMove = false;
 		}
 	}
 	else
 	{
 		pti = goMemory(posRaton);
-		if (dialog.activo)
+		switch (sMenu)
 		{
-			switch (dialog.checkButtons(posRatonW))
+		case 1:
+			if (dialog.activo)
 			{
-			case 0:
-				dialog.activo = false;
-				std::cout << "nada";
-				break;
-			case 1:
-				flagMove = true;
-				std::cout << "mueve";
-				break;
-			case 2:
-				flagAttack = true;
-				std::cout << "ataca";
-				break;
+				switch (dialog.checkButtons(posRatonW))
+				{
+				case 0:
+					std::cout << "nada";
+					break;
+				case 1:
+					std::cout << "AñadirJ";
+					pList.addPlayer(new Player("Jugador", pList.listLeng(), ePlayer))->token = pList.returnToken()->passToken();
+					break;
+				case 2:
+					pList.returnToken()->myShips.addElem(new Barco(2, -1, 1, lightCrusier));
+					std::cout << "Lc";
+					break;
+				case 3:
+					std::cout << "C";
+					break;
+				case 4:
+					std::cout << "BC";
+					break;
+				case 5:
+					std::cout << "Jant";
+					break;
+				case 6:
+					std::cout << "Jsig";
+					break;
+				case 7:
+					std::cout << "end";
+					break;
+				}
+				dialog.clearButtons();
 			}
-			dialog.clearButtons();
+			break;
+		default:
+			if (dialog.activo)
+			{
+				switch (dialog.checkButtons(posRatonW))
+				{
+				case 0:
+					dialog.activo = false;
+					std::cout << "nada";
+					break;
+				case 1:
+					flagMove = true;
+					std::cout << "mueve";
+					break;
+				case 2:
+					flagAttack = true;
+					std::cout << "ataca";
+					break;
+				}
+				dialog.clearButtons();
+			}
+			else
+			{
+				dialog.activo = false;
+			}
+			break;
 		}
-		else
-		{
-			dialog.activo = false;
-		}
-
 	}
-	if (pp && p == GLUT_RIGHT_BUTTON)
+	
+	int jugador = 0;
+	switch (sMenu)
 	{
+	case 1:
 		dialog.activo = true;
-		dialog.addButton(new Boton("Mover", 1, posRatonW, Posicion(20, 20)));
-		dialog.addButton(new Boton("Atacar", 2, posRatonW, Posicion(20, 50)));
+		dialog.addButton(new Boton("Añadir Jugador", 1, Posicion(0,0), Posicion(300, 100)));
+		dialog.addButton(new Boton("Cruzero Ligero", 2, Posicion(0, 0), Posicion(200, 200)));
+		dialog.addButton(new Boton("Cruzero", 3, Posicion(0, 0), Posicion(200, 300)));
+		dialog.addButton(new Boton("Cruzero de batalla", 4, Posicion(0, 0), Posicion(200, 400)));
+		dialog.addButton(new Boton("Jugador anterior", 5, Posicion(0, 0), Posicion(50, 100)));
+		dialog.addButton(new Boton("Jugador sigueinte", 6, Posicion(0, 0), Posicion(550, 100)));
+		dialog.addButton(new Boton("Hecho", 7, Posicion(0, 0), Posicion(350, 500)));
+		break;
+	default:
+		if (pp && p == GLUT_RIGHT_BUTTON)
+		{
+			dialog.activo = true;
+			dialog.addButton(new Boton("Mover", 1, posRatonW, Posicion(20, 20)));
+			dialog.addButton(new Boton("Atacar", 2, posRatonW, Posicion(20, 50)));
+		}
+		break;
 	}
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -169,6 +228,7 @@ void Interfaz::InterfazTeclado(Byte key, Camera *camara)
 		break;
 	}
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 //						Gestion de interaccion							//

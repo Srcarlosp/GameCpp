@@ -103,6 +103,7 @@
     <ClInclude Include="GameCounter.h" />
     <ClInclude Include="ID.h" />
     <ClInclude Include="Info.h" />
+    <ClInclude Include="InfoH.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerList.h" />
     <ClInclude Include="Roca.h" />

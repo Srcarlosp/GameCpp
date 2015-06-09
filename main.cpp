@@ -21,6 +21,7 @@
 #include "PlayerList.h"
 #include "GameCounter.h"
 #include "Info.h"
+#include "InfoH.h"
 #include "ButtonList.h"
 using namespace std;
 
@@ -74,6 +75,7 @@ World superficie(0);
 
 Interfaz interfaz;
 Info cuadro;
+InfoH menu;
 ButtonList dialog;
 
 //////////////////////////////////////////////////////////////////////////
@@ -129,7 +131,7 @@ int main(int argc,char* argv[])
 			pList[0].myShips.addElem(new Roca(i, v1));
 		}
 
-		
+	/*
 	//////////////Jugador 1////////////
 	system("CLS");
 	int num = 0;
@@ -169,6 +171,7 @@ int main(int argc,char* argv[])
 
 	turno.iniGameCounter(&pList);
 	pList.addWorldContent(&superficie);
+	*/
 
 	///////////////////////////////////////////////////////////////
 
@@ -199,6 +202,23 @@ void OnDraw(void) {
 			interfaz.Menu(camera);
 			break;
 		//Juego normal
+		case 1:
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Para definir el punto de vista
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+
+			gluLookAt(
+				vista[0], vista[1], vista[2], // posicion del ojo
+				vista[3], vista[4], vista[5], // hacia que punto mira (0,0,0) 
+				vista[6], vista[7], vista[8]  // definimos hacia arriba (eje Y)
+				);
+
+			menu.putInfoHFull(pti, posRatonW);
+			dialog.drawButtos();
+
+			break;
+
 		default:
 
 			camera = &pList[turno.thisSubturn()].pCamera;

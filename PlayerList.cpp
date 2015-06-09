@@ -3,13 +3,13 @@
 //////////////////////////////////////////////////////////////////////////
 //							Añadir jugador								//
 //////////////////////////////////////////////////////////////////////////
-void PlayerList::addPlayer(Player *pl)
+Player * PlayerList::addPlayer(Player *pl)
 {
 
 	if (pList.size() > 4)
 	{
 		std::cout << "Jugadores maximos alcanzados";
-		return;
+		return pl;
 	}
 
 	pList.push_back(pl);
@@ -34,6 +34,8 @@ void PlayerList::addPlayer(Player *pl)
 		break;
 	}
 
+	return pl;
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -55,6 +57,7 @@ void PlayerList::addWorldContent(World *W)
 PlayerList::PlayerList()
 {
 	pList.push_back(new Player("game", 0, Admin)); //Jugador juego, tine acceso adminstrador
+	pList[0]->token = true;
 }
 
 PlayerList::~PlayerList()
